@@ -1,0 +1,360 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { ArrowLeft, CheckCircle, XCircle, FileText, User, GraduationCap, Church, Loader2 } from "lucide-react";
+import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
+
+export default function ApplicationDetailPage() {
+    const params = useParams();
+    const router = useRouter();
+    const [application, setApplication] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isSaving, setIsSaving] = useState(false);
+
+    // Screening State
+    const [scores, setScores] = useState({
+        financial: "",
+        academic: "",
+        church: ""
+    });
+    const [notes, setNotes] = useState("");
+
+    useEffect(() => {
+        const fetchApplication = async () => {
+            try {
+                const response = await fetch(`/api/admin/applications/${params.id}`);
+                const result = await response.json();
+                if (result.success) {
+                    setApplication(result.data);
+                    // Initialize state
+                    setScores({
+                        financial: result.data.scoreFinancial || "",
+                        academic: result.data.scoreAcademic || "",
+                        church: result.data.scoreChurch || ""
+                    });
+                    setNotes(result.data.committeeNotes || "");
+                }
+            } catch (error) {
+                console.error("Error fetching application:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        if (params.id) {
+            fetchApplication();
+        }
+    }, [params.id]);
+
+    const handleStatusUpdate = async (newStatus: string) => {
+        if (!confirm(`Are you sure you want to ${newStatus} this application?`)) return;
+
+        setIsSaving(true);
+        try {
+            const response = await fetch(`/api/admin/applications/${params.id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ status: newStatus }),
+            });
+
+            if (response.ok) {
+                setApplication({ ...application, status: newStatus });
+                alert(`Application ${newStatus} successfully!`);
+                router.refresh();
+            } else {
+                alert("Failed to update status.");
+            }
+        } catch (error) {
+            console.error("Error updating status:", error);
+            alert("An error occurred.");
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    const handleSaveScore = async () => {
+        setIsSaving(true);
+        try {
+            const response = await fetch(`/api/admin/applications/${params.id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    scoreFinancial: scores.financial,
+                    scoreAcademic: scores.academic,
+                    scoreChurch: scores.church
+                }),
+            });
+
+            if (response.ok) {
+                alert("Scores saved successfully!");
+            } else {
+                alert("Failed to save scores.");
+            }
+        } catch (error) {
+            console.error("Error saving scores:", error);
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    const handleSaveNotes = async () => {
+        setIsSaving(true);
+        try {
+            const response = await fetch(`/api/admin/applications/${params.id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ committeeNotes: notes }),
+            });
+
+            if (response.ok) {
+                alert("Notes saved successfully!");
+            } else {
+                alert("Failed to save notes.");
+            }
+        } catch (error) {
+            console.error("Error saving notes:", error);
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    if (isLoading) {
+        return <div className="p-8 text-center">Loading application details...</div>;
+    }
+
+    if (!application) {
+        return <div className="p-8 text-center">Application not found.</div>;
+    }
+
+    const { applicant } = application;
+    const { familyInfo } = applicant;
+
+    return (
+        <div className="space-y-6 animate-fade-in">
+            <div className="flex items-center gap-4 mb-6">
+                <Link href="/admin/applications" className="p-2 hover:bg-accent rounded-full transition-colors">
+                    <ArrowLeft className="h-5 w-5" />
+                </Link>
+                <div>
+                    <h1 className="text-2xl font-bold text-primary">
+                        {applicant.surname} {applicant.firstName}
+                    </h1>
+                    <p className="text-muted-foreground">
+                        {application.schoolName} • {application.presentClass}
+                    </p>
+                </div>
+                <div className="ml-auto flex gap-2">
+                    <span className={`px-3 py-1 rounded-full text-sm font-medium border ${application.status === 'Approved' ? 'bg-green-100 text-green-800 border-green-200' :
+                            application.status === 'Rejected' ? 'bg-red-100 text-red-800 border-red-200' :
+                                'bg-yellow-100 text-yellow-800 border-yellow-200'
+                        }`}>
+                        {application.status}
+                    </span>
+                    <button
+                        onClick={() => handleStatusUpdate("Approved")}
+                        disabled={isSaving || application.status === "Approved"}
+                        className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50"
+                    >
+                        <CheckCircle className="h-4 w-4" /> Approve
+                    </button>
+                    <button
+                        onClick={() => handleStatusUpdate("Rejected")}
+                        disabled={isSaving || application.status === "Rejected"}
+                        className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:opacity-50"
+                    >
+                        <XCircle className="h-4 w-4" /> Reject
+                    </button>
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2 space-y-6">
+                    {/* Personal Info */}
+                    <div className="bg-card border rounded-lg p-6 shadow-sm">
+                        <div className="flex items-center gap-2 mb-4 border-b pb-2">
+                            <User className="h-5 w-5 text-primary" />
+                            <h2 className="text-lg font-semibold">Personal Information</h2>
+                        </div>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                            <div>
+                                <p className="text-muted-foreground">Full Name</p>
+                                <p className="font-medium">{applicant.surname} {applicant.firstName} {applicant.middleName}</p>
+                            </div>
+                            <div>
+                                <p className="text-muted-foreground">Date of Birth</p>
+                                <p className="font-medium">{new Date(applicant.dob).toLocaleDateString()}</p>
+                            </div>
+                            <div>
+                                <p className="text-muted-foreground">Gender</p>
+                                <p className="font-medium">{applicant.sex}</p>
+                            </div>
+                            <div>
+                                <p className="text-muted-foreground">State of Origin</p>
+                                <p className="font-medium">{applicant.stateOrigin}</p>
+                            </div>
+                            <div>
+                                <p className="text-muted-foreground">LGA</p>
+                                <p className="font-medium">{applicant.lga}</p>
+                            </div>
+                            <div>
+                                <p className="text-muted-foreground">Town</p>
+                                <p className="font-medium">{applicant.town}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Academic Info */}
+                    <div className="bg-card border rounded-lg p-6 shadow-sm">
+                        <div className="flex items-center gap-2 mb-4 border-b pb-2">
+                            <GraduationCap className="h-5 w-5 text-primary" />
+                            <h2 className="text-lg font-semibold">Academic Information</h2>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <p className="text-muted-foreground">School Name</p>
+                                <p className="font-medium">{application.schoolName}</p>
+                            </div>
+                            <div>
+                                <p className="text-muted-foreground">School Address</p>
+                                <p className="font-medium">{application.schoolAddress}</p>
+                            </div>
+                            <div>
+                                <p className="text-muted-foreground">Present Class</p>
+                                <p className="font-medium">{application.presentClass}</p>
+                            </div>
+                            <div>
+                                <p className="text-muted-foreground">School Fees</p>
+                                <p className="font-medium">{application.schoolFees}</p>
+                            </div>
+                            <div>
+                                <p className="text-muted-foreground">Last Result</p>
+                                <p className="font-medium">{application.lastResult || "N/A"}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Family Info */}
+                    {familyInfo && (
+                        <div className="bg-card border rounded-lg p-6 shadow-sm">
+                            <div className="flex items-center gap-2 mb-4 border-b pb-2">
+                                <Church className="h-5 w-5 text-primary" />
+                                <h2 className="text-lg font-semibold">Family & Church Info</h2>
+                            </div>
+                            <div className="space-y-4 text-sm">
+                                <div>
+                                    <h3 className="font-medium text-primary mb-2">Father</h3>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <p><span className="text-muted-foreground">Name:</span> {familyInfo.fatherSurname} {familyInfo.fatherFirstName}</p>
+                                        <p><span className="text-muted-foreground">Phone:</span> {familyInfo.fatherPhone}</p>
+                                        <p><span className="text-muted-foreground">Occupation:</span> {familyInfo.fatherOccupation}</p>
+                                        <p><span className="text-muted-foreground">Church Position:</span> {familyInfo.fatherChurchPosition}</p>
+                                    </div>
+                                </div>
+                                <div className="border-t pt-2">
+                                    <h3 className="font-medium text-primary mb-2">Mother</h3>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <p><span className="text-muted-foreground">Name:</span> {familyInfo.motherSurname} {familyInfo.motherFirstName}</p>
+                                        <p><span className="text-muted-foreground">Phone:</span> {familyInfo.motherPhone}</p>
+                                        <p><span className="text-muted-foreground">Occupation:</span> {familyInfo.motherOccupation}</p>
+                                        <p><span className="text-muted-foreground">Church Position:</span> {familyInfo.motherChurchPosition}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                <div className="space-y-6">
+                    {/* Documents */}
+                    <div className="bg-card border rounded-lg p-6 shadow-sm">
+                        <div className="flex items-center gap-2 mb-4 border-b pb-2">
+                            <FileText className="h-5 w-5 text-primary" />
+                            <h2 className="text-lg font-semibold">Documents</h2>
+                        </div>
+                        <div className="space-y-3">
+                            {[
+                                { label: "School Bill", value: application.schoolBillUrl },
+                                { label: "Admission Letter", value: application.admissionLetterUrl },
+                                { label: "Passport", value: application.passportUrl },
+                                { label: "Birth Certificate", value: application.birthCertUrl },
+                                { label: "School Results", value: application.schoolResultUrl },
+                            ].map((doc, i) => (
+                                <div key={i} className="flex items-center justify-between p-3 bg-muted/30 rounded-md">
+                                    <span className="text-sm font-medium">{doc.label}</span>
+                                    {doc.value ? (
+                                        <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Uploaded</span>
+                                    ) : (
+                                        <span className="text-xs text-muted-foreground">Pending</span>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Screening Score */}
+                    <div className="bg-card border rounded-lg p-6 shadow-sm">
+                        <h2 className="text-lg font-semibold mb-4">Screening Score</h2>
+                        <div className="space-y-4">
+                            <div>
+                                <label className="text-sm font-medium">Financial Need (0-10)</label>
+                                <input
+                                    type="number"
+                                    className="w-full mt-1 p-2 border rounded-md"
+                                    value={scores.financial}
+                                    onChange={(e) => setScores({ ...scores, financial: e.target.value })}
+                                    placeholder="Score"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-sm font-medium">Academic Performance (0-10)</label>
+                                <input
+                                    type="number"
+                                    className="w-full mt-1 p-2 border rounded-md"
+                                    value={scores.academic}
+                                    onChange={(e) => setScores({ ...scores, academic: e.target.value })}
+                                    placeholder="Score"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-sm font-medium">Church Participation (0-10)</label>
+                                <input
+                                    type="number"
+                                    className="w-full mt-1 p-2 border rounded-md"
+                                    value={scores.church}
+                                    onChange={(e) => setScores({ ...scores, church: e.target.value })}
+                                    placeholder="Score"
+                                />
+                            </div>
+                            <button
+                                onClick={handleSaveScore}
+                                disabled={isSaving}
+                                className="w-full py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50"
+                            >
+                                {isSaving ? "Saving..." : "Save Scores"}
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Committee Notes */}
+                    <div className="bg-card border rounded-lg p-6 shadow-sm">
+                        <h2 className="text-lg font-semibold mb-4">Committee Notes</h2>
+                        <textarea
+                            className="w-full min-h-[100px] p-2 border rounded-md text-sm"
+                            placeholder="Add internal notes here..."
+                            value={notes}
+                            onChange={(e) => setNotes(e.target.value)}
+                        />
+                        <button
+                            onClick={handleSaveNotes}
+                            disabled={isSaving}
+                            className="mt-4 w-full py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 disabled:opacity-50"
+                        >
+                            {isSaving ? "Saving..." : "Save Notes"}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
