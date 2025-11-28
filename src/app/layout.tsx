@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+// import { Outfit } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
-});
+// const outfit = Outfit({
+//   subsets: ["latin"],
+//   variable: "--font-outfit",
+// });
 
 export const metadata: Metadata = {
   title: "CCC Central Cathedral Abuja - ETF",
@@ -27,8 +27,8 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased flex flex-col",
-          outfit.variable
+          "min-h-screen bg-background font-sans antialiased flex flex-col"
+          // outfit.variable
         )}
       >
         <Header />

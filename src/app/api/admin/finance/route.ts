@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import { PrismaClient, Prisma } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 // GET - Fetch financial overview
 export async function GET(request: Request) {

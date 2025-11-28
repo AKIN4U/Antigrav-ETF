@@ -1,6 +1,14 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy initialize to avoid build-time errors
+let resend: Resend | null = null;
+
+function getResendClient() {
+    if (!resend && process.env.RESEND_API_KEY) {
+        resend = new Resend(process.env.RESEND_API_KEY);
+    }
+    return resend;
+}
 
 export async function sendApplicantNotification(email: string, name: string, applicationId: string) {
     if (!process.env.RESEND_API_KEY) {
@@ -8,8 +16,11 @@ export async function sendApplicantNotification(email: string, name: string, app
         return;
     }
 
+    const client = getResendClient();
+    if (!client) return;
+
     try {
-        await resend.emails.send({
+        await client.emails.send({
             from: 'Antigrav ETF <onboarding@resend.dev>', // Default Resend testing domain
             to: email,
             subject: 'Application Received - Antigrav ETF',
@@ -42,8 +53,10 @@ export async function sendAdminNotification(applicantName: string, applicationId
         // Default to the known admin email if not specified in env
         const adminEmail = process.env.ADMIN_EMAIL || 'akin4u@gmail.com';
         const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+        const client = getResendClient();
+        if (!client) return;
 
-        await resend.emails.send({
+        await client.emails.send({
             from: 'Antigrav ETF <onboarding@resend.dev>',
             to: adminEmail,
             subject: `New Application: ${applicantName}`,
