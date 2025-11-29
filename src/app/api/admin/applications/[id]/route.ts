@@ -1,7 +1,16 @@
+<<<<<<< HEAD
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
+=======
+import { NextRequest, NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+>>>>>>> 91c2fa5125287aa0555a6947ffeaf05533306122
     try {
         const { id } = await params;
         const application = await prisma.application.findUnique({
@@ -26,7 +35,11 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
     }
 }
 
+<<<<<<< HEAD
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+=======
+export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+>>>>>>> 91c2fa5125287aa0555a6947ffeaf05533306122
     try {
         const { id } = await params;
         const body = await request.json();

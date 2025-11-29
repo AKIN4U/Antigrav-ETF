@@ -1,0 +1,1221 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\froman\fprq2\fcharset0 Liberation Serif;}{\f2\fnil\fcharset0 Google Sans Code;}{\f3\fmodern\fprq1\fcharset0 Liberation Mono;}}
+{\colortbl ;\red0\green0\blue0;\red0\green0\blue255;}
+{\*\generator Riched20 10.0.21996}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9\par
+\par
+
+\pard\hyphpar0\widctlpar\cf1\kerning1\f1\fs24\lang1033\par
+\par
+
+\pard\widctlpar\kerning0\f2\fs16 diff --git a/package-lock.json b/package-lock.json\cf0\f3\fs20\par
+\cf1\f2\fs16 index 3b3a886..3b4fac0 100644\cf0\f3\fs20\par
+\cf1\f2\fs16 --- a/package-lock.json\cf0\f3\fs20\par
+\cf1\f2\fs16 +++ b/package-lock.json\cf0\f3\fs20\par
+\cf1\f2\fs16 @@ -75,6 +75,7 @@\cf0\f3\fs20\par
+\cf1        \f2\fs16 "integrity": "sha512-e7jT4DxYvIDLk1ZHmU/m/mB19rex9sv0c2ftBtjSBv+kVM/902eh0fINUzD7UwLLNR+jU585GxUJ8/EBfAM5fw==",\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dev": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "license": "MIT",\cf0\f3\fs20\par
+\cf1\f2\fs16 +      "peer": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dependencies": \{\cf0\f3\fs20\par
+\cf1          \f2\fs16 "@babel/code-frame": "^7.27.1",\cf0\f3\fs20\par
+\cf1          \f2\fs16 "@babel/generator": "^7.28.5",\cf0\f3\fs20\par
+\cf1\f2\fs16 @@ -1411,6 +1412,7 @@\cf0\f3\fs20\par
+\cf1        \f2\fs16 "resolved": "{{\field{\*\fldinst{HYPERLINK https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-2.84.0.tgz }}{\fldrslt{https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-2.84.0.tgz\ul0\cf0}}}}\f2\fs16 ",\cf0\f3\fs20\par
+\cf1        \f2\fs16 "integrity": "sha512-byMqYBvb91sx2jcZsdp0qLpmd4Dioe80e4OU/UexXftCkpTcgrkoENXHf5dO8FCSai8SgNeq16BKg10QiDI6xg==",\cf0\f3\fs20\par
+\cf1        \f2\fs16 "license": "MIT",\cf0\f3\fs20\par
+\cf1\f2\fs16 +      "peer": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dependencies": \{\cf0\f3\fs20\par
+\cf1          \f2\fs16 "@supabase/auth-js": "2.84.0",\cf0\f3\fs20\par
+\cf1          \f2\fs16 "@supabase/functions-js": "2.84.0",\cf0\f3\fs20\par
+\cf1\f2\fs16 @@ -1755,6 +1757,7 @@\cf0\f3\fs20\par
+\cf1        \f2\fs16 "integrity": "sha512-p/jUvulfgU7oKtj6Xpk8cA2Y1xKTtICGpJYeJXz2YVO2UcvjQgeRMLDGfDeqeRW2Ta+0QNFwcc8X3GH8SxZz6w==",\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dev": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "license": "MIT",\cf0\f3\fs20\par
+\cf1\f2\fs16 +      "peer": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dependencies": \{\cf0\f3\fs20\par
+\cf1          \f2\fs16 "csstype": "^3.2.2"\cf0\f3\fs20\par
+\cf1        \f2\fs16\}\cf0\f3\fs20\par
+\cf1\f2\fs16 @@ -1824,6 +1827,7 @@\cf0\f3\fs20\par
+\cf1        \f2\fs16 "integrity": "sha512-lJi3PfxVmo0AkEY93ecfN+r8SofEqZNGByvHAI3GBLrvt1Cw6H5k1IM02nSzu0RfUafr2EvFSw0wAsZgubNplQ==",\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dev": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "license": "MIT",\cf0\f3\fs20\par
+\cf1\f2\fs16 +      "peer": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dependencies": \{\cf0\f3\fs20\par
+\cf1          \f2\fs16 "@typescript-eslint/scope-manager": "8.47.0",\cf0\f3\fs20\par
+\cf1          \f2\fs16 "@typescript-eslint/types": "8.47.0",\cf0\f3\fs20\par
+\cf1\f2\fs16 @@ -2354,6 +2358,7 @@\cf0\f3\fs20\par
+\cf1        \f2\fs16 "integrity": "sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg==",\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dev": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "license": "MIT",\cf0\f3\fs20\par
+\cf1\f2\fs16 +      "peer": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "bin": \{\cf0\f3\fs20\par
+\cf1          \f2\fs16 "acorn": "bin/acorn"\cf0\f3\fs20\par
+\cf1        \f2\fs16\},\cf0\f3\fs20\par
+\cf1\f2\fs16 @@ -2695,6 +2700,7 @@\cf0\f3\fs20\par
+\cf1          \f2\fs16\}\cf0\f3\fs20\par
+\cf1        \f2\fs16 ],\cf0\f3\fs20\par
+\cf1        \f2\fs16 "license": "MIT",\cf0\f3\fs20\par
+\cf1\f2\fs16 +      "peer": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dependencies": \{\cf0\f3\fs20\par
+\cf1          \f2\fs16 "baseline-browser-mapping": "^2.8.25",\cf0\f3\fs20\par
+\cf1          \f2\fs16 "caniuse-lite": "^1.0.30001754",\cf0\f3\fs20\par
+\cf1\f2\fs16 @@ -3277,6 +3283,7 @@\cf0\f3\fs20\par
+\cf1        \f2\fs16 "integrity": "sha512-BhHmn2yNOFA9H9JmmIVKJmd288g9hrVRDkdoIgRCRuSySRUHH7r/DI6aAXW9T1WwUuY3DFgrcaqB+deURBLR5g==",\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dev": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "license": "MIT",\cf0\f3\fs20\par
+\cf1\f2\fs16 +      "peer": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dependencies": \{\cf0\f3\fs20\par
+\cf1          \f2\fs16 "@eslint-community/eslint-utils": "^4.8.0",\cf0\f3\fs20\par
+\cf1          \f2\fs16 "@eslint-community/regexpp": "^4.12.1",\cf0\f3\fs20\par
+\cf1\f2\fs16 @@ -3462,6 +3469,7 @@\cf0\f3\fs20\par
+\cf1        \f2\fs16 "integrity": "sha512-whOE1HFo/qJDyX4SnXzP4N6zOWn79WhnCUY/iDR0mPfQZO8wcYE4JClzI2oZrhBnnMUCBCHZhO6VQyoBU95mZA==",\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dev": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "license": "MIT",\cf0\f3\fs20\par
+\cf1\f2\fs16 +      "peer": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dependencies": \{\cf0\f3\fs20\par
+\cf1          \f2\fs16 "@rtsao/scc": "^1.1.0",\cf0\f3\fs20\par
+\cf1          \f2\fs16 "array-includes": "^3.1.9",\cf0\f3\fs20\par
+\cf1\f2\fs16 @@ -5638,6 +5646,7 @@\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dev": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "hasInstallScript": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "license": "Apache-2.0",\cf0\f3\fs20\par
+\cf1\f2\fs16 +      "peer": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dependencies": \{\cf0\f3\fs20\par
+\cf1          \f2\fs16 "@prisma/engines": "5.22.0"\cf0\f3\fs20\par
+\cf1        \f2\fs16\},\cf0\f3\fs20\par
+\cf1\f2\fs16 @@ -5705,6 +5714,7 @@\cf0\f3\fs20\par
+\cf1        \f2\fs16 "resolved": "{{\field{\*\fldinst{HYPERLINK https://registry.npmjs.org/react/-/react-19.2.0.tgz }}{\fldrslt{https://registry.npmjs.org/react/-/react-19.2.0.tgz\ul0\cf0}}}}\f2\fs16 ",\cf0\f3\fs20\par
+\cf1        \f2\fs16 "integrity": "sha512-tmbWg6W31tQLeB5cdIBOicJDJRR2KzXsV7uSK9iNfLWQ5bIZfxuPEHp7M8wiHyHnn0DD1i7w3Zmin0FtkrwoCQ==",\cf0\f3\fs20\par
+\cf1        \f2\fs16 "license": "MIT",\cf0\f3\fs20\par
+\cf1\f2\fs16 +      "peer": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "engines": \{\cf0\f3\fs20\par
+\cf1          \f2\fs16 "node": ">=0.10.0"\cf0\f3\fs20\par
+\cf1        \f2\fs16\}\cf0\f3\fs20\par
+\cf1\f2\fs16 @@ -5714,6 +5724,7 @@\cf0\f3\fs20\par
+\cf1        \f2\fs16 "resolved": "{{\field{\*\fldinst{HYPERLINK https://registry.npmjs.org/react-dom/-/react-dom-19.2.0.tgz }}{\fldrslt{https://registry.npmjs.org/react-dom/-/react-dom-19.2.0.tgz\ul0\cf0}}}}\f2\fs16 ",\cf0\f3\fs20\par
+\cf1        \f2\fs16 "integrity": "sha512-UlbRu4cAiGaIewkPyiRGJk0imDN2T3JjieT6spoL2UeSf5od4n5LB/mQ4ejmxhCFT1tYe8IvaFulzynWovsEFQ==",\cf0\f3\fs20\par
+\cf1        \f2\fs16 "license": "MIT",\cf0\f3\fs20\par
+\cf1\f2\fs16 +      "peer": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dependencies": \{\cf0\f3\fs20\par
+\cf1          \f2\fs16 "scheduler": "^0.27.0"\cf0\f3\fs20\par
+\cf1        \f2\fs16\},\cf0\f3\fs20\par
+\cf1\f2\fs16 @@ -6467,6 +6478,7 @@\cf0\f3\fs20\par
+\cf1        \f2\fs16 "integrity": "sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==",\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dev": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "license": "MIT",\cf0\f3\fs20\par
+\cf1\f2\fs16 +      "peer": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "engines": \{\cf0\f3\fs20\par
+\cf1          \f2\fs16 "node": ">=12"\cf0\f3\fs20\par
+\cf1        \f2\fs16\},\cf0\f3\fs20\par
+\cf1\f2\fs16 @@ -6629,6 +6641,7 @@\cf0\f3\fs20\par
+\cf1        \f2\fs16 "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==",\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dev": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "license": "Apache-2.0",\cf0\f3\fs20\par
+\cf1\f2\fs16 +      "peer": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "bin": \{\cf0\f3\fs20\par
+\cf1          \f2\fs16 "tsc": "bin/tsc",\cf0\f3\fs20\par
+\cf1          \f2\fs16 "tsserver": "bin/tsserver"\cf0\f3\fs20\par
+\cf1\f2\fs16 @@ -6947,6 +6960,7 @@\cf0\f3\fs20\par
+\cf1        \f2\fs16 "integrity": "sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==",\cf0\f3\fs20\par
+\cf1        \f2\fs16 "dev": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "license": "MIT",\cf0\f3\fs20\par
+\cf1\f2\fs16 +      "peer": true,\cf0\f3\fs20\par
+\cf1        \f2\fs16 "funding": \{\cf0\f3\fs20\par
+\cf1          \f2\fs16 "url": "{{\field{\*\fldinst{HYPERLINK https://github.com/sponsors/colinhacks }}{\fldrslt{https://github.com/sponsors/colinhacks\ul0\cf0}}}}\f2\fs16 "\cf0\f3\fs20\par
+\cf1        \f2\fs16\}\cf0\f3\fs20\par
+\cf1\f2\fs16 diff --git a/package.json b/package.json\cf0\f3\fs20\par
+\cf1\f2\fs16 index a3824b9..a4ba1cc 100644\cf0\f3\fs20\par
+\cf1\f2\fs16 --- a/package.json\cf0\f3\fs20\par
+\cf1\f2\fs16 +++ b/package.json\cf0\f3\fs20\par
+\cf1\f2\fs16 @@ -2,6 +2,9 @@\cf0\f3\fs20\par
+\cf1    \f2\fs16 "name": "etf-platform",\cf0\f3\fs20\par
+\cf1    \f2\fs16 "version": "0.1.0",\cf0\f3\fs20\par
+\cf1    \f2\fs16 "private": true,\cf0\f3\fs20\par
+\cf1\f2\fs16 +  "engines": \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +    "node": "24.x"\cf0\f3\fs20\par
+\cf1\f2\fs16 +  \},\cf0\f3\fs20\par
+\cf1    \f2\fs16 "scripts": \{\cf0\f3\fs20\par
+\cf1      \f2\fs16 "dev": "next dev",\cf0\f3\fs20\par
+\cf1      \f2\fs16 "build": "next build",\cf0\f3\fs20\par
+\cf1\f2\fs16 diff --git a/src/app/api/admin/applications/[id]/route.ts b/src/app/api/admin/applications/[id]/route.ts\cf0\f3\fs20\par
+\cf1\f2\fs16 index 1800b37..e970ddc 100644\cf0\f3\fs20\par
+\cf1\f2\fs16 --- a/src/app/api/admin/applications/[id]/route.ts\cf0\f3\fs20\par
+\cf1\f2\fs16 +++ b/src/app/api/admin/applications/[id]/route.ts\cf0\f3\fs20\par
+\cf1\f2\fs16 @@ -1,9 +1,9 @@\cf0\f3\fs20\par
+\cf1\f2\fs16 -import \{ NextResponse \} from "next/server";\cf0\f3\fs20\par
+\cf1\f2\fs16 +import \{ NextRequest, NextResponse \} from "next/server";\cf0\f3\fs20\par
+\cf1  \f2\fs16 import \{ PrismaClient \} from "@prisma/client";\cf0\f3\fs20\par
+\cf1  \cf0\par
+\cf1  \f2\fs16 const prisma = new PrismaClient();\cf0\f3\fs20\par
+\cf1  \cf0\par
+\cf1\f2\fs16 -export async function GET(request: Request, \{ params \}: \{ params: \{ id: string \} \}) \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +export async function GET(request: NextRequest, \{ params \}: \{ params: \{ id: string \} \}) \{\cf0\f3\fs20\par
+\cf1      \f2\fs16 try \{\cf0\f3\fs20\par
+\cf1          \f2\fs16 const id = params.id;\cf0\f3\fs20\par
+\cf1          \f2\fs16 const application = await prisma.application.findUnique(\{\cf0\f3\fs20\par
+\cf1\f2\fs16 @@ -28,7 +28,7 @@ export async function GET(request: Request, \{ params \}: \{ params: \{ id: string \}\cf0\f3\fs20\par
+\cf1      \f2\fs16\}\cf0\f3\fs20\par
+\cf1  \f2\fs16\}\cf0\f3\fs20\par
+\cf1  \cf0\par
+\cf1\f2\fs16 -export async function PATCH(request: Request, \{ params \}: \{ params: \{ id: string \} \}) \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +export async function PATCH(request: NextRequest, \{ params \}: \{ params: \{ id: string \} \}) \{\cf0\f3\fs20\par
+\cf1      \f2\fs16 try \{\cf0\f3\fs20\par
+\cf1          \f2\fs16 const id = params.id;\cf0\f3\fs20\par
+\cf1          \f2\fs16 const body = await request.json();\cf0\f3\fs20\par
+\cf1\f2\fs16 diff --git a/src/types/supabase.ts b/src/types/supabase.ts\cf0\f3\fs20\par
+\cf1\f2\fs16 index 37fb803..71e019f 100644\cf0\f3\fs20\par
+\cf1\f2\fs16 --- a/src/types/supabase.ts\cf0\f3\fs20\par
+\cf1\f2\fs16 +++ b/src/types/supabase.ts\cf0\f3\fs20\par
+\cf1\f2\fs16 @@ -1,459 +1,636 @@\cf0\f3\fs20\par
+\cf1  \f2\fs16 export type Json =\cf0\f3\fs20\par
+\cf1\f2\fs16 -    | string\cf0\f3\fs20\par
+\cf1\f2\fs16 -    | number\cf0\f3\fs20\par
+\cf1\f2\fs16 -    | boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 -    | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -    | \{ [key: string]: Json | undefined \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -    | Json[]\cf0\f3\fs20\par
+\cf1\f2\fs16 +  | string\cf0\f3\fs20\par
+\cf1\f2\fs16 +  | number\cf0\f3\fs20\par
+\cf1\f2\fs16 +  | boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +  | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +  | \{ [key: string]: Json | undefined \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +  | Json[]\cf0\f3\fs20\par
+\cf1  \cf0\par
+\cf1  \f2\fs16 export type Database = \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -    // Allows to automatically instantiate createClient with right options\cf0\f3\fs20\par
+\cf1\f2\fs16 -    // instead of createClient<Database, \{ PostgrestVersion: 'XX' \}>(URL, KEY)\cf0\f3\fs20\par
+\cf1\f2\fs16 -    __InternalSupabase: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -        PostgrestVersion: "13.0.5"\cf0\f3\fs20\par
+\cf1\f2\fs16 -    \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -    public: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -        Tables: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -            AdminUser: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -                Row: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    createdAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    email: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    name: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    role: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -                Insert: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    createdAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    email: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    name?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    role?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -                Update: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    createdAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    email?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    id?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    name?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    role?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -                Relationships: []\cf0\f3\fs20\par
+\cf1\f2\fs16 -            \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -            Applicant: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -                Row: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    address: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    age: number\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    createdAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    dob: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    email: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    firstName: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    lga: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    middleName: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    parish: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    phone: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    prevScholarship: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    prevScholarshipDate: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    sex: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    stateOrigin: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    surname: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    town: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    updatedAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -                Insert: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    address: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    age: number\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    createdAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    dob: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    email?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    firstName: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    lga: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    middleName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    parish?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    phone: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    prevScholarship?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    prevScholarshipDate?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    sex: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    stateOrigin: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    surname: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    town: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    updatedAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -                Update: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    address?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    age?: number\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    createdAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    dob?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    email?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    firstName?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    id?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    lga?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    middleName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    parish?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    phone?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    prevScholarship?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    prevScholarshipDate?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    sex?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    stateOrigin?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    surname?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    town?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    updatedAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -                Relationships: []\cf0\f3\fs20\par
+\cf1\f2\fs16 -            \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -            Application: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -                Row: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    admissionLetterUrl: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    applicantId: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    approvedAmount: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    assistanceLetterUrl: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    birthCertUrl: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    classPosition: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    classSize: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    committeeNotes: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    createdAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    enoughBooks: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    lastResult: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    libraryAccess: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    passportUrl: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    presentClass: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    primaryCertUrl: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    repeatedClass: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    schoolAddress: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    schoolBillUrl: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    schoolFees: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    schoolName: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    schoolResultUrl: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    scoreAcademic: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    scoreChurch: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    scoreFinancial: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    sentAway: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    status: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    textBooksCost: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    updatedAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    voucherCode: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -                Insert: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    admissionLetterUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    applicantId: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    approvedAmount?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    assistanceLetterUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    birthCertUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    classPosition?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    classSize?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    committeeNotes?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    createdAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    enoughBooks?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    lastResult?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    libraryAccess?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    passportUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    presentClass: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    primaryCertUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    repeatedClass?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    schoolAddress: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    schoolBillUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    schoolFees: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    schoolName: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    schoolResultUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    scoreAcademic?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    scoreChurch?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    scoreFinancial?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    sentAway?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    status?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    textBooksCost?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    updatedAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    voucherCode?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -                Update: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    admissionLetterUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    applicantId?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    approvedAmount?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    assistanceLetterUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    birthCertUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    classPosition?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    classSize?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    committeeNotes?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    createdAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    enoughBooks?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    id?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    lastResult?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    libraryAccess?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    passportUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    presentClass?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    primaryCertUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    repeatedClass?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    schoolAddress?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    schoolBillUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    schoolFees?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    schoolName?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    schoolResultUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    scoreAcademic?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    scoreChurch?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    scoreFinancial?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    sentAway?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    status?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    textBooksCost?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    updatedAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    voucherCode?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -                Relationships: [\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -                        foreignKeyName: "Application_applicantId_fkey"\cf0\f3\fs20\par
+\cf1\f2\fs16 -                        columns: ["applicantId"]\cf0\f3\fs20\par
+\cf1\f2\fs16 -                        isOneToOne: false\cf0\f3\fs20\par
+\cf1\f2\fs16 -                        referencedRelation: "Applicant"\cf0\f3\fs20\par
+\cf1\f2\fs16 -                        referencedColumns: ["id"]\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    \},\cf0\f3\fs20\par
+\cf1\f2\fs16 -                ]\cf0\f3\fs20\par
+\cf1\f2\fs16 -            \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -            FamilyInfo: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -                Row: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    applicantId: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherAddress: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherChildrenAges: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherChurchDuties: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherChurchPosition: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherEmployer: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherFirstName: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherIncome: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherLga: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherMiddleName: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherNumChildren: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherObligations: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherOccupation: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherPhone: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherSalaryGrade: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherSpouse: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherState: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherSurname: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherTown: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherYearsServed: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherAddress: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherChildrenAges: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherChurchDuties: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherChurchPosition: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherEmployer: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherFirstName: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherIncome: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherLga: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherMiddleName: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherNumChildren: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherObligations: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherOccupation: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherPhone: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherSalaryGrade: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherSpouse: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherState: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherSurname: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherTown: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherYearsServed: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -                Insert: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    applicantId: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherAddress?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherChildrenAges?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherChurchDuties?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherChurchPosition?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherEmployer?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherFirstName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherIncome?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherLga?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherMiddleName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherNumChildren?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherObligations?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherOccupation?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherPhone?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherSalaryGrade?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherSpouse?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherState?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherSurname?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherTown?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherYearsServed?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherAddress?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherChildrenAges?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherChurchDuties?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherChurchPosition?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherEmployer?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherFirstName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherIncome?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherLga?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherMiddleName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherNumChildren?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherObligations?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherOccupation?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherPhone?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherSalaryGrade?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherSpouse?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherState?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherSurname?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherTown?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherYearsServed?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -                Update: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    applicantId?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherAddress?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherChildrenAges?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherChurchDuties?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherChurchPosition?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherEmployer?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherFirstName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherIncome?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherLga?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherMiddleName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherNumChildren?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherObligations?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherOccupation?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherPhone?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherSalaryGrade?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherSpouse?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherState?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherSurname?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherTown?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    fatherYearsServed?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    id?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherAddress?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherChildrenAges?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherChurchDuties?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherChurchPosition?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherEmployer?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherFirstName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherIncome?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherLga?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherMiddleName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherNumChildren?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherObligations?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherOccupation?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherPhone?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherSalaryGrade?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherSpouse?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherState?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherSurname?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherTown?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    motherYearsServed?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 -                \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -                Relationships: [\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -                        foreignKeyName: "FamilyInfo_applicantId_fkey"\cf0\f3\fs20\par
+\cf1\f2\fs16 -                        columns: ["applicantId"]\cf0\f3\fs20\par
+\cf1\f2\fs16 -                        isOneToOne: true\cf0\f3\fs20\par
+\cf1\f2\fs16 -                        referencedRelation: "Applicant"\cf0\f3\fs20\par
+\cf1\f2\fs16 -                        referencedColumns: ["id"]\cf0\f3\fs20\par
+\cf1\f2\fs16 -                    \},\cf0\f3\fs20\par
+\cf1\f2\fs16 -                ]\cf0\f3\fs20\par
+\cf1\f2\fs16 -            \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +  // Allows to automatically instantiate createClient with right options\cf0\f3\fs20\par
+\cf1\f2\fs16 +  // instead of createClient<Database, \{ PostgrestVersion: 'XX' \}>(URL, KEY)\cf0\f3\fs20\par
+\cf1\f2\fs16 +  __InternalSupabase: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +    PostgrestVersion: "13.0.5"\cf0\f3\fs20\par
+\cf1\f2\fs16 +  \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +  public: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +    Tables: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +      AdminUser: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Row: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          email: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          name: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          role: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Insert: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          email: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          name?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          role?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Update: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          email?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          name?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          role?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Relationships: []\cf0\f3\fs20\par
+\cf1\f2\fs16 +      \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +      Applicant: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Row: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          address: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          age: number\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          dob: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          email: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          firstName: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          lga: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          middleName: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          parish: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          phone: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          prevScholarship: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          prevScholarshipDate: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          sex: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          stateOrigin: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          surname: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          town: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          updatedAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Insert: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          address: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          age: number\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          dob: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          email?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          firstName: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          lga: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          middleName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          parish?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          phone: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          prevScholarship?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          prevScholarshipDate?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          sex: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          stateOrigin: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          surname: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          town: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          updatedAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Update: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          address?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          age?: number\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          dob?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          email?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          firstName?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          lga?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          middleName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          parish?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          phone?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          prevScholarship?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          prevScholarshipDate?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          sex?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          stateOrigin?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          surname?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          town?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          updatedAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Relationships: []\cf0\f3\fs20\par
+\cf1\f2\fs16 +      \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +      Application: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Row: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          admissionLetterUrl: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          applicantId: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          approvedAmount: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          assistanceLetterUrl: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          birthCertUrl: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          classPosition: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          classSize: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          committeeNotes: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          disbursedDate: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          enoughBooks: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          lastResult: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          libraryAccess: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          passportUrl: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          paymentReference: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          presentClass: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          primaryCertUrl: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          repeatedClass: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          schoolAddress: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          schoolBillUrl: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          schoolFees: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          schoolName: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          schoolResultUrl: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          scoreAcademic: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          scoreChurch: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          scoreFinancial: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          sentAway: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          status: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          textBooksCost: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          updatedAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          voucherCode: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Insert: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          admissionLetterUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          applicantId: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          approvedAmount?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          assistanceLetterUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          birthCertUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          classPosition?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          classSize?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          committeeNotes?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          disbursedDate?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          enoughBooks?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          lastResult?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          libraryAccess?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          passportUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          paymentReference?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          presentClass: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          primaryCertUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          repeatedClass?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          schoolAddress: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          schoolBillUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          schoolFees: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          schoolName: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          schoolResultUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          scoreAcademic?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          scoreChurch?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          scoreFinancial?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          sentAway?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          status?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          textBooksCost?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          updatedAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          voucherCode?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Update: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          admissionLetterUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          applicantId?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          approvedAmount?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          assistanceLetterUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          birthCertUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          classPosition?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          classSize?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          committeeNotes?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          disbursedDate?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          enoughBooks?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          lastResult?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          libraryAccess?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          passportUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          paymentReference?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          presentClass?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          primaryCertUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          repeatedClass?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          schoolAddress?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          schoolBillUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          schoolFees?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          schoolName?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          schoolResultUrl?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          scoreAcademic?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          scoreChurch?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          scoreFinancial?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          sentAway?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          status?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          textBooksCost?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          updatedAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          voucherCode?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Relationships: [\cf0\f3\fs20\par
+\cf1\f2\fs16 +          \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +            foreignKeyName: "Application_applicantId_fkey"\cf0\f3\fs20\par
+\cf1\f2\fs16 +            columns: ["applicantId"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +            isOneToOne: false\cf0\f3\fs20\par
+\cf1\f2\fs16 +            referencedRelation: "Applicant"\cf0\f3\fs20\par
+\cf1\f2\fs16 +            referencedColumns: ["id"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +          \},\cf0\f3\fs20\par
+\cf1\f2\fs16 +        ]\cf0\f3\fs20\par
+\cf1\f2\fs16 +      \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +      Budget: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Row: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          allocated: number\cf0\f3\fs20\par
+\cf1\f2\fs16 +          category: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          description: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          quarter: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          spent: number\cf0\f3\fs20\par
+\cf1\f2\fs16 +          updatedAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          year: number\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Insert: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          allocated: number\cf0\f3\fs20\par
+\cf1\f2\fs16 +          category: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          description?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          quarter?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          spent?: number\cf0\f3\fs20\par
+\cf1\f2\fs16 +          updatedAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          year: number\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Update: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          allocated?: number\cf0\f3\fs20\par
+\cf1\f2\fs16 +          category?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          description?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          quarter?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          spent?: number\cf0\f3\fs20\par
+\cf1\f2\fs16 +          updatedAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          year?: number\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Relationships: []\cf0\f3\fs20\par
+\cf1\f2\fs16 +      \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +      Donation: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Row: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          donationType: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          donorAddress: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          donorEmail: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          donorName: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          donorPhone: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          isAnonymous: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          notes: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          purpose: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          receiptIssued: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          receiptNumber: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          transactionId: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          updatedAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Insert: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          donationType: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          donorAddress?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          donorEmail?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          donorName: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          donorPhone?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          isAnonymous?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          notes?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          purpose?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          receiptIssued?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          receiptNumber?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          transactionId: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          updatedAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Update: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          donationType?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          donorAddress?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          donorEmail?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          donorName?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          donorPhone?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          isAnonymous?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          notes?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          purpose?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          receiptIssued?: boolean\cf0\f3\fs20\par
+\cf1\f2\fs16 +          receiptNumber?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          transactionId?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          updatedAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Relationships: [\cf0\f3\fs20\par
+\cf1\f2\fs16 +          \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +            foreignKeyName: "Donation_transactionId_fkey"\cf0\f3\fs20\par
+\cf1\f2\fs16 +            columns: ["transactionId"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +            isOneToOne: true\cf0\f3\fs20\par
+\cf1\f2\fs16 +            referencedRelation: "Transaction"\cf0\f3\fs20\par
+\cf1\f2\fs16 +            referencedColumns: ["id"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +          \},\cf0\f3\fs20\par
+\cf1\f2\fs16 +        ]\cf0\f3\fs20\par
+\cf1\f2\fs16 +      \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +      FamilyInfo: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Row: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          applicantId: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherAddress: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherChildrenAges: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherChurchDuties: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherChurchPosition: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherEmployer: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherFirstName: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherIncome: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherLga: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherMiddleName: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherNumChildren: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherObligations: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherOccupation: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherPhone: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherSalaryGrade: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherSpouse: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherState: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherSurname: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherTown: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherYearsServed: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherAddress: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherChildrenAges: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherChurchDuties: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherChurchPosition: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherEmployer: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherFirstName: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherIncome: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherLga: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherMiddleName: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherNumChildren: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherObligations: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherOccupation: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherPhone: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherSalaryGrade: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherSpouse: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherState: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherSurname: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherTown: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherYearsServed: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Insert: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          applicantId: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherAddress?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherChildrenAges?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherChurchDuties?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherChurchPosition?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherEmployer?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherFirstName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherIncome?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherLga?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherMiddleName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherNumChildren?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherObligations?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherOccupation?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherPhone?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherSalaryGrade?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherSpouse?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherState?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherSurname?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherTown?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherYearsServed?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherAddress?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherChildrenAges?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherChurchDuties?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherChurchPosition?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherEmployer?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherFirstName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherIncome?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherLga?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherMiddleName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherNumChildren?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherObligations?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherOccupation?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherPhone?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherSalaryGrade?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherSpouse?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherState?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherSurname?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherTown?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherYearsServed?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Update: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          applicantId?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherAddress?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherChildrenAges?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherChurchDuties?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherChurchPosition?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherEmployer?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherFirstName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherIncome?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherLga?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherMiddleName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherNumChildren?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherObligations?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherOccupation?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherPhone?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherSalaryGrade?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherSpouse?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherState?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherSurname?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherTown?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          fatherYearsServed?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherAddress?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherChildrenAges?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherChurchDuties?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherChurchPosition?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherEmployer?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherFirstName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherIncome?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherLga?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherMiddleName?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherNumChildren?: number | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherObligations?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherOccupation?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherPhone?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherSalaryGrade?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherSpouse?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherState?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherSurname?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherTown?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          motherYearsServed?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Relationships: [\cf0\f3\fs20\par
+\cf1\f2\fs16 +          \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +            foreignKeyName: "FamilyInfo_applicantId_fkey"\cf0\f3\fs20\par
+\cf1\f2\fs16 +            columns: ["applicantId"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +            isOneToOne: false\cf0\f3\fs20\par
+\cf1\f2\fs16 +            referencedRelation: "Applicant"\cf0\f3\fs20\par
+\cf1\f2\fs16 +            referencedColumns: ["id"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +          \},\cf0\f3\fs20\par
+\cf1\f2\fs16 +        ]\cf0\f3\fs20\par
+\cf1\f2\fs16 +      \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +      Transaction: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Row: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          amount: number\cf0\f3\fs20\par
+\cf1\f2\fs16 +          budgetId: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          category: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdBy: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          date: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          description: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          reference: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          type: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          updatedAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Insert: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          amount: number\cf0\f3\fs20\par
+\cf1\f2\fs16 +          budgetId?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          category: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdBy?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          date: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          description: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          reference?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          type: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          updatedAt: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Update: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +          amount?: number\cf0\f3\fs20\par
+\cf1\f2\fs16 +          budgetId?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          category?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          createdBy?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          date?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          description?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          id?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          reference?: string | null\cf0\f3\fs20\par
+\cf1\f2\fs16 +          type?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +          updatedAt?: string\cf0\f3\fs20\par
+\cf1\f2\fs16 +        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Relationships: [\cf0\f3\fs20\par
+\cf1\f2\fs16 +          \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +            foreignKeyName: "Transaction_budgetId_fkey"\cf0\f3\fs20\par
+\cf1\f2\fs16 +            columns: ["budgetId"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +            isOneToOne: false\cf0\f3\fs20\par
+\cf1\f2\fs16 +            referencedRelation: "Budget"\cf0\f3\fs20\par
+\cf1\f2\fs16 +            referencedColumns: ["id"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +          \},\cf0\f3\fs20\par
+\cf1\f2\fs16 +        ]\cf0\f3\fs20\par
+\cf1\f2\fs16 +      \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +    \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +    Views: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +      [_ in never]: never\cf0\f3\fs20\par
+\cf1\f2\fs16 +    \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +    Functions: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +      [_ in never]: never\cf0\f3\fs20\par
+\cf1\f2\fs16 +    \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +    Enums: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +      [_ in never]: never\cf0\f3\fs20\par
+\cf1\f2\fs16 +    \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +    CompositeTypes: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +      [_ in never]: never\cf0\f3\fs20\par
+\cf1\f2\fs16 +    \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +  \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +\}\cf0\f3\fs20\par
+\cf1\f2\fs16 +\cf0\f3\fs20\par
+\cf1\f2\fs16 +type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">\cf0\f3\fs20\par
+\cf1\f2\fs16 +\cf0\f3\fs20\par
+\cf1\f2\fs16 +type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]\cf0\f3\fs20\par
+\cf1  \cf0\par
+\cf1  \f2\fs16 export type Tables<\cf0\f3\fs20\par
+\cf1\f2\fs16 -    PublicTableNameOrOptions extends\cf0\f3\fs20\par
+\cf1\f2\fs16 -    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])\cf0\f3\fs20\par
+\cf1\f2\fs16 -    | \{ schema: keyof Database \},\cf0\f3\fs20\par
+\cf1\f2\fs16 -    TableName extends PublicTableNameOrOptions extends \{ schema: keyof Database \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &\cf0\f3\fs20\par
+\cf1\f2\fs16 -        Database[PublicTableNameOrOptions["schema"]]["Views"])\cf0\f3\fs20\par
+\cf1\f2\fs16 +  DefaultSchemaTableNameOrOptions extends\cf0\f3\fs20\par
+\cf1\f2\fs16 +    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])\cf0\f3\fs20\par
+\cf1\f2\fs16 +    | \{ schema: keyof DatabaseWithoutInternals \},\cf0\f3\fs20\par
+\cf1\f2\fs16 +  TableName extends DefaultSchemaTableNameOrOptions extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +    schema: keyof DatabaseWithoutInternals\cf0\f3\fs20\par
+\cf1\f2\fs16 +  \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &\cf0\f3\fs20\par
+\cf1\f2\fs16 +        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])\cf0\f3\fs20\par
+\cf1      \f2\fs16 : never = never,\cf0\f3\fs20\par
+\cf1\f2\fs16 -> = PublicTableNameOrOptions extends \{ schema: keyof Database \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -    ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &\cf0\f3\fs20\par
+\cf1\f2\fs16 -        Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -            Row: infer R\cf0\f3\fs20\par
+\cf1\f2\fs16 -        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -    ? R\cf0\f3\fs20\par
+\cf1\f2\fs16 -    : never\cf0\f3\fs20\par
+\cf1\f2\fs16 -    : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &\cf0\f3\fs20\par
+\cf1\f2\fs16 -        PublicSchema["Views"])\cf0\f3\fs20\par
+\cf1\f2\fs16 -    ? (PublicSchema["Tables"] &\cf0\f3\fs20\par
+\cf1\f2\fs16 -        PublicSchema["Views"])[PublicTableNameOrOptions] extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -            Row: infer R\cf0\f3\fs20\par
+\cf1\f2\fs16 -        \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +> = DefaultSchemaTableNameOrOptions extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +  schema: keyof DatabaseWithoutInternals\cf0\f3\fs20\par
+\cf1\f2\fs16 +\}\cf0\f3\fs20\par
+\cf1\f2\fs16 +  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &\cf0\f3\fs20\par
+\cf1\f2\fs16 +      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +      Row: infer R\cf0\f3\fs20\par
+\cf1\f2\fs16 +    \}\cf0\f3\fs20\par
+\cf1      \f2\fs16 ? R\cf0\f3\fs20\par
+\cf1      \f2\fs16 : never\cf0\f3\fs20\par
+\cf1\f2\fs16 +  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &\cf0\f3\fs20\par
+\cf1\f2\fs16 +        DefaultSchema["Views"])\cf0\f3\fs20\par
+\cf1\f2\fs16 +    ? (DefaultSchema["Tables"] &\cf0\f3\fs20\par
+\cf1\f2\fs16 +        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +        Row: infer R\cf0\f3\fs20\par
+\cf1\f2\fs16 +      \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +      ? R\cf0\f3\fs20\par
+\cf1\f2\fs16 +      : never\cf0\f3\fs20\par
+\cf1      \f2\fs16 : never\cf0\f3\fs20\par
+\cf1  \cf0\par
+\cf1  \f2\fs16 export type TablesInsert<\cf0\f3\fs20\par
+\cf1\f2\fs16 -    PublicTableNameOrOptions extends\cf0\f3\fs20\par
+\cf1\f2\fs16 -    | keyof PublicSchema["Tables"]\cf0\f3\fs20\par
+\cf1\f2\fs16 -    | \{ schema: keyof Database \},\cf0\f3\fs20\par
+\cf1\f2\fs16 -    TableName extends PublicTableNameOrOptions extends \{ schema: keyof Database \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +  DefaultSchemaTableNameOrOptions extends\cf0\f3\fs20\par
+\cf1\f2\fs16 +    | keyof DefaultSchema["Tables"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +    | \{ schema: keyof DatabaseWithoutInternals \},\cf0\f3\fs20\par
+\cf1\f2\fs16 +  TableName extends DefaultSchemaTableNameOrOptions extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +    schema: keyof DatabaseWithoutInternals\cf0\f3\fs20\par
+\cf1\f2\fs16 +  \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]\cf0\f3\fs20\par
+\cf1      \f2\fs16 : never = never,\cf0\f3\fs20\par
+\cf1\f2\fs16 -> = PublicTableNameOrOptions extends \{ schema: keyof Database \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -    ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -        Insert: infer I\cf0\f3\fs20\par
+\cf1\f2\fs16 +> = DefaultSchemaTableNameOrOptions extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +  schema: keyof DatabaseWithoutInternals\cf0\f3\fs20\par
+\cf1\f2\fs16 +\}\cf0\f3\fs20\par
+\cf1\f2\fs16 +  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +      Insert: infer I\cf0\f3\fs20\par
+\cf1      \f2\fs16\}\cf0\f3\fs20\par
+\cf1      \f2\fs16 ? I\cf0\f3\fs20\par
+\cf1      \f2\fs16 : never\cf0\f3\fs20\par
+\cf1\f2\fs16 -    : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]\cf0\f3\fs20\par
+\cf1\f2\fs16 -    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends \{\cf0\f3\fs20\par
+\cf1          \f2\fs16 Insert: infer I\cf0\f3\fs20\par
+\cf1\f2\fs16 -    \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -    ? I\cf0\f3\fs20\par
+\cf1\f2\fs16 -    : never\cf0\f3\fs20\par
+\cf1\f2\fs16 +      \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +      ? I\cf0\f3\fs20\par
+\cf1\f2\fs16 +      : never\cf0\f3\fs20\par
+\cf1      \f2\fs16 : never\cf0\f3\fs20\par
+\cf1  \cf0\par
+\cf1  \f2\fs16 export type TablesUpdate<\cf0\f3\fs20\par
+\cf1\f2\fs16 -    PublicTableNameOrOptions extends\cf0\f3\fs20\par
+\cf1\f2\fs16 -    | keyof PublicSchema["Tables"]\cf0\f3\fs20\par
+\cf1\f2\fs16 -    | \{ schema: keyof Database \},\cf0\f3\fs20\par
+\cf1\f2\fs16 -    TableName extends PublicTableNameOrOptions extends \{ schema: keyof Database \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +  DefaultSchemaTableNameOrOptions extends\cf0\f3\fs20\par
+\cf1\f2\fs16 +    | keyof DefaultSchema["Tables"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +    | \{ schema: keyof DatabaseWithoutInternals \},\cf0\f3\fs20\par
+\cf1\f2\fs16 +  TableName extends DefaultSchemaTableNameOrOptions extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +    schema: keyof DatabaseWithoutInternals\cf0\f3\fs20\par
+\cf1\f2\fs16 +  \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]\cf0\f3\fs20\par
+\cf1      \f2\fs16 : never = never,\cf0\f3\fs20\par
+\cf1\f2\fs16 -> = PublicTableNameOrOptions extends \{ schema: keyof Database \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -    ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -        Update: infer U\cf0\f3\fs20\par
+\cf1\f2\fs16 +> = DefaultSchemaTableNameOrOptions extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +  schema: keyof DatabaseWithoutInternals\cf0\f3\fs20\par
+\cf1\f2\fs16 +\}\cf0\f3\fs20\par
+\cf1\f2\fs16 +  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +      Update: infer U\cf0\f3\fs20\par
+\cf1      \f2\fs16\}\cf0\f3\fs20\par
+\cf1      \f2\fs16 ? U\cf0\f3\fs20\par
+\cf1      \f2\fs16 : never\cf0\f3\fs20\par
+\cf1\f2\fs16 -    : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]\cf0\f3\fs20\par
+\cf1\f2\fs16 -    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends \{\cf0\f3\fs20\par
+\cf1          \f2\fs16 Update: infer U\cf0\f3\fs20\par
+\cf1\f2\fs16 -    \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -    ? U\cf0\f3\fs20\par
+\cf1\f2\fs16 -    : never\cf0\f3\fs20\par
+\cf1\f2\fs16 +      \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +      ? U\cf0\f3\fs20\par
+\cf1\f2\fs16 +      : never\cf0\f3\fs20\par
+\cf1      \f2\fs16 : never\cf0\f3\fs20\par
+\cf1  \cf0\par
+\cf1  \f2\fs16 export type Enums<\cf0\f3\fs20\par
+\cf1\f2\fs16 -    PublicEnumNameOrOptions extends\cf0\f3\fs20\par
+\cf1\f2\fs16 -    | keyof PublicSchema["Enums"]\cf0\f3\fs20\par
+\cf1\f2\fs16 -    | \{ schema: keyof Database \},\cf0\f3\fs20\par
+\cf1\f2\fs16 -    EnumName extends PublicEnumNameOrOptions extends \{ schema: keyof Database \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +  DefaultSchemaEnumNameOrOptions extends\cf0\f3\fs20\par
+\cf1\f2\fs16 +    | keyof DefaultSchema["Enums"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +    | \{ schema: keyof DatabaseWithoutInternals \},\cf0\f3\fs20\par
+\cf1\f2\fs16 +  EnumName extends DefaultSchemaEnumNameOrOptions extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +    schema: keyof DatabaseWithoutInternals\cf0\f3\fs20\par
+\cf1\f2\fs16 +  \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]\cf0\f3\fs20\par
+\cf1      \f2\fs16 : never = never,\cf0\f3\fs20\par
+\cf1\f2\fs16 -> = PublicEnumNameOrOptions extends \{ schema: keyof Database \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -    ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]\cf0\f3\fs20\par
+\cf1\f2\fs16 -    : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]\cf0\f3\fs20\par
+\cf1\f2\fs16 -    ? PublicSchema["Enums"][PublicEnumNameOrOptions]\cf0\f3\fs20\par
+\cf1\f2\fs16 +> = DefaultSchemaEnumNameOrOptions extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +  schema: keyof DatabaseWithoutInternals\cf0\f3\fs20\par
+\cf1\f2\fs16 +\}\cf0\f3\fs20\par
+\cf1\f2\fs16 +  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]\cf0\f3\fs20\par
+\cf1\f2\fs16 +  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]\cf0\f3\fs20\par
+\cf1      \f2\fs16 : never\cf0\f3\fs20\par
+\cf1  \cf0\par
+\cf1  \f2\fs16 export type CompositeTypes<\cf0\f3\fs20\par
+\cf1\f2\fs16 -    PublicCompositeTypeNameOrOptions extends\cf0\f3\fs20\par
+\cf1\f2\fs16 -    | keyof PublicSchema["CompositeTypes"]\cf0\f3\fs20\par
+\cf1\f2\fs16 -    | \{ schema: keyof Database \},\cf0\f3\fs20\par
+\cf1\f2\fs16 -    CompositeTypeName extends PublicCompositeTypeNameOrOptions extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 -        schema: keyof Database\cf0\f3\fs20\par
+\cf1\f2\fs16 -    \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +  PublicCompositeTypeNameOrOptions extends\cf0\f3\fs20\par
+\cf1\f2\fs16 +    | keyof DefaultSchema["CompositeTypes"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +    | \{ schema: keyof DatabaseWithoutInternals \},\cf0\f3\fs20\par
+\cf1\f2\fs16 +  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +    schema: keyof DatabaseWithoutInternals\cf0\f3\fs20\par
+\cf1\f2\fs16 +  \}\cf0\f3\fs20\par
+\cf1\f2\fs16 +    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]\cf0\f3\fs20\par
+\cf1      \f2\fs16 : never = never,\cf0\f3\fs20\par
+\cf1\f2\fs16 -> = PublicCompositeTypeNameOrOptions extends \{ schema: keyof Database \}\cf0\f3\fs20\par
+\cf1\f2\fs16 -    ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]\cf0\f3\fs20\par
+\cf1\f2\fs16 -    : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]\cf0\f3\fs20\par
+\cf1\f2\fs16 -    ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]\cf0\f3\fs20\par
+\cf1\f2\fs16 +> = PublicCompositeTypeNameOrOptions extends \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +  schema: keyof DatabaseWithoutInternals\cf0\f3\fs20\par
+\cf1\f2\fs16 +\}\cf0\f3\fs20\par
+\cf1\f2\fs16 +  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]\cf0\f3\fs20\par
+\cf1\f2\fs16 +  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]\cf0\f3\fs20\par
+\cf1\f2\fs16 +    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]\cf0\f3\fs20\par
+\cf1      \f2\fs16 : never\cf0\f3\fs20\par
+\cf1\f2\fs16 +\cf0\f3\fs20\par
+\cf1\f2\fs16 +export const Constants = \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +  public: \{\cf0\f3\fs20\par
+\cf1\f2\fs16 +    Enums: \{\},\cf0\f3\fs20\par
+\cf1\f2\fs16 +  \},\cf0\f3\fs20\par
+
+\pard\widctlpar\sa283\cf1\f2\fs16 +\} as const\cf0\f3\fs20\par
+
+\pard\noline\sa283\fs12\par
+
+\pard\sa200\sl276\slmult1\f0\fs22\lang9\par
+}
+ 
