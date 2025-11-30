@@ -76,3 +76,33 @@ export async function sendAdminNotification(applicantName: string, applicationId
         console.error("Failed to send admin email:", error);
     }
 }
+
+export async function sendStatusUpdateEmail(email: string, name: string, status: string) {
+    if (!process.env.RESEND_API_KEY) {
+        console.warn("RESEND_API_KEY is not set. Email not sent.");
+        return;
+    }
+
+    const client = getResendClient();
+    if (!client) return;
+
+    try {
+        await client.emails.send({
+            from: 'Antigrav ETF <onboarding@resend.dev>',
+            to: email,
+            subject: `Application Update - Antigrav ETF`,
+            html: `
+        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+            <h1 style="color: #0f172a;">Application Update</h1>
+            <p>Dear ${name},</p>
+            <p>Your scholarship application status has been updated to: <strong>${status}</strong>.</p>
+            <p>Please log in to your dashboard for more details.</p>
+            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 20px 0;" />
+            <p style="color: #64748b; font-size: 14px;">Best regards,<br/>Antigrav ETF Team</p>
+        </div>
+      `
+        });
+    } catch (error) {
+        console.error("Failed to send status update email:", error);
+    }
+}

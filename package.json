@@ -9,11 +9,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@supabase/auth-helpers-nextjs": "^0.10.0",
-    "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.84.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.554.0",

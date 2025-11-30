@@ -1,18 +1,10 @@
-import { createBrowserClient } from '@supabase/ssr'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 export function createClient() {
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-    if (!url || !key) {
-        console.warn("Supabase env vars missing in createClient");
-        if (typeof window === 'undefined') {
-            return {} as any;
-        }
+    try {
+        return createClientComponentClient()
+    } catch (e) {
+        console.warn("Failed to create Supabase client:", e);
+        return {} as any;
     }
-
-    return createBrowserClient(
-        url || '',
-        key || ''
-    )
 }

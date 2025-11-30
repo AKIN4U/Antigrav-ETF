@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { sendStatusUpdateEmail } from "@/lib/email";
 
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
-=======
-import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
-
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
->>>>>>> 91c2fa5125287aa0555a6947ffeaf05533306122
     try {
         const { id } = await params;
         const application = await prisma.application.findUnique({
@@ -35,24 +27,35 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     }
 }
 
-<<<<<<< HEAD
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
-=======
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
->>>>>>> 91c2fa5125287aa0555a6947ffeaf05533306122
     try {
         const { id } = await params;
         const body = await request.json();
 
+        // Extract applicant info if present (for email) and remove from update data
+        const { applicant, ...updateData } = body;
+
         // Ensure numeric fields are actually numbers if present
-        if (body.scoreFinancial) body.scoreFinancial = parseInt(body.scoreFinancial);
-        if (body.scoreAcademic) body.scoreAcademic = parseInt(body.scoreAcademic);
-        if (body.scoreChurch) body.scoreChurch = parseInt(body.scoreChurch);
+        if (updateData.scoreFinancial) updateData.scoreFinancial = parseInt(updateData.scoreFinancial);
+        if (updateData.scoreAcademic) updateData.scoreAcademic = parseInt(updateData.scoreAcademic);
+        if (updateData.scoreChurch) updateData.scoreChurch = parseInt(updateData.scoreChurch);
 
         const updatedApplication = await prisma.application.update({
             where: { id },
-            data: body,
+            data: updateData,
+            include: {
+                applicant: true
+            }
         });
+
+        // Send email if status changed and we have an email
+        if (updateData.status && updatedApplication.applicant?.email) {
+            await sendStatusUpdateEmail(
+                updatedApplication.applicant.email,
+                updatedApplication.applicant.firstName,
+                updateData.status
+            );
+        }
 
         return NextResponse.json({ success: true, data: updatedApplication });
     } catch (error) {
