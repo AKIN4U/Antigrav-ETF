@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Loader2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { getAppUrl } from "@/lib/utils";
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -33,7 +34,7 @@ export default function RegisterPage() {
                 email,
                 password,
                 options: {
-                    emailRedirectTo: `${location.origin}/auth/callback`,
+                    emailRedirectTo: `${getAppUrl()}/auth/callback`,
                 },
             });
 
