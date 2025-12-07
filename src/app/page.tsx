@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BookOpen, GraduationCap, Users, Sparkles, Award, Heart } from "lucide-react";
+import { ArrowRight, BookOpen, GraduationCap, Users, Sparkles, Award, Heart, UserCircle, Shield, LogIn, UserPlus } from "lucide-react";
 
 export default function Home() {
   return (
@@ -71,6 +71,144 @@ export default function Home() {
               <div className="text-4xl font-bold text-yellow-300">95%</div>
               <div className="text-sm text-gray-300 mt-1">Success Rate</div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Portal Selection Section */}
+      <section className="py-24 bg-white relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-10 left-10 w-72 h-72 bg-blue-300 rounded-full blur-3xl" />
+          <div className="absolute bottom-10 right-10 w-72 h-72 bg-purple-300 rounded-full blur-3xl" />
+        </div>
+
+        <div className="container px-4 mx-auto relative z-10">
+          <div className="text-center mb-16 animate-fade-in">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200 text-sm font-medium mb-4">
+              <Users className="h-4 w-4 text-blue-600" />
+              <span className="text-blue-700">Choose Your Portal</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Welcome to <span className="text-gradient">CCC ETF</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Select the portal that matches your role to get started
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Scholar Portal Card */}
+            <div className="group relative p-10 rounded-3xl bg-gradient-to-br from-blue-50 to-blue-100/50 border-2 border-blue-200 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 animate-scale-in">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+
+              <div className="relative">
+                {/* Icon */}
+                <div className="w-20 h-20 mb-6 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg">
+                  <GraduationCap className="h-10 w-10 text-white" />
+                </div>
+
+                {/* Title */}
+                <h3 className="text-3xl font-bold mb-3 text-gray-900">Scholar Portal</h3>
+                <p className="text-muted-foreground leading-relaxed mb-8">
+                  For students and applicants seeking scholarship opportunities and educational support
+                </p>
+
+                {/* Action Buttons */}
+                <div className="space-y-3">
+                  <Link
+                    href="/register"
+                    className="group/btn flex items-center justify-center gap-2 w-full h-12 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all hover:scale-105"
+                  >
+                    <UserPlus className="h-5 w-5" />
+                    Create Account
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                  </Link>
+
+                  <Link
+                    href="/login"
+                    className="flex items-center justify-center gap-2 w-full h-12 rounded-xl bg-white border-2 border-blue-200 text-blue-700 font-semibold hover:bg-blue-50 transition-all"
+                  >
+                    <LogIn className="h-5 w-5" />
+                    Login to Dashboard
+                  </Link>
+
+                  <Link
+                    href="/apply"
+                    className="flex items-center justify-center gap-2 w-full h-12 rounded-xl bg-blue-100 text-blue-700 font-medium hover:bg-blue-200 transition-all"
+                  >
+                    <BookOpen className="h-5 w-5" />
+                    View Application Info
+                  </Link>
+                </div>
+
+                {/* Badge */}
+                <div className="mt-6 pt-6 border-t border-blue-200">
+                  <div className="flex items-center gap-2 text-sm text-blue-700">
+                    <Sparkles className="h-4 w-4" />
+                    <span className="font-medium">500+ Students Supported</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Committee Portal Card */}
+            <div className="group relative p-10 rounded-3xl bg-gradient-to-br from-purple-50 to-purple-100/50 border-2 border-purple-200 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 animate-scale-in delay-100">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+
+              <div className="relative">
+                {/* Icon */}
+                <div className="w-20 h-20 mb-6 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-lg">
+                  <Shield className="h-10 w-10 text-white" />
+                </div>
+
+                {/* Title */}
+                <h3 className="text-3xl font-bold mb-3 text-gray-900">Committee Portal</h3>
+                <p className="text-muted-foreground leading-relaxed mb-8">
+                  For ETF committee members and administrators to manage applications and operations
+                </p>
+
+                {/* Action Buttons */}
+                <div className="space-y-3">
+                  <Link
+                    href="/admin/login"
+                    className="group/btn flex items-center justify-center gap-2 w-full h-12 rounded-xl bg-gradient-to-r from-purple-600 to-purple-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all hover:scale-105"
+                  >
+                    <Shield className="h-5 w-5" />
+                    Admin Login
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                  </Link>
+
+                  <div className="flex items-center justify-center gap-2 w-full h-12 rounded-xl bg-purple-100 text-purple-700 font-medium cursor-not-allowed opacity-60">
+                    <UserCircle className="h-5 w-5" />
+                    Invitation Only
+                  </div>
+                </div>
+
+                {/* Info Box */}
+                <div className="mt-6 pt-6 border-t border-purple-200">
+                  <div className="space-y-2 text-sm text-purple-700">
+                    <div className="flex items-center gap-2">
+                      <Award className="h-4 w-4" />
+                      <span className="font-medium">Secure Access Control</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground pl-6">
+                      Committee access requires administrator approval
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Help Text */}
+          <div className="text-center mt-12 animate-fade-in delay-300">
+            <p className="text-sm text-muted-foreground">
+              Need help? Contact us at{" "}
+              <a href="mailto:etf@cccabuja.org" className="text-blue-600 hover:text-blue-700 font-medium underline">
+                etf@cccabuja.org
+              </a>
+            </p>
           </div>
         </div>
       </section>
