@@ -102,8 +102,16 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
     try {
         checkConfig();
-        const cookieStore = await cookies();
-        const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+
+        // Handle cookie store explicitly
+        let supabase;
+        try {
+            const cookieStore = await cookies();
+            supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+        } catch (e) {
+            console.error("Cookie store error:", e);
+            return NextResponse.json({ error: "Configuration Error: Cookie store unavailable" }, { status: 500 });
+        }
 
         // Check if user is authenticated
         const {
