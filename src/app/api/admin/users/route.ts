@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 // This requires SUPABASE_SERVICE_ROLE_KEY to be set in environment variables
 const supabaseAdmin = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY || "", // Use empty string to avoid immediate crash
     {
         auth: {
             autoRefreshToken: false,
@@ -17,6 +17,13 @@ const supabaseAdmin = createClient(
         },
     }
 );
+
+// Helper to check for configuration
+function checkConfig() {
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+        throw new Error("SUPABASE_SERVICE_ROLE_KEY is not defined");
+    }
+}
 
 // GET - List all admin users
 export async function GET(req: NextRequest) {
@@ -94,6 +101,7 @@ export async function GET(req: NextRequest) {
 // POST - Create new admin user
 export async function POST(req: NextRequest) {
     try {
+        checkConfig();
         const cookieStore = await cookies();
         const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
 
