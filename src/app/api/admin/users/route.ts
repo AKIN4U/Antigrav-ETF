@@ -1,4 +1,4 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
@@ -21,7 +21,8 @@ const supabaseAdmin = createClient(
 // GET - List all admin users
 export async function GET(req: NextRequest) {
     try {
-        const supabase = createServerComponentClient({ cookies });
+        const cookieStore = await cookies();
+        const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
 
         // Check if user is authenticated
         const {
@@ -93,7 +94,8 @@ export async function GET(req: NextRequest) {
 // POST - Create new admin user
 export async function POST(req: NextRequest) {
     try {
-        const supabase = createServerComponentClient({ cookies });
+        const cookieStore = await cookies();
+        const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
 
         // Check if user is authenticated
         const {
@@ -214,7 +216,8 @@ export async function POST(req: NextRequest) {
 // PATCH - Update admin user role
 export async function PATCH(req: NextRequest) {
     try {
-        const supabase = createServerComponentClient({ cookies });
+        const cookieStore = await cookies();
+        const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
 
         // Check if user is authenticated
         const {
@@ -293,7 +296,8 @@ export async function PATCH(req: NextRequest) {
 // DELETE - Deactivate admin user
 export async function DELETE(req: NextRequest) {
     try {
-        const supabase = createServerComponentClient({ cookies });
+        const cookieStore = await cookies();
+        const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
 
         // Check if user is authenticated
         const {
