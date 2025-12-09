@@ -1,4 +1,4 @@
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
@@ -25,11 +25,41 @@ function checkConfig() {
     }
 }
 
+// Helper to create a Supabase client ensuring async cookies are handled
+async function createSupabaseServerClient() {
+    const cookieStore = await cookies();
+
+    return createServerClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        {
+            cookies: {
+                get(name: string) {
+                    return cookieStore.get(name)?.value;
+                },
+                set(name: string, value: string, options: CookieOptions) {
+                    try {
+                        cookieStore.set({ name, value, ...options });
+                    } catch (error) {
+                        // Handle server action/component restrictions
+                    }
+                },
+                remove(name: string, options: CookieOptions) {
+                    try {
+                        cookieStore.set({ name, value: "", ...options });
+                    } catch (error) {
+                        // Handle server action/component restrictions
+                    }
+                },
+            },
+        }
+    );
+}
+
 // GET - List all admin users
 export async function GET(req: NextRequest) {
     try {
-        const cookieStore = await cookies();
-        const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+        const supabase = await createSupabaseServerClient();
 
         // Check if user is authenticated
         const {
@@ -102,16 +132,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
     try {
         checkConfig();
-
-        // Handle cookie store explicitly
-        let supabase;
-        try {
-            const cookieStore = await cookies();
-            supabase = createRouteHandlerClient({ cookies: () => cookieStore });
-        } catch (e) {
-            console.error("Cookie store error:", e);
-            return NextResponse.json({ error: "Configuration Error: Cookie store unavailable" }, { status: 500 });
-        }
+        const supabase = await createSupabaseServerClient();
 
         // Check if user is authenticated
         const {
@@ -232,8 +253,7 @@ export async function POST(req: NextRequest) {
 // PATCH - Update admin user role
 export async function PATCH(req: NextRequest) {
     try {
-        const cookieStore = await cookies();
-        const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+        const supabase = await createSupabaseServerClient();
 
         // Check if user is authenticated
         const {
@@ -312,8 +332,7 @@ export async function PATCH(req: NextRequest) {
 // DELETE - Deactivate admin user
 export async function DELETE(req: NextRequest) {
     try {
-        const cookieStore = await cookies();
-        const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+        const supabase = await createSupabaseServerClient();
 
         // Check if user is authenticated
         const {
