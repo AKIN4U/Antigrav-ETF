@@ -225,8 +225,8 @@ export default function FinancePage() {
                                         </td>
                                         <td className="py-3 px-4">
                                             <span className={`text-xs px-2 py-1 rounded ${transaction.type === 'Income' ? 'bg-green-100 text-green-800' :
-                                                    transaction.type === 'Expense' ? 'bg-red-100 text-red-800' :
-                                                        'bg-blue-100 text-blue-800'
+                                                transaction.type === 'Expense' ? 'bg-red-100 text-red-800' :
+                                                    'bg-blue-100 text-blue-800'
                                                 }`}>
                                                 {transaction.type}
                                             </span>
@@ -330,6 +330,25 @@ export default function FinancePage() {
                                             <option value="Transfer">Transfer</option>
                                         </select>
                                     </div>
+
+                                    {(formData.transactionType === 'Expense' || !formData.transactionType) && (
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-medium">Link to Budget (Optional)</label>
+                                            <select
+                                                value={formData.budgetId || ''}
+                                                onChange={(e) => setFormData({ ...formData, budgetId: e.target.value })}
+                                                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                                            >
+                                                <option value="">Select a Budget</option>
+                                                {budgets.map((b: any) => (
+                                                    <option key={b.id} value={b.id}>
+                                                        {b.category} {b.quarter ? `(Q${b.quarter})` : '(Annual)'} - ₦{Number(b.allocated).toLocaleString()}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    )}
+
                                     <div className="space-y-2">
                                         <label className="text-sm font-medium">Category</label>
                                         <input

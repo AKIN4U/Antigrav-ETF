@@ -6,70 +6,70 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section with Gradient Overlay */}
-      <section className="relative min-h-[700px] w-full overflow-hidden flex items-center justify-center text-center text-white">
+      <section className="relative min-h-[800px] w-full overflow-hidden flex items-center justify-center text-center text-white">
         {/* Background Image with Gradient Overlay */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/hero-new.png"
-            alt="CCC ETF Hero"
+            src="/hero-generated.png"
+            alt="CCC ETF Hero - Children in White Robes"
             fill
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/90 via-blue-800/80 to-purple-900/90" />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-950/90 via-blue-900/80 to-purple-900/80" />
           {/* Animated gradient orbs */}
-          <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/30 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
           <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse delay-1000" />
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 container px-4 space-y-8 py-20">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/20 text-sm font-medium mb-4 animate-fade-in">
-            <Sparkles className="h-4 w-4 text-yellow-300" />
-            <span>Empowering Education Since 2021</span>
+        <div className="relative z-10 container px-4 space-y-8 py-20 flex flex-col items-center">
+          <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full glass border border-white/20 text-sm font-medium mb-6 animate-fade-in shadow-lg backdrop-blur-md">
+            <Sparkles className="h-4 w-4 text-yellow-400" />
+            <span className="tracking-wide uppercase text-xs">Empowering Education Since 2021</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight animate-fade-in-up">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight animate-fade-in-up leading-tight">
             Transform Lives Through
             <br />
-            <span className="text-gradient bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-400 bg-clip-text text-transparent">
+            <span className="text-gradient bg-gradient-to-r from-yellow-300 via-amber-200 to-yellow-400 bg-clip-text text-transparent drop-shadow-sm">
               Education & Faith
             </span>
           </h1>
 
-          <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-100 leading-relaxed animate-fade-in-up delay-200">
-            The CCC Central Cathedral Abuja Education Trust Fund provides scholarships and financial support to deserving students, nurturing the next generation of leaders.
+          <p className="text-lg md:text-2xl max-w-3xl mx-auto text-blue-50/90 leading-relaxed animate-fade-in-up delay-200 font-light">
+            The CCC Central Cathedral Abuja Education Trust Fund nurtures the next generation of leaders through scholarships and spiritual guidance.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6 animate-fade-in-up delay-300">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8 animate-fade-in-up delay-300 w-full max-w-lg">
             <Link
               href="/apply"
-              className="group inline-flex h-14 items-center justify-center rounded-full gradient-primary px-10 text-lg font-semibold text-white shadow-glow-lg transition-all hover:scale-105 hover:shadow-glow"
+              className="group inline-flex h-14 w-full sm:w-auto items-center justify-center rounded-full gradient-primary px-8 text-lg font-bold text-white shadow-glow-lg transition-all hover:scale-105 hover:shadow-glow hover:-translate-y-1"
             >
-              Apply Now
+              Apply for Scholarship
               <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Link>
             <Link
               href="/about"
-              className="inline-flex h-14 items-center justify-center rounded-full glass border border-white/30 px-10 text-lg font-semibold text-white shadow-lg transition-all hover:bg-white/20 hover:scale-105"
+              className="inline-flex h-14 w-full sm:w-auto items-center justify-center rounded-full glass border border-white/30 px-8 text-lg font-semibold text-white shadow-lg transition-all hover:bg-white/10 hover:scale-105 hover:-translate-y-1 backdrop-blur-md"
             >
               Learn More
             </Link>
           </div>
 
-          {/* Stats Bar */}
-          <div className="grid grid-cols-3 gap-8 max-w-3xl mx-auto pt-12 animate-fade-in delay-500">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-yellow-300">500+</div>
-              <div className="text-sm text-gray-300 mt-1">Students Supported</div>
+          {/* Stats Bar - Glass Card */}
+          <div className="mt-16 p-6 rounded-2xl glass border border-white/10 bg-white/5 backdrop-blur-md grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 animate-fade-in delay-500 shadow-2xl max-w-4xl mx-auto w-full">
+            <div className="text-center group hover:scale-105 transition-transform">
+              <div className="text-4xl md:text-5xl font-bold text-white group-hover:text-yellow-300 transition-colors">500+</div>
+              <div className="text-sm md:text-base text-blue-200 mt-2 font-medium">Students Supported</div>
             </div>
-            <div className="text-center border-x border-white/20">
-              <div className="text-4xl font-bold text-yellow-300">₦50M+</div>
-              <div className="text-sm text-gray-300 mt-1">Disbursed</div>
+            <div className="text-center md:border-x md:border-white/10 group hover:scale-105 transition-transform">
+              <div className="text-4xl md:text-5xl font-bold text-white group-hover:text-yellow-300 transition-colors">₦50M+</div>
+              <div className="text-sm md:text-base text-blue-200 mt-2 font-medium">Funds Disbursed</div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-yellow-300">95%</div>
-              <div className="text-sm text-gray-300 mt-1">Success Rate</div>
+            <div className="text-center group hover:scale-105 transition-transform">
+              <div className="text-4xl md:text-5xl font-bold text-white group-hover:text-yellow-300 transition-colors">95%</div>
+              <div className="text-sm md:text-base text-blue-200 mt-2 font-medium">Academic Success</div>
             </div>
           </div>
         </div>

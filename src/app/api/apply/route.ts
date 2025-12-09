@@ -12,6 +12,7 @@ export async function POST(request: Request) {
             surname, firstName, middleName, age, dob, sex, stateOrigin, lga, town,
             // Contact
             address = "See Family Info", phone = "See Family Info", email,
+            parish, // Allow parish to be passed, or default will be used
             prevScholarship, prevScholarshipDate,
 
             // Academic Info
@@ -33,46 +34,60 @@ export async function POST(request: Request) {
 
         // Basic validation
         if (!surname || !firstName || !dob || !schoolName) {
-            return NextResponse.json({ success: false, error: "Missing required fields" }, { status: 400 });
+            return NextResponse.json({ success: false, error: "Missing required fields: surname, firstName, dob, or schoolName" }, { status: 400 });
         }
+
+        // Validate Date
+        const dateOfBirth = new Date(dob);
+        if (isNaN(dateOfBirth.getTime())) {
+            return NextResponse.json({ success: false, error: "Invalid Date of Birth format" }, { status: 400 });
+        }
+
+        // Helper to safe parse Int
+        const safeInt = (val: any) => {
+            if (!val || val === "") return null;
+            const parsed = parseInt(val);
+            return isNaN(parsed) ? null : parsed;
+        };
 
         // Create Applicant with nested relations
         const applicant = await prisma.applicant.create({
             data: {
-                surname,
-                firstName,
-                middleName,
-                age: age ? parseInt(age) : 0,
-                dob: new Date(dob),
+                surname: surname || "",
+                firstName: firstName || "",
+                middleName: middleName || "",
+                age: safeInt(age) || 0,
+                dob: dateOfBirth,
                 sex: sex || "Not Specified",
                 stateOrigin: stateOrigin || "",
                 lga: lga || "",
                 town: town || "",
-                address,
-                phone,
-                email,
+                address: address || "",
+                phone: phone || "",
+                email: email === "" ? null : email, // Convert empty string to null to avoid unique constraint violations
+                parish: parish || undefined, // undefined triggers default value
                 prevScholarship: prevScholarship === "Yes",
-                prevScholarshipDate,
+                prevScholarshipDate: prevScholarshipDate || null,
                 familyInfo: {
                     create: {
                         fatherSurname, fatherFirstName, fatherMiddleName, fatherAddress, fatherPhone, fatherState, fatherLga, fatherTown,
                         fatherOccupation, fatherEmployer, fatherSalaryGrade, fatherIncome, fatherObligations, fatherSpouse,
-                        fatherNumChildren: fatherNumChildren ? parseInt(fatherNumChildren) : null,
+                        fatherNumChildren: safeInt(fatherNumChildren),
                         fatherChildrenAges, fatherYearsServed, fatherChurchPosition, fatherChurchDuties,
 
                         motherSurname, motherFirstName, motherMiddleName, motherAddress, motherPhone, motherState, motherLga, motherTown,
                         motherOccupation, motherEmployer, motherSalaryGrade, motherIncome, motherObligations, motherSpouse,
-                        motherNumChildren: motherNumChildren ? parseInt(motherNumChildren) : null,
+                        motherNumChildren: safeInt(motherNumChildren),
                         motherChildrenAges, motherYearsServed, motherChurchPosition, motherChurchDuties,
                     }
                 },
                 applications: {
                     create: {
-                        schoolName,
+                        schoolName: schoolName || "",
                         schoolAddress: schoolAddress || "",
                         presentClass: presentClass || "",
                         classPosition,
-                        classSize: classSize ? parseInt(classSize) : null,
+                        classSize: safeInt(classSize),
                         schoolFees: schoolFees || "0",
                         textBooksCost,
                         enoughBooks: enoughBooks === "Yes",
@@ -98,8 +113,10 @@ export async function POST(request: Request) {
         await sendAdminNotification(`${firstName} ${surname}`, applicant.id);
 
         return NextResponse.json({ success: true, applicantId: applicant.id });
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error submitting application:", error);
-        return NextResponse.json({ success: false, error: "Failed to submit application" }, { status: 500 });
+        // Clean up prisma error message for client if possible, or just return it
+        const errorMessage = error.message || "Failed to submit application";
+        return NextResponse.json({ success: false, error: errorMessage }, { status: 500 });
     }
 }
