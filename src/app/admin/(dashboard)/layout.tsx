@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LayoutDashboard, Users, FileText, CreditCard, Settings, LogOut, BarChart3, Wallet, Heart } from "lucide-react";
+import { LayoutDashboard, Users, FileText, CreditCard, Settings, LogOut, BarChart3, Wallet, Heart, Shield } from "lucide-react";
 
 export default function AdminLayout({
     children,
@@ -63,6 +63,13 @@ export default function AdminLayout({
                     >
                         <Heart className="h-5 w-5" />
                         Donations
+                    </Link>
+                    <Link
+                        href="/admin/users"
+                        className="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
+                    >
+                        <Shield className="h-5 w-5" />
+                        Committee Members
                     </Link>
                     <Link
                         href="/admin/settings"
