@@ -1,15 +1,29 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 
 export const dynamic = "force-dynamic";
+
+// Initialize Supabase Admin Client for Admin Auth Operations
+// This requires SUPABASE_SERVICE_ROLE_KEY to be set in environment variables
+const supabaseAdmin = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    {
+        auth: {
+            autoRefreshToken: false,
+            persistSession: false,
+        },
+    }
+);
 
 // GET - List all admin users
 export async function GET(req: NextRequest) {
     try {
         const supabase = createServerComponentClient({ cookies });
 
-        // Check if user is authenticated and is a SuperAdmin
+        // Check if user is authenticated
         const {
             data: { session },
         } = await supabase.auth.getSession();
@@ -48,11 +62,17 @@ export async function GET(req: NextRequest) {
         }
 
         // Get Supabase Auth users to check if accounts are active
-        const { data: authUsers } = await supabase.auth.admin.listUsers();
+        // Use supabaseAdmin because listUsers requires service_role permissions
+        const { data: authUsers, error: listUsersError } = await supabaseAdmin.auth.admin.listUsers();
+
+        if (listUsersError) {
+            console.error("Error fetching auth users:", listUsersError);
+            // We continue, but status might be inaccurate
+        }
 
         // Merge data to show account status
         const usersWithStatus = adminUsers.map((admin: any) => {
-            const authUser = authUsers?.users.find((u: any) => u.email === admin.email);
+            const authUser = authUsers?.users?.find((u: any) => u.email === admin.email);
             return {
                 ...admin,
                 isActive: !!authUser,
@@ -61,10 +81,10 @@ export async function GET(req: NextRequest) {
         });
 
         return NextResponse.json({ users: usersWithStatus });
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error in GET /api/admin/users:", error);
         return NextResponse.json(
-            { error: "Internal server error" },
+            { error: `Internal server error: ${error.message}` },
             { status: 500 }
         );
     }
@@ -75,7 +95,7 @@ export async function POST(req: NextRequest) {
     try {
         const supabase = createServerComponentClient({ cookies });
 
-        // Check if user is authenticated and is a SuperAdmin
+        // Check if user is authenticated
         const {
             data: { session },
         } = await supabase.auth.getSession();
@@ -135,7 +155,8 @@ export async function POST(req: NextRequest) {
         }
 
         // Create Supabase Auth user
-        const { data: authUser, error: authError } = await supabase.auth.admin.createUser({
+        // Use supabaseAdmin for privileged creation
+        const { data: authUser, error: authError } = await supabaseAdmin.auth.admin.createUser({
             email,
             password,
             email_confirm: true, // Auto-confirm email
@@ -167,7 +188,7 @@ export async function POST(req: NextRequest) {
         if (dbError) {
             console.error("Error creating admin user in database:", dbError);
             // Rollback: Delete the auth user
-            await supabase.auth.admin.deleteUser(authUser.user.id);
+            await supabaseAdmin.auth.admin.deleteUser(authUser.user.id);
             return NextResponse.json(
                 { error: `Failed to create admin user: ${dbError.message}` },
                 { status: 500 }
@@ -181,10 +202,10 @@ export async function POST(req: NextRequest) {
             },
             { status: 201 }
         );
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error in POST /api/admin/users:", error);
         return NextResponse.json(
-            { error: "Internal server error" },
+            { error: `Internal server error: ${error.message}` },
             { status: 500 }
         );
     }
@@ -195,7 +216,7 @@ export async function PATCH(req: NextRequest) {
     try {
         const supabase = createServerComponentClient({ cookies });
 
-        // Check if user is authenticated and is a SuperAdmin
+        // Check if user is authenticated
         const {
             data: { session },
         } = await supabase.auth.getSession();
@@ -260,7 +281,7 @@ export async function PATCH(req: NextRequest) {
             message: "Admin user updated successfully",
             user: updatedAdmin,
         });
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error in PATCH /api/admin/users:", error);
         return NextResponse.json(
             { error: "Internal server error" },
@@ -274,7 +295,7 @@ export async function DELETE(req: NextRequest) {
     try {
         const supabase = createServerComponentClient({ cookies });
 
-        // Check if user is authenticated and is a SuperAdmin
+        // Check if user is authenticated
         const {
             data: { session },
         } = await supabase.auth.getSession();
@@ -334,8 +355,9 @@ export async function DELETE(req: NextRequest) {
         }
 
         // Get the auth user ID
-        const { data: authUsers } = await supabase.auth.admin.listUsers();
-        const authUser = authUsers?.users.find((u: any) => u.email === adminToDelete.email);
+        // Use supabaseAdmin
+        const { data: authUsers } = await supabaseAdmin.auth.admin.listUsers();
+        const authUser = authUsers?.users?.find((u: any) => u.email === adminToDelete.email);
 
         // Delete from AdminUser table
         const { error: dbError } = await supabase
@@ -349,8 +371,9 @@ export async function DELETE(req: NextRequest) {
         }
 
         // Delete from Supabase Auth if exists
+        // Use supabaseAdmin
         if (authUser) {
-            const { error: authError } = await supabase.auth.admin.deleteUser(authUser.id);
+            const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(authUser.id);
             if (authError) {
                 console.error("Error deleting auth user:", authError);
                 // Don't fail the request if auth deletion fails
@@ -360,7 +383,7 @@ export async function DELETE(req: NextRequest) {
         return NextResponse.json({
             message: "Admin user deactivated successfully",
         });
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error in DELETE /api/admin/users:", error);
         return NextResponse.json(
             { error: "Internal server error" },
