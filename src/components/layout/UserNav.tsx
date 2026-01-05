@@ -3,19 +3,19 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { User } from "@supabase/supabase-js";
-import { LogOut, User as UserIcon, LayoutDashboard, Loader2 } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
+import { User, AuthChangeEvent, Session } from "@supabase/supabase-js";
+import { LogOut, LayoutDashboard, Loader2 } from "lucide-react";
 
 export function UserNav() {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
-    const supabase = createClientComponentClient();
+    const supabase = createClient();
 
     useEffect(() => {
         const getUser = async () => {
-            const { data: { session }, error } = await supabase.auth.getSession();
+            const { data: { session } } = await supabase.auth.getSession();
             if (session?.user) {
                 setUser(session.user);
             } else {
@@ -26,7 +26,7 @@ export function UserNav() {
 
         getUser();
 
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: AuthChangeEvent, session: Session | null) => {
             setUser(session?.user ?? null);
             setLoading(false);
             router.refresh(); // Refresh server components when auth state changes

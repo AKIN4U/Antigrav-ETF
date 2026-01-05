@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { BarChart3, TrendingUp, Users, DollarSign, Download, Calendar, PieChart } from "lucide-react";
+import { ReportResponse, ApiResponse } from "@/types";
 
 export default function ReportsPage() {
-    const [reportData, setReportData] = useState<any>(null);
+    const [reportData, setReportData] = useState<ReportResponse | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
 
@@ -16,8 +17,8 @@ export default function ReportsPage() {
         setIsLoading(true);
         try {
             const response = await fetch(`/api/admin/reports?year=${selectedYear}`);
-            const result = await response.json();
-            if (result.success) {
+            const result: ApiResponse<ReportResponse> = await response.json();
+            if (result.success && result.data) {
                 setReportData(result.data);
             }
         } catch (error) {
@@ -138,9 +139,9 @@ export default function ReportsPage() {
                         Application Status
                     </h3>
                     <div className="space-y-4">
-                        {Object.entries(statusBreakdown).map(([status, count]: [string, any]) => {
+                        {Object.entries(statusBreakdown).map(([status, count]) => {
                             const percentage = (count / summary.totalApplications) * 100;
-                            const colors: any = {
+                            const colors: Record<string, string> = {
                                 'Pending': 'bg-yellow-500',
                                 'Under Review': 'bg-blue-500',
                                 'Approved': 'bg-green-500',
@@ -172,9 +173,9 @@ export default function ReportsPage() {
                         Gender Distribution
                     </h3>
                     <div className="space-y-4">
-                        {Object.entries(genderBreakdown).map(([gender, count]: [string, any]) => {
+                        {Object.entries(genderBreakdown).map(([gender, count]) => {
                             const percentage = (count / summary.totalApplications) * 100;
-                            const colors: any = {
+                            const colors: Record<string, string> = {
                                 'Male': 'bg-blue-500',
                                 'Female': 'bg-pink-500',
                                 'Unknown': 'bg-gray-500'
@@ -204,9 +205,9 @@ export default function ReportsPage() {
                         Education Level
                     </h3>
                     <div className="space-y-4">
-                        {Object.entries(levelBreakdown).map(([level, count]: [string, any]) => {
+                        {Object.entries(levelBreakdown).map(([level, count]) => {
                             const percentage = (count / summary.totalApplications) * 100;
-                            const colors: any = {
+                            const colors: Record<string, string> = {
                                 'Primary': 'bg-green-500',
                                 'Secondary': 'bg-blue-500',
                                 'Tertiary': 'bg-purple-500'
@@ -236,8 +237,8 @@ export default function ReportsPage() {
                         Monthly Applications
                     </h3>
                     <div className="space-y-3">
-                        {monthlyData.map((data: any) => {
-                            const maxCount = Math.max(...monthlyData.map((d: any) => d.applications));
+                        {monthlyData.map((data) => {
+                            const maxCount = Math.max(...monthlyData.map((d) => d.applications));
                             const percentage = maxCount > 0 ? (data.applications / maxCount) * 100 : 0;
                             return (
                                 <div key={data.month} className="flex items-center gap-3">
@@ -271,7 +272,7 @@ export default function ReportsPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {topSchools.map((school: any, index: number) => (
+                            {topSchools.map((school, index) => (
                                 <tr key={school.name} className="border-b last:border-0 hover:bg-muted/50 transition-colors">
                                     <td className="py-3 px-4 font-medium">{index + 1}</td>
                                     <td className="py-3 px-4">{school.name}</td>

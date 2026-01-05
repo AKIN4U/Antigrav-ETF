@@ -1,13 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Download, CheckCircle, AlertTriangle, Plus, X } from "lucide-react";
+import { Plus, X } from "lucide-react";
+
+import { ApplicationWithApplicant, ApiResponse } from "@/types";
 
 export default function DisbursementsPage() {
-    const [disbursements, setDisbursements] = useState<any[]>([]);
+    const [disbursements, setDisbursements] = useState<ApplicationWithApplicant[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
-    const [selectedApp, setSelectedApp] = useState<any>(null);
+    const [selectedApp, setSelectedApp] = useState<ApplicationWithApplicant | null>(null);
     const [voucherCode, setVoucherCode] = useState("");
     const [paymentReference, setPaymentReference] = useState("");
 
@@ -158,8 +160,8 @@ export default function DisbursementsPage() {
                                     <td className="p-4 align-middle">
                                         <span
                                             className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent ${item.status === "Disbursed"
-                                                    ? "bg-green-100 text-green-800"
-                                                    : "bg-yellow-100 text-yellow-800"
+                                                ? "bg-green-100 text-green-800"
+                                                : "bg-yellow-100 text-yellow-800"
                                                 }`}
                                         >
                                             {item.status}

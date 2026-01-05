@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { UploadCloud, CheckCircle, Loader2, XCircle } from "lucide-react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/lib/supabase/client";
 
 interface DocumentUploadStepProps {
     updateData: (data: any) => void;
@@ -10,7 +10,7 @@ interface DocumentUploadStepProps {
 export function DocumentUploadStep({ updateData, data }: DocumentUploadStepProps) {
     const [uploading, setUploading] = useState<Record<string, boolean>>({});
     const [errors, setErrors] = useState<Record<string, string>>({});
-    const supabase = createClientComponentClient();
+    const supabase = createClient();
 
     const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
         if (!e.target.files || !e.target.files[0]) return;

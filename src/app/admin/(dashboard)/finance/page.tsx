@@ -3,13 +3,26 @@
 import { useState, useEffect } from "react";
 import { DollarSign, TrendingUp, TrendingDown, Plus, X, Wallet, PieChart, Calendar } from "lucide-react";
 
+import { FinanceResponse, ApiResponse } from "@/types";
+
 export default function FinancePage() {
-    const [financeData, setFinanceData] = useState<any>(null);
+    const [financeData, setFinanceData] = useState<FinanceResponse | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState<'budget' | 'transaction'>('budget');
-    const [formData, setFormData] = useState<any>({});
+    const [formData, setFormData] = useState<{
+        year?: number;
+        quarter?: number | null;
+        category?: string;
+        allocated?: string;
+        description?: string;
+        transactionType?: string;
+        budgetId?: string;
+        amount?: string;
+        date?: string;
+        reference?: string;
+    }>({});
 
     useEffect(() => {
         fetchFinanceData();
@@ -19,8 +32,8 @@ export default function FinancePage() {
         setIsLoading(true);
         try {
             const response = await fetch(`/api/admin/finance?year=${selectedYear}`);
-            const result = await response.json();
-            if (result.success) {
+            const result: ApiResponse<FinanceResponse> = await response.json();
+            if (result.success && result.data) {
                 setFinanceData(result.data);
             }
         } catch (error) {
@@ -151,7 +164,7 @@ export default function FinancePage() {
                     {budgets.length === 0 ? (
                         <p className="text-muted-foreground text-center py-8">No budgets created for {selectedYear}</p>
                     ) : (
-                        budgets.map((budget: any) => {
+                        budgets.map((budget) => {
                             const utilization = Number(budget.allocated) > 0
                                 ? (Number(budget.spent) / Number(budget.allocated)) * 100
                                 : 0;
@@ -218,7 +231,7 @@ export default function FinancePage() {
                                     </td>
                                 </tr>
                             ) : (
-                                transactions.slice(0, 20).map((transaction: any) => (
+                                transactions.slice(0, 20).map((transaction) => (
                                     <tr key={transaction.id} className="border-b last:border-0 hover:bg-muted/50 transition-colors">
                                         <td className="py-3 px-4 text-sm">
                                             {new Date(transaction.date).toLocaleDateString()}
@@ -340,7 +353,7 @@ export default function FinancePage() {
                                                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                                             >
                                                 <option value="">Select a Budget</option>
-                                                {budgets.map((b: any) => (
+                                                {budgets.map((b) => (
                                                     <option key={b.id} value={b.id}>
                                                         {b.category} {b.quarter ? `(Q${b.quarter})` : '(Annual)'} - ₦{Number(b.allocated).toLocaleString()}
                                                     </option>

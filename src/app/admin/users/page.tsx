@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Shield, UserPlus, Edit2, Trash2, Loader2, CheckCircle, XCircle, AlertCircle } from "lucide-react";
+import { Shield, UserPlus, Edit2, Trash2, Loader2, CheckCircle, XCircle } from "lucide-react";
 
 interface AdminUser {
     id: string;
@@ -46,8 +46,8 @@ export default function AdminUsersPage() {
 
             const data = await response.json();
             setUsers(data.users);
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : "An unknown error occurred");
         } finally {
             setIsLoading(false);
         }
@@ -75,8 +75,8 @@ export default function AdminUsersPage() {
             setShowCreateModal(false);
             setFormData({ email: "", name: "", role: "Admin", password: "" });
             fetchUsers();
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : "An unknown error occurred");
         }
     };
 
@@ -108,8 +108,8 @@ export default function AdminUsersPage() {
             setShowEditModal(false);
             setSelectedUser(null);
             fetchUsers();
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : "An unknown error occurred");
         }
     };
 
@@ -134,8 +134,8 @@ export default function AdminUsersPage() {
 
             setSuccess("Committee member deactivated successfully!");
             fetchUsers();
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : "An unknown error occurred");
         }
     };
 
@@ -237,8 +237,8 @@ export default function AdminUsersPage() {
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <span
                                             className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${user.role === "SuperAdmin"
-                                                    ? "bg-purple-100 text-purple-800"
-                                                    : "bg-blue-100 text-blue-800"
+                                                ? "bg-purple-100 text-purple-800"
+                                                : "bg-blue-100 text-blue-800"
                                                 }`}
                                         >
                                             {user.role}

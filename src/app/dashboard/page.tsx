@@ -45,7 +45,7 @@ export default function DashboardPage() {
                     <FileText className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
                     <h2 className="text-2xl font-semibold mb-2">No Application Yet</h2>
                     <p className="text-muted-foreground mb-6">
-                        You haven't submitted a scholarship application. Start your application to get support for your education.
+                        You typically haven&apos;t submitted a scholarship application. Start your application to get support for your education.
                     </p>
                     <Link
                         href="/apply/form"

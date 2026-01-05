@@ -127,14 +127,38 @@ model Application {
   voucherCode     String?
   disbursedDate   DateTime?
   paymentReference String?
+
+  assessments     Assessment[] // Relation to assessments
 }
 
 model AdminUser {
   id        String   @id @default(uuid())
   email     String   @unique
   name      String?
-  role      String   @default("Admin") // Admin, SuperAdmin
+  role      String   @default("Admin") // Admin, SuperAdmin, Committee
+  assessments Assessment[]
   createdAt DateTime @default(now())
+}
+
+model Assessment {
+  id            String    @id @default(uuid())
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  adminUserId   String
+  adminUser     AdminUser @relation(fields: [adminUserId], references: [id])
+  
+  // Scores
+  financialScore Int      @default(0)
+  academicScore  Int      @default(0)
+  churchScore    Int      @default(0)
+  totalScore     Int      @default(0)
+  
+  notes          String?
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([applicationId, adminUserId]) // One assessment per admin per application
 }
 
 model Budget {

@@ -1,0 +1,44 @@
+﻿
+> etf-platform@0.1.0 build
+> next build
+
+   Γû▓ Next.js 16.0.7 (Turbopack)
+   - Environments: .env
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully in 8.2s
+   Running TypeScript ...
+   Collecting page data using 7 workers ...
+   Generating static pages using 7 workers (0/26) ...
+   Generating static pages using 7 workers (6/26) 
+node.exe : Error occurred prerendering page "/apply/form". 
+Read more: https://nextjs.org/docs/messages/prerender-error
+At C:\Program Files\nodejs\npm.ps1:29 char:3
++   & $NODE_EXE $NPM_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error occurred . 
+   ..prerender-error:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Error: either NEXT_PUBLIC_SUPABASE_URL and 
+NEXT_PUBLIC_SUPABASE_ANON_KEY env variables or supabaseUrl 
+and supabaseKey are required!
+    at k (C:\projects\Antigrav ETF\.next\server\chunks\ssr\[ro
+ot-of-the-server]__1ff44458._.js:1:3458) {
+  digest: '1989716758'
+}
+Export encountered an error on /apply/form/page: /apply/form, 
+exiting the build.
+Error occurred prerendering page "/admin/applications". Read 
+more: https://nextjs.org/docs/messages/prerender-error
+Error: either NEXT_PUBLIC_SUPABASE_URL and 
+NEXT_PUBLIC_SUPABASE_ANON_KEY env variables or supabaseUrl 
+and supabaseKey are required!
+    at k (C:\projects\Antigrav ETF\.next\server\chunks\ssr\[ro
+ot-of-the-server]__1ff44458._.js:1:3458) {
+  digest: '1989716758'
+}
+Export encountered an error on 
+/admin/(dashboard)/applications/page: /admin/applications, 
+exiting the build.
+ Γ¿» Next.js build worker exited with code: 1 and signal: null

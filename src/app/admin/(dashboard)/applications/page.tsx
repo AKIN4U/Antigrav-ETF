@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import { Search, Filter, Eye, Loader2 } from "lucide-react";
 import Link from "next/link";
 
+import { ApplicationWithApplicant, ApiResponse } from "@/types";
+
 export default function ApplicationsPage() {
-    const [applications, setApplications] = useState<any[]>([]);
+    const [applications, setApplications] = useState<ApplicationWithApplicant[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("All");
@@ -22,10 +24,10 @@ export default function ApplicationsPage() {
                 search: searchTerm,
             });
             const response = await fetch(`/api/admin/applications?${params}`);
-            const result = await response.json();
-            if (result.success) {
+            const result: ApiResponse<ApplicationWithApplicant[]> = await response.json();
+            if (result.success && result.data) {
                 setApplications(result.data);
-                setTotalPages(result.meta.totalPages);
+                setTotalPages(result.meta?.totalPages || 1);
             }
         } catch (error) {
             console.error("Error fetching applications:", error);

@@ -16,7 +16,7 @@ export function PersonalInfoStep({ updateData, data }: PersonalInfoStepProps) {
                 <h4 className="text-md font-medium text-muted-foreground">EDUCATIONAL TRUST FUND SCHOLARSHIP APPLICATION FORM</h4>
             </div>
 
-            <h2 className="text-xl font-semibold mb-4">Child's Personal Information</h2>
+            <h2 className="text-xl font-semibold mb-4">Child&apos;s Personal Information</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-2">
