@@ -7,16 +7,20 @@ export const dynamic = "force-dynamic";
 
 // Initialize Supabase Admin Client for Admin Auth Operations
 // This requires SUPABASE_SERVICE_ROLE_KEY to be set in environment variables
-const supabaseAdmin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY || "", // Use empty string to avoid immediate crash
-    {
-        auth: {
-            autoRefreshToken: false,
-            persistSession: false,
-        },
-    }
-);
+// Initialize Supabase Admin Client for Admin Auth Operations
+// Lazily initialized to avoid build-time errors if env vars are missing
+const getSupabaseAdmin = () => {
+    return createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY || "",
+        {
+            auth: {
+                autoRefreshToken: false,
+                persistSession: false,
+            },
+        }
+    );
+};
 
 // Helper to check for configuration
 function checkConfig() {
@@ -67,11 +71,11 @@ export async function GET(req: NextRequest) {
         } = await supabase.auth.getSession();
 
         if (!session) {
-            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+            return NextResponse.json({ error: "Unauthorized: No active session found" }, { status: 401 });
         }
 
         if (!session.user?.email) {
-            return NextResponse.json({ error: "User email not found" }, { status: 401 });
+            return NextResponse.json({ error: "Unauthorized: Session has no email" }, { status: 401 });
         }
 
         // Verify SuperAdmin role
@@ -81,9 +85,16 @@ export async function GET(req: NextRequest) {
             .eq("email", session.user.email)
             .single();
 
-        if (!currentAdmin || currentAdmin.role !== "SuperAdmin") {
+        if (!currentAdmin) {
             return NextResponse.json(
-                { error: "Forbidden - SuperAdmin access required" },
+                { error: "Forbidden: You are not registered as an AdminUser" },
+                { status: 403 }
+            );
+        }
+
+        if (currentAdmin.role !== "SuperAdmin") {
+            return NextResponse.json(
+                { error: `Forbidden: Requires SuperAdmin role (Current: ${currentAdmin.role})` },
                 { status: 403 }
             );
         }
@@ -100,8 +111,8 @@ export async function GET(req: NextRequest) {
         }
 
         // Get Supabase Auth users to check if accounts are active
-        // Use supabaseAdmin because listUsers requires service_role permissions
-        const { data: authUsers, error: listUsersError } = await supabaseAdmin.auth.admin.listUsers();
+        // Use getSupabaseAdmin because listUsers requires service_role permissions
+        const { data: authUsers, error: listUsersError } = await getSupabaseAdmin().auth.admin.listUsers();
 
         if (listUsersError) {
             console.error("Error fetching auth users:", listUsersError);
@@ -194,8 +205,8 @@ export async function POST(req: NextRequest) {
         }
 
         // Create Supabase Auth user
-        // Use supabaseAdmin for privileged creation
-        const { data: authUser, error: authError } = await supabaseAdmin.auth.admin.createUser({
+        // Use getSupabaseAdmin for privileged creation
+        const { data: authUser, error: authError } = await getSupabaseAdmin().auth.admin.createUser({
             email,
             password,
             email_confirm: true, // Auto-confirm email
@@ -227,7 +238,7 @@ export async function POST(req: NextRequest) {
         if (dbError) {
             console.error("Error creating admin user in database:", dbError);
             // Rollback: Delete the auth user
-            await supabaseAdmin.auth.admin.deleteUser(authUser.user.id);
+            await getSupabaseAdmin().auth.admin.deleteUser(authUser.user.id);
             return NextResponse.json(
                 { error: `Failed to create admin user: ${dbError.message}` },
                 { status: 500 }
@@ -394,8 +405,8 @@ export async function DELETE(req: NextRequest) {
         }
 
         // Get the auth user ID
-        // Use supabaseAdmin
-        const { data: authUsers } = await supabaseAdmin.auth.admin.listUsers();
+        // Use getSupabaseAdmin
+        const { data: authUsers } = await getSupabaseAdmin().auth.admin.listUsers();
         const authUser = authUsers?.users?.find((u: any) => u.email === adminToDelete.email);
 
         // Delete from AdminUser table
@@ -410,9 +421,9 @@ export async function DELETE(req: NextRequest) {
         }
 
         // Delete from Supabase Auth if exists
-        // Use supabaseAdmin
+        // Use getSupabaseAdmin
         if (authUser) {
-            const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(authUser.id);
+            const { error: authError } = await getSupabaseAdmin().auth.admin.deleteUser(authUser.id);
             if (authError) {
                 console.error("Error deleting auth user:", authError);
                 // Don't fail the request if auth deletion fails

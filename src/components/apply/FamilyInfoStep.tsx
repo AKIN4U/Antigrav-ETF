@@ -12,7 +12,7 @@ export function FamilyInfoStep({ updateData, data }: FamilyInfoStepProps) {
         const prefix = parentType.toLowerCase();
         return (
             <div className="space-y-4 border p-4 rounded-lg bg-muted/10">
-                <h3 className="text-lg font-semibold text-primary">{parentType}'s Biodata</h3>
+                <h3 className="text-lg font-semibold text-primary">{parentType}&apos;s Biodata</h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="space-y-2">

@@ -1,0 +1,158 @@
+
+> etf-platform@0.1.0 lint
+> eslint
+
+
+C:\projects\Antigrav ETF\scripts\check-env.js
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\projects\Antigrav ETF\scripts\db-push.js
+  1:22  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:1   error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\projects\Antigrav ETF\scripts\make-superadmin.js
+  1:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\projects\Antigrav ETF\src\app\admin\(dashboard)\applications\[id]\page.tsx
+   4:82  warning  'Loader2' is defined but never used       @typescript-eslint/no-unused-vars
+  13:52  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\projects\Antigrav ETF\src\app\admin\(dashboard)\applications\page.tsx
+  45:8  warning  React Hook useEffect has a missing dependency: 'fetchApplications'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\projects\Antigrav ETF\src\app\admin\(dashboard)\disbursements\page.tsx
+   4:10  warning  'Download' is defined but never used       @typescript-eslint/no-unused-vars
+   4:20  warning  'CheckCircle' is defined but never used    @typescript-eslint/no-unused-vars
+   4:33  warning  'AlertTriangle' is defined but never used  @typescript-eslint/no-unused-vars
+   7:56  error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+  10:52  error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+
+C:\projects\Antigrav ETF\src\app\admin\(dashboard)\donations\page.tsx
+    6:41  warning  'DonationWithTransaction' is defined but never used                                                                @typescript-eslint/no-unused-vars
+   31:8   warning  React Hook useEffect has a missing dependency: 'fetchDonations'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  355:71  error    Unexpected any. Specify a different type                                                                           @typescript-eslint/no-explicit-any
+
+C:\projects\Antigrav ETF\src\app\admin\(dashboard)\finance\page.tsx
+  29:8  warning  React Hook useEffect has a missing dependency: 'fetchFinanceData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\projects\Antigrav ETF\src\app\admin\(dashboard)\reports\page.tsx
+  14:8  warning  React Hook useEffect has a missing dependency: 'fetchReport'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\projects\Antigrav ETF\src\app\admin\assessments\page.tsx
+  7:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\projects\Antigrav ETF\src\app\admin\users\page.tsx
+    4:74  warning  'AlertCircle' is defined but never used   @typescript-eslint/no-unused-vars
+   49:23  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   78:23  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  111:23  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  137:23  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\projects\Antigrav ETF\src\app\api\admin\applications\[id]\route.ts
+  36:17  warning  'applicant' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\projects\Antigrav ETF\src\app\api\admin\applications\route.ts
+  14:22  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\projects\Antigrav ETF\src\app\api\admin\donations\route.ts
+  34:54  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  39:57  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  61:51  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  72:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  72:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\projects\Antigrav ETF\src\app\api\admin\reports\route.ts
+  34:59  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  39:59  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  45:58  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  78:55  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  91:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\projects\Antigrav ETF\src\app\api\admin\users\route.ts
+   47:30  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+   54:30  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+   64:27  warning  'req' is defined but never used           @typescript-eslint/no-unused-vars
+  123:56  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  124:57  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  133:21  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  255:21  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  314:27  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  334:21  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  410:53  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  436:21  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\projects\Antigrav ETF\src\app\api\applications\[id]\assessments\route.ts
+  21:30  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+  28:30  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+  70:21  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\projects\Antigrav ETF\src\app\api\apply\route.ts
+   47:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  116:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\projects\Antigrav ETF\src\app\api\assessments\route.ts
+   21:30  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+   28:30  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+   38:27  warning  'req' is defined but never used           @typescript-eslint/no-unused-vars
+   73:21  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  132:21  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\projects\Antigrav ETF\src\app\apply\form\page.tsx
+  60:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\projects\Antigrav ETF\src\app\dashboard\page.tsx
+   8:48  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  48:34  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\projects\Antigrav ETF\src\app\login\page.tsx
+  36:18  warning  'err' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\projects\Antigrav ETF\src\app\page.tsx
+  230:17  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\projects\Antigrav ETF\src\app\register\page.tsx
+  47:18  warning  'err' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\projects\Antigrav ETF\src\components\AssessmentForm.tsx
+   8:26  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  58:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\projects\Antigrav ETF\src\components\AssessmentList.tsx
+   6:52   error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  43:86   error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  43:105  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+C:\projects\Antigrav ETF\src\components\apply\AcademicInfoStep.tsx
+  2:24  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  3:11  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\projects\Antigrav ETF\src\components\apply\DocumentUploadStep.tsx
+   6:24  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   7:11  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  40:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\projects\Antigrav ETF\src\components\apply\FamilyInfoStep.tsx
+   2:24  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   3:11  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  15:80  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\projects\Antigrav ETF\src\components\apply\PersonalInfoStep.tsx
+   2:24  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   3:11  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  19:61  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\projects\Antigrav ETF\src\components\layout\UserNav.tsx
+   8:26  warning  'UserIcon' is defined but never used        @typescript-eslint/no-unused-vars
+  18:40  warning  'error' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\projects\Antigrav ETF\src\lib\supabase\client.ts
+  23:14  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  43:14  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\projects\Antigrav ETF\src\middleware.ts
+  1:35  warning  'CookieOptions' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 85 problems (61 errors, 24 warnings)
+

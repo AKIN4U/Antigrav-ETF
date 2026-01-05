@@ -3,12 +3,24 @@
 import { useState, useEffect } from "react";
 import { Heart, TrendingUp, Users, FileText, Plus, X, Download, CheckCircle } from "lucide-react";
 
+import { DonationResponse, ApiResponse } from "@/types";
+
 export default function DonationsPage() {
-    const [donationsData, setDonationsData] = useState<any>(null);
+    const [donationsData, setDonationsData] = useState<DonationResponse | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
     const [showModal, setShowModal] = useState(false);
-    const [formData, setFormData] = useState<any>({
+    const [formData, setFormData] = useState<{
+        donorName?: string;
+        donorEmail?: string;
+        donorPhone?: string;
+        amount?: string;
+        donorAddress?: string;
+        donationType: string;
+        isAnonymous: boolean;
+        purpose: string;
+        notes?: string;
+    }>({
         donationType: 'One-time',
         isAnonymous: false,
         purpose: 'General'
@@ -22,8 +34,8 @@ export default function DonationsPage() {
         setIsLoading(true);
         try {
             const response = await fetch(`/api/admin/donations?year=${selectedYear}`);
-            const result = await response.json();
-            if (result.success) {
+            const result: ApiResponse<DonationResponse> = await response.json();
+            if (result.success && result.data) {
                 setDonationsData(result.data);
             }
         } catch (error) {
@@ -78,7 +90,7 @@ export default function DonationsPage() {
         const headers = ["Date", "Donor Name", "Email", "Phone", "Type", "Purpose", "Amount", "Receipt #"];
         const csvContent = [
             headers.join(","),
-            ...donationsData.donations.map((d: any) => [
+            ...donationsData.donations.map((d) => [
                 `"${new Date(d.transaction.date).toLocaleDateString()}"`,
                 `"${d.isAnonymous ? 'Anonymous' : d.donorName}"`,
                 `"${d.donorEmail || 'N/A'}"`,
@@ -202,9 +214,9 @@ export default function DonationsPage() {
                 <div className="bg-card border rounded-2xl p-6 shadow-sm">
                     <h3 className="text-lg font-semibold mb-6">Donation Types</h3>
                     <div className="space-y-4">
-                        {Object.entries(typeBreakdown).map(([type, amount]: [string, any]) => {
+                        {Object.entries(typeBreakdown).map(([type, amount]) => {
                             const percentage = (amount / summary.totalDonations) * 100;
-                            const colors: any = {
+                            const colors: Record<string, string> = {
                                 'One-time': 'bg-blue-500',
                                 'Monthly': 'bg-green-500',
                                 'Annual': 'bg-purple-500'
@@ -231,9 +243,9 @@ export default function DonationsPage() {
                 <div className="bg-card border rounded-2xl p-6 shadow-sm">
                     <h3 className="text-lg font-semibold mb-6">Donation Purpose</h3>
                     <div className="space-y-4">
-                        {Object.entries(purposeBreakdown).map(([purpose, amount]: [string, any]) => {
+                        {Object.entries(purposeBreakdown).map(([purpose, amount]) => {
                             const percentage = (amount / summary.totalDonations) * 100;
-                            const colors: any = {
+                            const colors: Record<string, string> = {
                                 'General': 'bg-blue-500',
                                 'Scholarship': 'bg-yellow-500',
                                 'Infrastructure': 'bg-purple-500',
@@ -262,8 +274,8 @@ export default function DonationsPage() {
             <div className="bg-card border rounded-2xl p-6 shadow-sm">
                 <h3 className="text-lg font-semibold mb-6">Monthly Donation Trend</h3>
                 <div className="space-y-3">
-                    {monthlyData.map((data: any) => {
-                        const maxAmount = Math.max(...monthlyData.map((d: any) => d.amount));
+                    {monthlyData.map((data) => {
+                        const maxAmount = Math.max(...monthlyData.map((d) => d.amount));
                         const percentage = maxAmount > 0 ? (data.amount / maxAmount) * 100 : 0;
                         return (
                             <div key={data.month} className="flex items-center gap-3">
@@ -301,7 +313,7 @@ export default function DonationsPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {topDonors.map((donor: any, index: number) => (
+                            {topDonors.map((donor, index) => (
                                 <tr key={index} className="border-b last:border-0 hover:bg-muted/50 transition-colors">
                                     <td className="py-3 px-4 font-medium">{index + 1}</td>
                                     <td className="py-3 px-4">{donor.name}</td>
@@ -340,7 +352,7 @@ export default function DonationsPage() {
                                     </td>
                                 </tr>
                             ) : (
-                                donations.slice(0, 20).map((donation: any) => (
+                                donations.slice(0, 20).map((donation) => (
                                     <tr key={donation.id} className="border-b last:border-0 hover:bg-muted/50 transition-colors">
                                         <td className="py-3 px-4 text-sm">
                                             {new Date(donation.transaction.date).toLocaleDateString()}

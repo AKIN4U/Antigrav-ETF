@@ -227,7 +227,7 @@ export default function Home() {
               Why Choose <span className="text-gradient">Antigrav ETF</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              We're committed to making quality education accessible to every deserving student in our community.
+              We&apos;re committed to making quality education accessible to every deserving student in our community.
             </p>
           </div>
 

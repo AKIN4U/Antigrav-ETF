@@ -1,39 +1,29 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ArrowLeft, CheckCircle, XCircle, FileText, User, GraduationCap, Church, Loader2 } from "lucide-react";
+import { ArrowLeft, CheckCircle, XCircle, FileText, User, GraduationCap, Church } from "lucide-react";
+import AssessmentForm from "@/components/AssessmentForm";
+import AssessmentList from "@/components/AssessmentList";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import { ApplicationDetail, ApiResponse } from "@/types";
 
 export default function ApplicationDetailPage() {
     const params = useParams();
     const router = useRouter();
-    const [application, setApplication] = useState<any>(null);
+    const [application, setApplication] = useState<ApplicationDetail | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
 
-    // Screening State
-    const [scores, setScores] = useState({
-        financial: "",
-        academic: "",
-        church: ""
-    });
-    const [notes, setNotes] = useState("");
+    // Screening State replaced by AssessmentForm
 
     useEffect(() => {
         const fetchApplication = async () => {
             try {
                 const response = await fetch(`/api/admin/applications/${params.id}`);
-                const result = await response.json();
-                if (result.success) {
+                const result: ApiResponse<ApplicationDetail> = await response.json();
+                if (result.success && result.data) {
                     setApplication(result.data);
-                    // Initialize state
-                    setScores({
-                        financial: result.data.scoreFinancial || "",
-                        academic: result.data.scoreAcademic || "",
-                        church: result.data.scoreChurch || ""
-                    });
-                    setNotes(result.data.committeeNotes || "");
                 }
             } catch (error) {
                 console.error("Error fetching application:", error);
@@ -48,6 +38,7 @@ export default function ApplicationDetailPage() {
     }, [params.id]);
 
     const handleStatusUpdate = async (newStatus: string) => {
+        if (!application) return;
         if (!confirm(`Are you sure you want to ${newStatus} this application?`)) return;
 
         setIsSaving(true);
@@ -68,52 +59,6 @@ export default function ApplicationDetailPage() {
         } catch (error) {
             console.error("Error updating status:", error);
             alert("An error occurred.");
-        } finally {
-            setIsSaving(false);
-        }
-    };
-
-    const handleSaveScore = async () => {
-        setIsSaving(true);
-        try {
-            const response = await fetch(`/api/admin/applications/${params.id}`, {
-                method: "PATCH",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    scoreFinancial: scores.financial,
-                    scoreAcademic: scores.academic,
-                    scoreChurch: scores.church
-                }),
-            });
-
-            if (response.ok) {
-                alert("Scores saved successfully!");
-            } else {
-                alert("Failed to save scores.");
-            }
-        } catch (error) {
-            console.error("Error saving scores:", error);
-        } finally {
-            setIsSaving(false);
-        }
-    };
-
-    const handleSaveNotes = async () => {
-        setIsSaving(true);
-        try {
-            const response = await fetch(`/api/admin/applications/${params.id}`, {
-                method: "PATCH",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ committeeNotes: notes }),
-            });
-
-            if (response.ok) {
-                alert("Notes saved successfully!");
-            } else {
-                alert("Failed to save notes.");
-            }
-        } catch (error) {
-            console.error("Error saving notes:", error);
         } finally {
             setIsSaving(false);
         }
@@ -146,8 +91,8 @@ export default function ApplicationDetailPage() {
                 </div>
                 <div className="ml-auto flex gap-2">
                     <span className={`px-3 py-1 rounded-full text-sm font-medium border ${application.status === 'Approved' ? 'bg-green-100 text-green-800 border-green-200' :
-                            application.status === 'Rejected' ? 'bg-red-100 text-red-800 border-red-200' :
-                                'bg-yellow-100 text-yellow-800 border-yellow-200'
+                        application.status === 'Rejected' ? 'bg-red-100 text-red-800 border-red-200' :
+                            'bg-yellow-100 text-yellow-800 border-yellow-200'
                         }`}>
                         {application.status}
                     </span>
@@ -292,66 +237,18 @@ export default function ApplicationDetailPage() {
                         </div>
                     </div>
 
-                    {/* Screening Score */}
-                    <div className="bg-card border rounded-lg p-6 shadow-sm">
-                        <h2 className="text-lg font-semibold mb-4">Screening Score</h2>
-                        <div className="space-y-4">
-                            <div>
-                                <label className="text-sm font-medium">Financial Need (0-10)</label>
-                                <input
-                                    type="number"
-                                    className="w-full mt-1 p-2 border rounded-md"
-                                    value={scores.financial}
-                                    onChange={(e) => setScores({ ...scores, financial: e.target.value })}
-                                    placeholder="Score"
-                                />
-                            </div>
-                            <div>
-                                <label className="text-sm font-medium">Academic Performance (0-10)</label>
-                                <input
-                                    type="number"
-                                    className="w-full mt-1 p-2 border rounded-md"
-                                    value={scores.academic}
-                                    onChange={(e) => setScores({ ...scores, academic: e.target.value })}
-                                    placeholder="Score"
-                                />
-                            </div>
-                            <div>
-                                <label className="text-sm font-medium">Church Participation (0-10)</label>
-                                <input
-                                    type="number"
-                                    className="w-full mt-1 p-2 border rounded-md"
-                                    value={scores.church}
-                                    onChange={(e) => setScores({ ...scores, church: e.target.value })}
-                                    placeholder="Score"
-                                />
-                            </div>
-                            <button
-                                onClick={handleSaveScore}
-                                disabled={isSaving}
-                                className="w-full py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50"
-                            >
-                                {isSaving ? "Saving..." : "Save Scores"}
-                            </button>
+                    {/* Committee Assessments */}
+                    <div className="space-y-6">
+                        <div className="bg-card border rounded-lg p-6 shadow-sm">
+                            <h2 className="text-lg font-semibold mb-4">My Assessment</h2>
+                            <AssessmentForm applicationId={params.id as string} onSuccess={() => router.refresh()} />
                         </div>
-                    </div>
 
-                    {/* Committee Notes */}
-                    <div className="bg-card border rounded-lg p-6 shadow-sm">
-                        <h2 className="text-lg font-semibold mb-4">Committee Notes</h2>
-                        <textarea
-                            className="w-full min-h-[100px] p-2 border rounded-md text-sm"
-                            placeholder="Add internal notes here..."
-                            value={notes}
-                            onChange={(e) => setNotes(e.target.value)}
-                        />
-                        <button
-                            onClick={handleSaveNotes}
-                            disabled={isSaving}
-                            className="mt-4 w-full py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 disabled:opacity-50"
-                        >
-                            {isSaving ? "Saving..." : "Save Notes"}
-                        </button>
+                        {/* List of other assessments (could be restricted to admins in future) */}
+                        <div className="bg-card border rounded-lg p-6 shadow-sm">
+                            <h2 className="text-lg font-semibold mb-4">Committee Reviews</h2>
+                            <AssessmentList applicationId={params.id as string} />
+                        </div>
                     </div>
                 </div>
             </div>
