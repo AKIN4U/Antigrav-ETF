@@ -22,17 +22,36 @@ export default function AdminLoginPage() {
         setError(null);
 
         try {
-            const { error } = await supabase.auth.signInWithPassword({
+            const { data, error } = await supabase.auth.signInWithPassword({
                 email,
                 password,
             });
 
             if (error) {
                 setError(error.message);
-            } else {
-                router.push("/admin/applications");
-                router.refresh();
+                return;
             }
+
+            // Check if user is approved
+            const statusResponse = await fetch("/api/admin/users/check-status");
+            const statusData = await statusResponse.json();
+
+            if (!statusResponse.ok || !statusData.approved) {
+                // Sign out the user
+                await supabase.auth.signOut();
+
+                if (statusData.status === "Pending") {
+                    setError("Your account is pending approval by a Super Admin. Please wait for confirmation.");
+                } else if (statusData.status === "Rejected") {
+                    setError("Your account registration has been rejected. Please contact support.");
+                } else {
+                    setError("You are not authorized to access this portal.");
+                }
+                return;
+            }
+
+            router.push("/admin/applications");
+            router.refresh();
         } catch (err) {
             setError("An unexpected error occurred");
             console.error(err);

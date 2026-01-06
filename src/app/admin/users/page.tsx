@@ -8,6 +8,7 @@ interface AdminUser {
     email: string;
     name: string | null;
     role: string;
+    status: string;
     createdAt: string;
     isActive: boolean;
     lastSignIn: string | null;
@@ -21,6 +22,7 @@ export default function AdminUsersPage() {
     const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
+    const [filter, setFilter] = useState<"all" | "pending" | "approved">("all");
 
     // Form states
     const [formData, setFormData] = useState({
@@ -139,6 +141,58 @@ export default function AdminUsersPage() {
         }
     };
 
+    const handleApproveUser = async (userId: string) => {
+        setError(null);
+        setSuccess(null);
+
+        try {
+            const response = await fetch("/api/admin/users", {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: userId, status: "Approved" }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || "Failed to approve user");
+            }
+
+            setSuccess("User approved successfully!");
+            fetchUsers();
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : "An unknown error occurred");
+        }
+    };
+
+    const handleRejectUser = async (userId: string) => {
+        if (!confirm("Are you sure you want to reject this registration?")) {
+            return;
+        }
+
+        setError(null);
+        setSuccess(null);
+
+        try {
+            const response = await fetch("/api/admin/users", {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: userId, status: "Rejected" }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || "Failed to reject user");
+            }
+
+            setSuccess("User rejected successfully!");
+            fetchUsers();
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : "An unknown error occurred");
+        }
+    };
+
     const openEditModal = (user: AdminUser) => {
         setSelectedUser(user);
         setFormData({
@@ -172,6 +226,37 @@ export default function AdminUsersPage() {
                 >
                     <UserPlus className="h-4 w-4" />
                     Add Committee Member
+                </button>
+            </div>
+
+            {/* Filter Tabs */}
+            <div className="flex gap-2 border-b">
+                <button
+                    onClick={() => setFilter("all")}
+                    className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${filter === "all"
+                        ? "border-primary text-primary"
+                        : "border-transparent text-muted-foreground hover:text-foreground"
+                        }`}
+                >
+                    All Users ({users.length})
+                </button>
+                <button
+                    onClick={() => setFilter("pending")}
+                    className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${filter === "pending"
+                        ? "border-primary text-primary"
+                        : "border-transparent text-muted-foreground hover:text-foreground"
+                        }`}
+                >
+                    Pending Approval ({users.filter(u => u.status === "Pending").length})
+                </button>
+                <button
+                    onClick={() => setFilter("approved")}
+                    className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${filter === "approved"
+                        ? "border-primary text-primary"
+                        : "border-transparent text-muted-foreground hover:text-foreground"
+                        }`}
+                >
+                    Approved ({users.filter(u => u.status === "Approved").length})
                 </button>
             </div>
 
@@ -226,58 +311,82 @@ export default function AdminUsersPage() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-border">
-                            {users.map((user) => (
-                                <tr key={user.id} className="hover:bg-muted/20 transition-colors">
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <div className="font-medium">{user.name || "—"}</div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
-                                        {user.email}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <span
-                                            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${user.role === "SuperAdmin"
-                                                ? "bg-purple-100 text-purple-800"
-                                                : "bg-blue-100 text-blue-800"
-                                                }`}
-                                        >
-                                            {user.role}
-                                        </span>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        {user.isActive ? (
-                                            <span className="inline-flex items-center gap-1 text-green-600 text-sm">
-                                                <CheckCircle className="h-4 w-4" />
-                                                Active
+                            {users
+                                .filter(user => {
+                                    if (filter === "pending") return user.status === "Pending";
+                                    if (filter === "approved") return user.status === "Approved";
+                                    return true;
+                                })
+                                .map((user) => (
+                                    <tr key={user.id} className="hover:bg-muted/20 transition-colors">
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <div className="font-medium">{user.name || "—"}</div>
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
+                                            {user.email}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <span
+                                                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${user.role === "SuperAdmin"
+                                                    ? "bg-purple-100 text-purple-800"
+                                                    : "bg-blue-100 text-blue-800"
+                                                    }`}
+                                            >
+                                                {user.role}
                                             </span>
-                                        ) : (
-                                            <span className="inline-flex items-center gap-1 text-red-600 text-sm">
-                                                <XCircle className="h-4 w-4" />
-                                                Inactive
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <span
+                                                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${user.status === "Approved"
+                                                        ? "bg-green-100 text-green-800"
+                                                        : user.status === "Pending"
+                                                            ? "bg-yellow-100 text-yellow-800"
+                                                            : "bg-red-100 text-red-800"
+                                                    }`}
+                                            >
+                                                {user.status}
                                             </span>
-                                        )}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
-                                        {user.lastSignIn
-                                            ? new Date(user.lastSignIn).toLocaleDateString()
-                                            : "Never"}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <button
-                                            onClick={() => openEditModal(user)}
-                                            className="text-blue-600 hover:text-blue-900 mr-4"
-                                        >
-                                            <Edit2 className="h-4 w-4" />
-                                        </button>
-                                        <button
-                                            onClick={() => handleDeleteUser(user.id)}
-                                            className="text-red-600 hover:text-red-900"
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
+                                            {user.lastSignIn
+                                                ? new Date(user.lastSignIn).toLocaleDateString()
+                                                : "Never"}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                            {user.status === "Pending" ? (
+                                                <div className="flex justify-end gap-2">
+                                                    <button
+                                                        onClick={() => handleApproveUser(user.id)}
+                                                        className="text-green-600 hover:text-green-900 font-medium"
+                                                    >
+                                                        Approve
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleRejectUser(user.id)}
+                                                        className="text-red-600 hover:text-red-900 font-medium"
+                                                    >
+                                                        Reject
+                                                    </button>
+                                                </div>
+                                            ) : (
+                                                <div className="flex justify-end gap-2">
+                                                    <button
+                                                        onClick={() => openEditModal(user)}
+                                                        className="text-blue-600 hover:text-blue-900 mr-4"
+                                                    >
+                                                        <Edit2 className="h-4 w-4" />
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleDeleteUser(user.id)}
+                                                        className="text-red-600 hover:text-red-900"
+                                                    >
+                                                        <Trash2 className="h-4 w-4" />
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </td>
+                                    </tr>
+                                ))}
                         </tbody>
                     </table>
                 )}
