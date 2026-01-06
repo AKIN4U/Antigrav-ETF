@@ -294,7 +294,7 @@ export async function PATCH(req: NextRequest) {
         }
 
         const body = await req.json();
-        const { id, role, name } = body;
+        const { id, role, name, status } = body;
 
         if (!id) {
             return NextResponse.json(
@@ -303,9 +303,16 @@ export async function PATCH(req: NextRequest) {
             );
         }
 
-        if (role && !["Admin", "SuperAdmin"].includes(role)) {
+        if (role && !["Admin", "SuperAdmin", "Committee"].includes(role)) {
             return NextResponse.json(
-                { error: "Role must be either 'Admin' or 'SuperAdmin'" },
+                { error: "Role must be Admin, SuperAdmin, or Committee" },
+                { status: 400 }
+            );
+        }
+
+        if (status && !["Pending", "Approved", "Rejected"].includes(status)) {
+            return NextResponse.json(
+                { error: "Status must be Pending, Approved, or Rejected" },
                 { status: 400 }
             );
         }
@@ -314,6 +321,7 @@ export async function PATCH(req: NextRequest) {
         const updateData: any = {};
         if (role) updateData.role = role;
         if (name) updateData.name = name;
+        if (status) updateData.status = status;
 
         const { data: updatedAdmin, error } = await supabase
             .from("AdminUser")

@@ -136,6 +136,7 @@ model AdminUser {
   email     String   @unique
   name      String?
   role      String   @default("Admin") // Admin, SuperAdmin, Committee
+  status    String   @default("Pending") // Pending, Approved, Rejected
   assessments Assessment[]
   createdAt DateTime @default(now())
 }
