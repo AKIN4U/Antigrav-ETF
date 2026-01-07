@@ -41,7 +41,7 @@ export default function Home() {
             The CCC Central Cathedral Abuja Education Trust Fund nurtures the next generation of leaders through scholarships and spiritual guidance.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8 animate-fade-in-up delay-300 w-full max-w-lg">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8 animate-fade-in-up delay-300 w-full max-w-2xl">
             <Link
               href="/apply"
               className="group inline-flex h-14 w-full sm:w-auto items-center justify-center rounded-full gradient-primary px-8 text-lg font-bold text-white shadow-glow-lg transition-all hover:scale-105 hover:shadow-glow hover:-translate-y-1"
@@ -50,10 +50,11 @@ export default function Home() {
               <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Link>
             <Link
-              href="/about"
-              className="inline-flex h-14 w-full sm:w-auto items-center justify-center rounded-full glass border border-white/30 px-8 text-lg font-semibold text-white shadow-lg transition-all hover:bg-white/10 hover:scale-105 hover:-translate-y-1 backdrop-blur-md"
+              href="/donate"
+              className="group inline-flex h-14 w-full sm:w-auto items-center justify-center rounded-full bg-white text-primary border-2 border-primary/20 px-8 text-lg font-bold shadow-xl transition-all hover:scale-105 hover:-translate-y-1"
             >
-              Learn More
+              <Heart className="mr-2 h-5 w-5 text-rose-500 fill-rose-500 group-hover:scale-110 transition-transform" />
+              Donate Now
             </Link>
           </div>
 

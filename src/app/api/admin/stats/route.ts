@@ -21,13 +21,27 @@ export async function GET() {
             }
         });
 
+        const recentApplications = await prisma.application.findMany({
+            take: 5,
+            orderBy: { createdAt: "desc" },
+            include: {
+                applicant: {
+                    select: {
+                        surname: true,
+                        firstName: true
+                    }
+                }
+            }
+        });
+
         return NextResponse.json({
             success: true,
             data: {
                 totalApplications,
                 pendingReview,
                 approvedScholars,
-                totalBeneficiaries
+                totalBeneficiaries,
+                recentApplications
             }
         });
     } catch (error) {
