@@ -73,10 +73,13 @@ export default function AdminUsersPage() {
                 throw new Error(data.error || "Failed to create user");
             }
 
-            setSuccess("Committee member created successfully!");
+            setSuccess(`✓ ${data.user.name || data.user.email} has been added successfully!`);
             setShowCreateModal(false);
             setFormData({ email: "", name: "", role: "Admin", password: "" });
             fetchUsers();
+
+            // Auto-dismiss success message after 5 seconds
+            setTimeout(() => setSuccess(null), 5000);
         } catch (err: unknown) {
             setError(err instanceof Error ? err.message : "An unknown error occurred");
         }
@@ -160,6 +163,9 @@ export default function AdminUsersPage() {
 
             setSuccess("User approved successfully!");
             fetchUsers();
+
+            // Auto-dismiss after 5 seconds
+            setTimeout(() => setSuccess(null), 5000);
         } catch (err: unknown) {
             setError(err instanceof Error ? err.message : "An unknown error occurred");
         }
@@ -186,8 +192,11 @@ export default function AdminUsersPage() {
                 throw new Error(data.error || "Failed to reject user");
             }
 
-            setSuccess("User rejected successfully!");
+            setSuccess("User registration rejected.");
             fetchUsers();
+
+            // Auto-dismiss after 5 seconds
+            setTimeout(() => setSuccess(null), 5000);
         } catch (err: unknown) {
             setError(err instanceof Error ? err.message : "An unknown error occurred");
         }
@@ -269,9 +278,9 @@ export default function AdminUsersPage() {
             )}
 
             {success && (
-                <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5" />
-                    {success}
+                <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 px-4 py-3 rounded-md flex items-center gap-2 animate-in fade-in slide-in-from-top-1 duration-300">
+                    <CheckCircle className="h-5 w-5 flex-shrink-0" />
+                    <span className="font-medium">{success}</span>
                 </div>
             )}
 
@@ -338,10 +347,10 @@ export default function AdminUsersPage() {
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <span
                                                 className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${user.status === "Approved"
-                                                        ? "bg-green-100 text-green-800"
-                                                        : user.status === "Pending"
-                                                            ? "bg-yellow-100 text-yellow-800"
-                                                            : "bg-red-100 text-red-800"
+                                                    ? "bg-green-100 text-green-800"
+                                                    : user.status === "Pending"
+                                                        ? "bg-yellow-100 text-yellow-800"
+                                                        : "bg-red-100 text-red-800"
                                                     }`}
                                             >
                                                 {user.status}
