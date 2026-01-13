@@ -23,7 +23,7 @@ export default function ApplicationsPage() {
                 status: statusFilter,
                 search: searchTerm,
             });
-            const response = await fetch(`/api/admin/applications?${params}`);
+            const response = await fetch(`/api/admin/debug-apps?${params}`);
             const result: ApiResponse<ApplicationWithApplicant[]> = await response.json();
             if (result.success && result.data) {
                 setApplications(result.data);
@@ -75,7 +75,7 @@ export default function ApplicationsPage() {
     return (
         <div className="space-y-6 animate-fade-in">
             <div className="flex justify-between items-center">
-                <h1 className="text-3xl font-bold text-primary">Applications</h1>
+                <h1 className="text-3xl font-bold tracking-tight text-primary">DEBUG: Applications</h1>
                 <div className="flex gap-2">
                     <button
                         onClick={handleExportCSV}
@@ -112,6 +112,7 @@ export default function ApplicationsPage() {
                     >
                         <option value="All">All Status</option>
                         <option value="Pending">Pending</option>
+                        <option value="Under Review">Under Review</option>
                         <option value="Approved">Approved</option>
                         <option value="Rejected">Rejected</option>
                         <option value="Disbursed">Disbursed</option>
@@ -145,7 +146,7 @@ export default function ApplicationsPage() {
                             ) : applications.length === 0 ? (
                                 <tr>
                                     <td colSpan={6} className="px-6 py-8 text-center text-muted-foreground">
-                                        No applications found.
+                                        DEBUG: No applications found (Supabase client).
                                     </td>
                                 </tr>
                             ) : (
