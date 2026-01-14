@@ -28,7 +28,10 @@
 prisma/dev.db
 prisma/dev.db-journal
 
-# Logs & Build Artifacts (NEW)
+# Logs & Build Artifacts
 *.log
 *.txt
 *.patch
+
+# PNPM (NEW)
+pnpm-debug.log*
