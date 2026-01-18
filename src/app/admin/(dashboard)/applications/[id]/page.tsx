@@ -7,6 +7,7 @@ import AssessmentList from "@/components/AssessmentList";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { ApplicationDetail, ApiResponse } from "@/types";
+import { Button } from "@/components/ui/button";
 
 export default function ApplicationDetailPage() {
     const params = useParams();
@@ -14,8 +15,6 @@ export default function ApplicationDetailPage() {
     const [application, setApplication] = useState<ApplicationDetail | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
-
-    // Screening State replaced by AssessmentForm
 
     useEffect(() => {
         const fetchApplication = async () => {
@@ -78,9 +77,11 @@ export default function ApplicationDetailPage() {
     return (
         <div className="space-y-6 animate-fade-in">
             <div className="flex items-center gap-4 mb-6">
-                <Link href="/admin/applications" className="p-2 hover:bg-accent rounded-full transition-colors">
-                    <ArrowLeft className="h-5 w-5" />
-                </Link>
+                <Button asChild variant="ghost" size="icon" className="h-9 w-9">
+                    <Link href="/admin/applications">
+                        <ArrowLeft className="h-5 w-5" />
+                    </Link>
+                </Button>
                 <div>
                     <h1 className="text-2xl font-bold text-primary">
                         {applicant.surname} {applicant.firstName}
@@ -89,27 +90,29 @@ export default function ApplicationDetailPage() {
                         {application.schoolName} • {application.presentClass}
                     </p>
                 </div>
-                <div className="ml-auto flex gap-2">
+                <div className="ml-auto flex gap-2 items-center">
                     <span className={`px-3 py-1 rounded-full text-sm font-medium border ${application.status === 'Approved' ? 'bg-green-100 text-green-800 border-green-200' :
                         application.status === 'Rejected' ? 'bg-red-100 text-red-800 border-red-200' :
                             'bg-yellow-100 text-yellow-800 border-yellow-200'
                         }`}>
                         {application.status}
                     </span>
-                    <button
+                    <Button
                         onClick={() => handleStatusUpdate("Approved")}
                         disabled={isSaving || application.status === "Approved"}
-                        className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50"
+                        size="sm"
+                        className="bg-green-600 hover:bg-green-700"
                     >
-                        <CheckCircle className="h-4 w-4" /> Approve
-                    </button>
-                    <button
+                        <CheckCircle className="h-4 w-4 mr-2" /> Approve
+                    </Button>
+                    <Button
+                        variant="destructive"
+                        size="sm"
                         onClick={() => handleStatusUpdate("Rejected")}
                         disabled={isSaving || application.status === "Rejected"}
-                        className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 disabled:opacity-50"
                     >
-                        <XCircle className="h-4 w-4" /> Reject
-                    </button>
+                        <XCircle className="h-4 w-4 mr-2" /> Reject
+                    </Button>
                 </div>
             </div>
 
