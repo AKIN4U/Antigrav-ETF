@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BookOpen, Award, Heart, Shield, GraduationCap, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       {/* ===== Hero Section ===== */}
-      <section className="relative flex min-h-175 w-full items-center justify-center text-center text-white">
+      <section className="relative flex min-h-[700px] w-full items-center justify-center text-center text-white">
         {/* Background Image with Solid Overlay */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -36,19 +37,17 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6 w-full max-w-md">
-            <Link
-              href="/apply"
-              className="group inline-flex h-12 w-full sm:w-auto items-center justify-center rounded-xl bg-amber-500 px-8 text-base font-bold text-white shadow-lg transition-all hover:bg-amber-400 hover:shadow-xl hover:-translate-y-0.5"
-            >
-              Apply for Scholarship
-              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </Link>
-            <Link
-              href="/about"
-              className="inline-flex h-12 w-full sm:w-auto items-center justify-center rounded-xl border border-white/40 bg-white/10 px-8 text-base font-semibold text-white shadow-md transition-all hover:bg-white/20 hover:-translate-y-0.5 backdrop-blur-sm"
-            >
-              Learn More
-            </Link>
+            <Button asChild size="lg" className="group w-full sm:w-auto font-bold bg-amber-500 text-white hover:bg-amber-400 shadow-lg transition-all hover:shadow-xl hover:-translate-y-0.5">
+              <Link href="/apply">
+                Apply for Scholarship
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="group w-full sm:w-auto border-white/40 bg-white/10 text-white shadow-md hover:bg-white/20 hover:-translate-y-0.5 backdrop-blur-sm">
+              <Link href="/about">
+                Learn More
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -111,13 +110,12 @@ export default function Home() {
           <p className="text-lg text-slate-300 mb-10 max-w-2xl mx-auto">
             Join hundreds of students who have transformed their lives. Apply today and take the first step towards a brighter future.
           </p>
-          <Link
-            href="/apply"
-            className="group inline-flex h-12 items-center justify-center rounded-xl bg-amber-500 px-10 text-base font-bold text-slate-900 shadow-lg transition-transform hover:scale-105"
-          >
-            Start Your Application
-            <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </Link>
+          <Button asChild size="lg" className="group font-bold bg-amber-500 text-slate-900 hover:bg-amber-400 shadow-lg transition-transform hover:scale-105 px-10">
+            <Link href="/apply">
+              Start Your Application
+              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </Button>
         </div>
       </section>
     </div>
