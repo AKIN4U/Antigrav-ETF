@@ -7,6 +7,7 @@ import { AcademicInfoStep } from "@/components/apply/AcademicInfoStep";
 import { FamilyInfoStep } from "@/components/apply/FamilyInfoStep";
 import { DocumentUploadStep } from "@/components/apply/DocumentUploadStep";
 import { Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const STEPS = ["Personal Info", "Academic Info", "Family Info", "Documents", "Review"];
 
@@ -83,21 +84,17 @@ export default function ApplicationFormPage() {
             </div>
 
             <div className="flex justify-between mt-8">
-                <button
+                <Button
+                    variant="outline"
                     onClick={handleBack}
                     disabled={currentStep === 0 || isLoading}
-                    className="px-4 py-2 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground disabled:opacity-50"
                 >
                     Back
-                </button>
-                <button
-                    onClick={handleNext}
-                    disabled={isLoading}
-                    className="px-4 py-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 flex items-center"
-                >
+                </Button>
+                <Button onClick={handleNext} disabled={isLoading}>
                     {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                     {currentStep === STEPS.length - 1 ? "Submit Application" : "Next Step"}
-                </button>
+                </Button>
             </div>
         </div>
     );

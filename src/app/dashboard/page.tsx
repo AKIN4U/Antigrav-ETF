@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { FileText, Clock, CheckCircle, AlertCircle, XCircle, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function DashboardPage() {
     const [applicant, setApplicant] = useState<any>(null);
@@ -47,12 +48,11 @@ export default function DashboardPage() {
                     <p className="text-muted-foreground mb-6">
                         You typically haven&apos;t submitted a scholarship application. Start your application to get support for your education.
                     </p>
-                    <Link
-                        href="/apply/form"
-                        className="inline-flex px-6 py-3 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 text-sm font-medium"
-                    >
-                        Start New Application
-                    </Link>
+                    <Button asChild>
+                        <Link href="/apply/form">
+                            Start New Application
+                        </Link>
+                    </Button>
                 </div>
             </div>
         );
@@ -114,12 +114,11 @@ export default function DashboardPage() {
         <div className="container mx-auto px-4 py-12 max-w-5xl">
             <div className="flex justify-between items-center mb-8">
                 <h1 className="text-3xl font-bold">My Dashboard</h1>
-                <Link
-                    href="/apply/form"
-                    className="px-4 py-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 text-sm font-medium"
-                >
-                    New Application
-                </Link>
+                <Button asChild>
+                    <Link href="/apply/form">
+                        New Application
+                    </Link>
+                </Button>
             </div>
 
             <div className="grid gap-6 md:grid-cols-3">
