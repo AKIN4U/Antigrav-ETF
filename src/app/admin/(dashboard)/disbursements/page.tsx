@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Plus, X } from "lucide-react";
-
+import { Button } from "@/components/ui/button";
 import { ApplicationWithApplicant, ApiResponse } from "@/types";
 
 export default function DisbursementsPage() {
@@ -108,13 +108,14 @@ export default function DisbursementsPage() {
                     <p className="text-muted-foreground">Manage payments and generate vouchers.</p>
                 </div>
                 <div className="flex gap-2">
-                    <button
+                    <Button
+                        variant="outline"
+                        size="sm"
                         onClick={handleExportCSV}
                         disabled={disbursements.length === 0}
-                        className="px-4 py-2 border border-input bg-background rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground disabled:opacity-50"
                     >
                         Export Report
-                    </button>
+                    </Button>
                 </div>
             </div>
 
@@ -169,16 +170,16 @@ export default function DisbursementsPage() {
                                     </td>
                                     <td className="p-4 align-middle text-right">
                                         {item.status === "Approved" && (
-                                            <button
+                                            <Button
+                                                size="sm"
                                                 onClick={() => {
                                                     setSelectedApp(item);
                                                     setShowModal(true);
                                                 }}
-                                                className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-8 px-3"
                                             >
                                                 <Plus className="h-4 w-4 mr-1" />
                                                 Record
-                                            </button>
+                                            </Button>
                                         )}
                                     </td>
                                 </tr>
@@ -193,9 +194,9 @@ export default function DisbursementsPage() {
                     <div className="bg-card rounded-lg p-6 w-full max-w-md shadow-xl">
                         <div className="flex justify-between items-center mb-4">
                             <h3 className="text-lg font-semibold">Record Disbursement</h3>
-                            <button onClick={() => setShowModal(false)} className="text-muted-foreground hover:text-foreground">
+                            <Button variant="ghost" size="icon" onClick={() => setShowModal(false)} className="h-7 w-7">
                                 <X className="h-5 w-5" />
-                            </button>
+                            </Button>
                         </div>
                         <div className="space-y-4">
                             <div>
@@ -228,20 +229,16 @@ export default function DisbursementsPage() {
                                     placeholder="e.g., TXN123456"
                                 />
                             </div>
-                            <div className="flex gap-2 justify-end">
-                                <button
-                                    onClick={() => setShowModal(false)}
-                                    className="px-4 py-2 border border-input bg-background rounded-md text-sm font-medium hover:bg-accent"
-                                >
+                            <div className="flex gap-2 justify-end pt-2">
+                                <Button variant="outline" onClick={() => setShowModal(false)}>
                                     Cancel
-                                </button>
-                                <button
+                                </Button>
+                                <Button
                                     onClick={handleRecordDisbursement}
                                     disabled={!voucherCode}
-                                    className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 disabled:opacity-50"
                                 >
                                     Record Disbursement
-                                </button>
+                                </Button>
                             </div>
                         </div>
                     </div>
