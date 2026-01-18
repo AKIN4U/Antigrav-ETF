@@ -75,7 +75,7 @@ export default function ApplicationsPage() {
     return (
         <div className="space-y-6 animate-fade-in">
             <div className="flex justify-between items-center">
-                <h1 className="text-3xl font-bold tracking-tight text-primary">DEBUG: Applications</h1>
+                <h1 className="text-3xl font-bold tracking-tight text-primary">ETF Applications</h1>
                 <div className="flex gap-2">
                     <button
                         onClick={handleExportCSV}
@@ -146,7 +146,7 @@ export default function ApplicationsPage() {
                             ) : applications.length === 0 ? (
                                 <tr>
                                     <td colSpan={6} className="px-6 py-8 text-center text-muted-foreground">
-                                        DEBUG: No applications found (Supabase client).
+                                        No applications found.
                                     </td>
                                 </tr>
                             ) : (
