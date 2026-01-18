@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, FileText, Upload, UserCheck } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function ApplyPage() {
     return (
@@ -41,18 +42,16 @@ export default function ApplyPage() {
                     The application process takes approximately 10-15 minutes. You can save your progress and return later.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link
-                        href="/apply/form"
-                        className="inline-flex h-12 items-center justify-center rounded-md bg-primary px-8 text-lg font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                    >
-                        Start New Application <ArrowRight className="ml-2 h-5 w-5" />
-                    </Link>
-                    <Link
-                        href="/login"
-                        className="inline-flex h-12 items-center justify-center rounded-md border border-input bg-background px-8 text-lg font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                    >
-                        Continue Application
-                    </Link>
+                    <Button asChild size="lg">
+                        <Link href="/apply/form">
+                            Start New Application <ArrowRight className="ml-2 h-5 w-5" />
+                        </Link>
+                    </Button>
+                    <Button asChild variant="outline" size="lg">
+                        <Link href="/login">
+                            Continue Application
+                        </Link>
+                    </Button>
                 </div>
             </div>
         </div>
