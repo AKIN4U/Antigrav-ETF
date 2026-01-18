@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Loader2, ShieldCheck } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { Button } from "@/components/ui/button";
 
 export default function AdminLoginPage() {
     const router = useRouter();
@@ -29,6 +30,7 @@ export default function AdminLoginPage() {
 
             if (error) {
                 setError(error.message);
+                setIsLoading(false);
                 return;
             }
 
@@ -47,10 +49,11 @@ export default function AdminLoginPage() {
                 } else {
                     setError("You are not authorized to access this portal.");
                 }
+                setIsLoading(false);
                 return;
             }
 
-            router.push("/admin/applications");
+                router.push("/admin/applications");
             router.refresh();
         } catch (err) {
             setError("An unexpected error occurred");
@@ -112,15 +115,16 @@ export default function AdminLoginPage() {
                                     {error}
                                 </div>
                             )}
-                            <button
-                                className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2"
+                            <Button
+                                type="submit"
+                                className="w-full"
                                 disabled={isLoading}
                             >
                                 {isLoading && (
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                 )}
                                 Access Dashboard
-                            </button>
+                            </Button>
                         </div>
                     </form>
                 </div>

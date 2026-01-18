@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { UserPlus, Loader2, CheckCircle, AlertCircle, Shield } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function CommitteeRegistrationPage() {
     const [isLoading, setIsLoading] = useState(false);
@@ -73,12 +74,11 @@ export default function CommitteeRegistrationPage() {
                         </p>
                     </div>
                     <div className="pt-4">
-                        <Link
-                            href="/admin/login"
-                            className="inline-flex w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
-                        >
-                            Return to Login
-                        </Link>
+                        <Button asChild className="w-full">
+                            <Link href="/admin/login">
+                                Return to Login
+                            </Link>
+                        </Button>
                     </div>
                 </div>
             </div>
@@ -156,23 +156,23 @@ export default function CommitteeRegistrationPage() {
                             />
                         </div>
 
-                        <button
+                        <Button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground py-2 px-4 rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50 font-medium"
+                            className="w-full"
                         >
                             {isLoading ? (
                                 <>
-                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
                                     Creating Account...
                                 </>
                             ) : (
                                 <>
-                                    <UserPlus className="h-4 w-4" />
+                                    <UserPlus className="h-4 w-4 mr-2" />
                                     Register
                                 </>
                             )}
-                        </button>
+                        </Button>
                     </form>
 
                     <div className="mt-6 text-center text-sm">
