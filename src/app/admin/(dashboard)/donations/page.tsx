@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Heart, TrendingUp, Users, FileText, Plus, X, Download, CheckCircle } from "lucide-react";
-
+import { Button } from "@/components/ui/button";
 import { DonationResponse, ApiResponse } from "@/types";
 
 export default function DonationsPage() {
@@ -137,27 +137,25 @@ export default function DonationsPage() {
                     <select
                         value={selectedYear}
                         onChange={(e) => setSelectedYear(e.target.value)}
-                        className="px-4 py-2 border border-input bg-background rounded-md text-sm font-medium"
+                        className="px-4 py-2 border border-input bg-background rounded-md text-sm font-medium h-9"
                     >
                         {Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - i).map(year => (
                             <option key={year} value={year}>{year}</option>
                         ))}
                     </select>
-                    <button
+                    <Button
+                        variant="outline"
+                        size="sm"
                         onClick={handleExportCSV}
                         disabled={donations.length === 0}
-                        className="px-4 py-2 border border-input bg-background rounded-md text-sm font-medium hover:bg-accent disabled:opacity-50 flex items-center gap-2"
                     >
-                        <Download className="h-4 w-4" />
+                        <Download className="h-4 w-4 mr-2" />
                         Export CSV
-                    </button>
-                    <button
-                        onClick={() => setShowModal(true)}
-                        className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 flex items-center gap-2"
-                    >
-                        <Plus className="h-4 w-4" />
+                    </Button>
+                    <Button size="sm" onClick={() => setShowModal(true)}>
+                        <Plus className="h-4 w-4 mr-2" />
                         Record Donation
-                    </button>
+                    </Button>
                 </div>
             </div>
 
@@ -390,12 +388,9 @@ export default function DonationsPage() {
                                         </td>
                                         <td className="py-3 px-4 text-right">
                                             {!donation.receiptIssued && (
-                                                <button
-                                                    onClick={() => handleIssueReceipt(donation.id)}
-                                                    className="text-xs px-3 py-1 bg-primary text-primary-foreground rounded hover:bg-primary/90"
-                                                >
+                                                <Button size="sm" onClick={() => handleIssueReceipt(donation.id)} className="h-8">
                                                     Issue Receipt
-                                                </button>
+                                                </Button>
                                             )}
                                         </td>
                                     </tr>
@@ -412,9 +407,9 @@ export default function DonationsPage() {
                     <div className="bg-card rounded-lg p-6 w-full max-w-2xl shadow-xl max-h-[90vh] overflow-y-auto">
                         <div className="flex justify-between items-center mb-4">
                             <h3 className="text-lg font-semibold">Record Donation</h3>
-                            <button onClick={() => setShowModal(false)} className="text-muted-foreground hover:text-foreground">
+                            <Button variant="ghost" size="icon" onClick={() => setShowModal(false)} className="h-7 w-7">
                                 <X className="h-5 w-5" />
-                            </button>
+                            </Button>
                         </div>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
@@ -524,19 +519,12 @@ export default function DonationsPage() {
                             </div>
 
                             <div className="flex gap-2 justify-end pt-4">
-                                <button
-                                    type="button"
-                                    onClick={() => setShowModal(false)}
-                                    className="px-4 py-2 border border-input bg-background rounded-md text-sm font-medium hover:bg-accent"
-                                >
+                                <Button type="button" variant="outline" onClick={() => setShowModal(false)}>
                                     Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90"
-                                >
+                                </Button>
+                                <Button type="submit">
                                     Record Donation
-                                </button>
+                                </Button>
                             </div>
                         </form>
                     </div>

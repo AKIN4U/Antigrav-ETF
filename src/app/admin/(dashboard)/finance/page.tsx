@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { DollarSign, TrendingUp, TrendingDown, Plus, X, Wallet, PieChart, Calendar } from "lucide-react";
-
+import { Button } from "@/components/ui/button";
 import { FinanceResponse, ApiResponse } from "@/types";
 
 export default function FinancePage() {
@@ -84,26 +84,27 @@ export default function FinancePage() {
                     <select
                         value={selectedYear}
                         onChange={(e) => setSelectedYear(e.target.value)}
-                        className="px-4 py-2 border border-input bg-background rounded-md text-sm font-medium"
+                        className="px-4 py-2 border border-input bg-background rounded-md text-sm font-medium h-9"
                     >
                         {Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - i).map(year => (
                             <option key={year} value={year}>{year}</option>
                         ))}
                     </select>
-                    <button
+                    <Button
+                        size="sm"
+                        variant="secondary"
                         onClick={() => { setModalType('budget'); setShowModal(true); }}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 flex items-center gap-2"
                     >
-                        <Plus className="h-4 w-4" />
+                        <Plus className="h-4 w-4 mr-2" />
                         Add Budget
-                    </button>
-                    <button
+                    </Button>
+                    <Button
+                        size="sm"
                         onClick={() => { setModalType('transaction'); setShowModal(true); }}
-                        className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 flex items-center gap-2"
                     >
-                        <Plus className="h-4 w-4" />
+                        <Plus className="h-4 w-4 mr-2" />
                         Add Transaction
-                    </button>
+                    </Button>
                 </div>
             </div>
 
@@ -119,7 +120,6 @@ export default function FinancePage() {
                         <div className="text-sm opacity-90">Total Budget</div>
                     </div>
                 </div>
-
                 <div className="relative p-6 bg-gradient-to-br from-green-500 to-green-600 text-white rounded-2xl shadow-lg overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
                     <div className="relative">
@@ -130,7 +130,6 @@ export default function FinancePage() {
                         <div className="text-sm opacity-90">Total Income</div>
                     </div>
                 </div>
-
                 <div className="relative p-6 bg-gradient-to-br from-red-500 to-red-600 text-white rounded-2xl shadow-lg overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
                     <div className="relative">
@@ -141,7 +140,6 @@ export default function FinancePage() {
                         <div className="text-sm opacity-90">Total Expenses</div>
                     </div>
                 </div>
-
                 <div className={`relative p-6 bg-gradient-to-br ${summary.balance >= 0 ? 'from-emerald-500 to-emerald-600' : 'from-orange-500 to-orange-600'} text-white rounded-2xl shadow-lg overflow-hidden`}>
                     <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
                     <div className="relative">
@@ -266,9 +264,9 @@ export default function FinancePage() {
                             <h3 className="text-lg font-semibold">
                                 {modalType === 'budget' ? 'Create Budget' : 'Add Transaction'}
                             </h3>
-                            <button onClick={() => setShowModal(false)} className="text-muted-foreground hover:text-foreground">
+                            <Button variant="ghost" size="icon" onClick={() => setShowModal(false)} className="h-7 w-7">
                                 <X className="h-5 w-5" />
-                            </button>
+                            </Button>
                         </div>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             {modalType === 'budget' ? (
@@ -417,19 +415,12 @@ export default function FinancePage() {
                                 </>
                             )}
                             <div className="flex gap-2 justify-end pt-4">
-                                <button
-                                    type="button"
-                                    onClick={() => setShowModal(false)}
-                                    className="px-4 py-2 border border-input bg-background rounded-md text-sm font-medium hover:bg-accent"
-                                >
+                                <Button type="button" variant="outline" onClick={() => setShowModal(false)}>
                                     Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90"
-                                >
+                                </Button>
+                                <Button type="submit">
                                     {modalType === 'budget' ? 'Create Budget' : 'Add Transaction'}
-                                </button>
+                                </Button>
                             </div>
                         </form>
                     </div>
