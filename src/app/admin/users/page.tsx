@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Shield, UserPlus, Edit2, Trash2, Loader2, CheckCircle, XCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface AdminUser {
     id: string;
@@ -217,47 +218,49 @@ export default function AdminUsersPage() {
                         Manage admin users and their access levels
                     </p>
                 </div>
-                <button
+                <Button
                     onClick={() => {
                         setFormData({ email: "", name: "", role: "Admin", password: "" });
                         setShowCreateModal(true);
                     }}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
                 >
-                    <UserPlus className="h-4 w-4" />
+                    <UserPlus className="h-4 w-4 mr-2" />
                     Add Committee Member
-                </button>
+                </Button>
             </div>
 
             {/* Filter Tabs */}
             <div className="flex gap-2 border-b">
-                <button
+                <Button
+                    variant="ghost"
                     onClick={() => setFilter("all")}
-                    className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${filter === "all"
+                    className={`font-medium text-sm rounded-none border-b-2 ${filter === "all"
                         ? "border-primary text-primary"
                         : "border-transparent text-muted-foreground hover:text-foreground"
                         }`}
                 >
                     All Users ({users.length})
-                </button>
-                <button
+                </Button>
+                <Button
+                    variant="ghost"
                     onClick={() => setFilter("pending")}
-                    className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${filter === "pending"
+                    className={`font-medium text-sm rounded-none border-b-2 ${filter === "pending"
                         ? "border-primary text-primary"
                         : "border-transparent text-muted-foreground hover:text-foreground"
                         }`}
                 >
                     Pending Approval ({users.filter(u => u.status === "Pending").length})
-                </button>
-                <button
+                </Button>
+                <Button
+                    variant="ghost"
                     onClick={() => setFilter("approved")}
-                    className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${filter === "approved"
+                    className={`font-medium text-sm rounded-none border-b-2 ${filter === "approved"
                         ? "border-primary text-primary"
                         : "border-transparent text-muted-foreground hover:text-foreground"
                         }`}
                 >
                     Approved ({users.filter(u => u.status === "Approved").length})
-                </button>
+                </Button>
             </div>
 
             {/* Alerts */}
@@ -355,33 +358,21 @@ export default function AdminUsersPage() {
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             {user.status === "Pending" ? (
                                                 <div className="flex justify-end gap-2">
-                                                    <button
-                                                        onClick={() => handleApproveUser(user.id)}
-                                                        className="text-green-600 hover:text-green-900 font-medium"
-                                                    >
+                                                    <Button variant="link" className="text-green-600 h-auto p-0" onClick={() => handleApproveUser(user.id)}>
                                                         Approve
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleRejectUser(user.id)}
-                                                        className="text-red-600 hover:text-red-900 font-medium"
-                                                    >
+                                                    </Button>
+                                                    <Button variant="link" className="text-red-600 h-auto p-0" onClick={() => handleRejectUser(user.id)}>
                                                         Reject
-                                                    </button>
+                                                    </Button>
                                                 </div>
                                             ) : (
                                                 <div className="flex justify-end gap-2">
-                                                    <button
-                                                        onClick={() => openEditModal(user)}
-                                                        className="text-blue-600 hover:text-blue-900 mr-4"
-                                                    >
+                                                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEditModal(user)}>
                                                         <Edit2 className="h-4 w-4" />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleDeleteUser(user.id)}
-                                                        className="text-red-600 hover:text-red-900"
-                                                    >
+                                                    </Button>
+                                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => handleDeleteUser(user.id)}>
                                                         <Trash2 className="h-4 w-4" />
-                                                    </button>
+                                                    </Button>
                                                 </div>
                                             )}
                                         </td>
@@ -444,19 +435,12 @@ export default function AdminUsersPage() {
                                 </select>
                             </div>
                             <div className="flex gap-2 pt-4">
-                                <button
-                                    type="button"
-                                    onClick={() => setShowCreateModal(false)}
-                                    className="flex-1 px-4 py-2 border rounded-md hover:bg-muted transition-colors"
-                                >
+                                <Button type="button" variant="outline" onClick={() => setShowCreateModal(false)} className="flex-1">
                                     Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-                                >
+                                </Button>
+                                <Button type="submit" className="flex-1">
                                     Create
-                                </button>
+                                </Button>
                             </div>
                         </form>
                     </div>
@@ -501,22 +485,20 @@ export default function AdminUsersPage() {
                                 </select>
                             </div>
                             <div className="flex gap-2 pt-4">
-                                <button
+                                <Button
                                     type="button"
+                                    variant="outline"
                                     onClick={() => {
                                         setShowEditModal(false);
                                         setSelectedUser(null);
                                     }}
-                                    className="flex-1 px-4 py-2 border rounded-md hover:bg-muted transition-colors"
+                                    className="flex-1"
                                 >
                                     Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-                                >
+                                </Button>
+                                <Button type="submit" className="flex-1">
                                     Update
-                                </button>
+                                </Button>
                             </div>
                         </form>
                     </div>
