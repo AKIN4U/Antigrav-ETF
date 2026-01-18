@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 interface AssessmentFormProps {
     applicationId: string;
@@ -139,13 +140,9 @@ export default function AssessmentForm({ applicationId, existingAssessment, onSu
             </div>
 
             <div className="flex justify-end">
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 transition-colors"
-                >
+                <Button type="submit" disabled={loading}>
                     {loading ? "Saving..." : "Save Assessment"}
-                </button>
+                </Button>
             </div>
         </form>
     );
