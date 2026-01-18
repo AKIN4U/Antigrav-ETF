@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Search, Filter, Eye, Loader2 } from "lucide-react";
 import Link from "next/link";
-
+import { Button } from "@/components/ui/button";
 import { ApplicationWithApplicant, ApiResponse } from "@/types";
 
 export default function ApplicationsPage() {
@@ -77,13 +77,13 @@ export default function ApplicationsPage() {
             <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-bold text-primary">Applications</h1>
                 <div className="flex gap-2">
-                    <button
+                    <Button
                         onClick={handleExportCSV}
                         disabled={applications.length === 0}
-                        className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 text-sm disabled:opacity-50"
+                        size="sm"
                     >
                         Export CSV
-                    </button>
+                    </Button>
                 </div>
             </div>
 
@@ -170,12 +170,11 @@ export default function ApplicationsPage() {
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 text-right">
-                                            <Link
-                                                href={`/admin/applications/${app.id}`}
-                                                className="inline-flex items-center justify-center h-8 w-8 rounded-md hover:bg-accent text-muted-foreground hover:text-primary transition-colors"
-                                            >
-                                                <Eye className="h-4 w-4" />
-                                            </Link>
+                                            <Button asChild variant="ghost" size="icon">
+                                                <Link href={`/admin/applications/${app.id}`}>
+                                                    <Eye className="h-4 w-4" />
+                                                </Link>
+                                            </Button>
                                         </td>
                                     </tr>
                                 ))
@@ -190,20 +189,22 @@ export default function ApplicationsPage() {
                         Page {page} of {totalPages}
                     </div>
                     <div className="flex gap-2">
-                        <button
+                        <Button
+                            variant="outline"
+                            size="sm"
                             onClick={() => setPage((p) => Math.max(1, p - 1))}
                             disabled={page === 1 || isLoading}
-                            className="px-3 py-1 border rounded-md text-sm hover:bg-accent disabled:opacity-50"
                         >
                             Previous
-                        </button>
-                        <button
+                        </Button>
+                        <Button
+                            variant="outline"
+                            size="sm"
                             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                             disabled={page === totalPages || isLoading}
-                            className="px-3 py-1 border rounded-md text-sm hover:bg-accent disabled:opacity-50"
                         >
                             Next
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </div>
