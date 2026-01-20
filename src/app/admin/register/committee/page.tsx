@@ -4,6 +4,7 @@ import { useState } from "react";
 import { UserPlus, Loader2, CheckCircle, AlertCircle, Shield } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function CommitteeRegistrationPage() {
     const [isLoading, setIsLoading] = useState(false);
@@ -75,9 +76,7 @@ export default function CommitteeRegistrationPage() {
                     </div>
                     <div className="pt-4">
                         <Button asChild className="w-full">
-                            <Link href="/admin/login">
-                                Return to Login
-                            </Link>
+                            <Link href="/admin/login">Return to Login</Link>
                         </Button>
                     </div>
                 </div>
@@ -109,49 +108,45 @@ export default function CommitteeRegistrationPage() {
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
                             <label className="block text-sm font-medium mb-1">Full Name</label>
-                            <input
+                            <Input
                                 type="text"
                                 required
                                 value={formData.name}
                                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-background"
                                 placeholder="John Doe"
                             />
                         </div>
 
                         <div>
                             <label className="block text-sm font-medium mb-1">Email Address</label>
-                            <input
+                            <Input
                                 type="email"
                                 required
                                 value={formData.email}
                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-background"
                                 placeholder="john@cccabuja.org"
                             />
                         </div>
 
                         <div>
                             <label className="block text-sm font-medium mb-1">Password</label>
-                            <input
+                            <Input
                                 type="password"
                                 required
                                 minLength={8}
                                 value={formData.password}
                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-background"
                                 placeholder="Min. 8 characters"
                             />
                         </div>
 
                         <div>
                             <label className="block text-sm font-medium mb-1">Confirm Password</label>
-                            <input
+                            <Input
                                 type="password"
                                 required
                                 value={formData.confirmPassword}
                                 onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-background"
                                 placeholder="Confirm password"
                             />
                         </div>
@@ -163,12 +158,12 @@ export default function CommitteeRegistrationPage() {
                         >
                             {isLoading ? (
                                 <>
-                                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                     Creating Account...
                                 </>
                             ) : (
                                 <>
-                                    <UserPlus className="h-4 w-4 mr-2" />
+                                    <UserPlus className="mr-2 h-4 w-4" />
                                     Register
                                 </>
                             )}
@@ -177,9 +172,9 @@ export default function CommitteeRegistrationPage() {
 
                     <div className="mt-6 text-center text-sm">
                         <span className="text-muted-foreground">Already have an account? </span>
-                        <Link href="/admin/login" className="text-primary hover:underline font-medium">
-                            Sign in
-                        </Link>
+                        <Button asChild variant="link" className="px-1 font-medium">
+                            <Link href="/admin/login">Sign in</Link>
+                        </Button>
                     </div>
                 </div>
             </div>
