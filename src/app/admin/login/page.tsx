@@ -8,6 +8,8 @@ import Link from "next/link";
 import { Loader2, ShieldCheck } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function AdminLoginPage() {
     const router = useRouter();
@@ -30,7 +32,6 @@ export default function AdminLoginPage() {
 
             if (error) {
                 setError(error.message);
-                setIsLoading(false);
                 return;
             }
 
@@ -49,11 +50,10 @@ export default function AdminLoginPage() {
                 } else {
                     setError("You are not authorized to access this portal.");
                 }
-                setIsLoading(false);
                 return;
             }
 
-                router.push("/admin/applications");
+            router.push("/admin/applications");
             router.refresh();
         } catch (err) {
             setError("An unexpected error occurred");
@@ -79,11 +79,8 @@ export default function AdminLoginPage() {
                     <form onSubmit={handleLogin}>
                         <div className="grid gap-4">
                             <div className="grid gap-2">
-                                <label className="text-sm font-medium leading-none" htmlFor="email">
-                                    Official Email
-                                </label>
-                                <input
-                                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                <Label htmlFor="email">Official Email</Label>
+                                <Input
                                     id="email"
                                     placeholder="committee@ccchet.org"
                                     type="email"
@@ -97,11 +94,8 @@ export default function AdminLoginPage() {
                                 />
                             </div>
                             <div className="grid gap-2">
-                                <label className="text-sm font-medium leading-none" htmlFor="password">
-                                    Password
-                                </label>
-                                <input
-                                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                <Label htmlFor="password">Password</Label>
+                                <Input
                                     id="password"
                                     type="password"
                                     disabled={isLoading}
@@ -109,14 +103,6 @@ export default function AdminLoginPage() {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
-                            </div>
-                            <div className="flex justify-end">
-                                <Link
-                                    href="/login/forgot-password"
-                                    className="text-xs text-muted-foreground hover:text-primary transition-colors"
-                                >
-                                    Forgot Password?
-                                </Link>
                             </div>
                             {error && (
                                 <div className="text-sm text-red-500 text-center">
