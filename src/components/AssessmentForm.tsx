@@ -3,6 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 interface AssessmentFormProps {
     applicationId: string;
@@ -64,83 +67,78 @@ export default function AssessmentForm({ applicationId, existingAssessment, onSu
     };
 
     return (
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 dark:bg-gray-800 dark:border-gray-700">
-            <h3 className="text-lg font-semibold mb-4 dark:text-gray-100">Committee Assessment</h3>
+        <form onSubmit={handleSubmit} className="space-y-4">
+            <h3 className="text-lg font-semibold">Committee Assessment</h3>
 
             {error && (
-                <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-md text-sm dark:bg-red-900/30 dark:text-red-400">
+                <div className="p-3 bg-destructive/10 text-destructive rounded-md text-sm">
                     {error}
                 </div>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">
-                        Financial Need (0-100)
-                    </label>
-                    <input
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                    <Label htmlFor="financialScore">Financial Need (0-100)</Label>
+                    <Input
+                        id="financialScore"
                         type="number"
                         name="financialScore"
                         min="0"
                         max="100"
                         value={scores.financialScore}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                     />
                 </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">
-                        Academic Perf. (0-100)
-                    </label>
-                    <input
+                <div className="space-y-2">
+                    <Label htmlFor="academicScore">Academic Perf. (0-100)</Label>
+                    <Input
+                        id="academicScore"
                         type="number"
                         name="academicScore"
                         min="0"
                         max="100"
                         value={scores.academicScore}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                     />
                 </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">
-                        Church Part. (0-100)
-                    </label>
-                    <input
+                <div className="space-y-2">
+                    <Label htmlFor="churchScore">Church Part. (0-100)</Label>
+                    <Input
+                        id="churchScore"
                         type="number"
                         name="churchScore"
                         min="0"
                         max="100"
                         value={scores.churchScore}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                     />
                 </div>
             </div>
 
-            <div className="mb-4">
-                <div className="flex justify-between items-center bg-gray-50 p-3 rounded-md dark:bg-gray-700/50">
-                    <span className="font-medium text-gray-700 dark:text-gray-300">Total Score:</span>
-                    <span className="text-xl font-bold text-blue-600 dark:text-blue-400">{totalScore}</span>
+            <div>
+                <div className="flex justify-between items-center bg-muted/50 p-3 rounded-md">
+                    <span className="font-medium text-muted-foreground">Total Score:</span>
+                    <span className="text-xl font-bold text-primary">{totalScore}</span>
                 </div>
             </div>
 
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">
-                    Committee Notes / Comments
-                </label>
-                <textarea
+            <div className="space-y-2">
+                <Label htmlFor="notes">Committee Notes / Comments</Label>
+                <Textarea
+                    id="notes"
                     name="notes"
                     rows={3}
                     value={scores.notes}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                     placeholder="Enter your observations..."
                 />
             </div>
 
             <div className="flex justify-end">
-                <Button type="submit" disabled={loading}>
+                <Button
+                    type="submit"
+                    disabled={loading}
+                >
                     {loading ? "Saving..." : "Save Assessment"}
                 </Button>
             </div>
