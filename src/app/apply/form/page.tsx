@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 import { StepIndicator } from "@/components/apply/StepIndicator";
 import { PersonalInfoStep } from "@/components/apply/PersonalInfoStep";
 import { AcademicInfoStep } from "@/components/apply/AcademicInfoStep";
@@ -15,6 +17,30 @@ export default function ApplicationFormPage() {
     const [currentStep, setCurrentStep] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({});
+    const router = useRouter();
+    const supabase = createClient();
+
+    useEffect(() => {
+        const checkUserStatus = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                // Check if user is a committee member
+                try {
+                    const response = await fetch("/api/admin/users/check-status");
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.approved) {
+                            alert("Creating an application is restricted for committee members.");
+                            router.push("/admin/dashboard");
+                        }
+                    }
+                } catch (error) {
+                    console.error("Error checking user status:", error);
+                }
+            }
+        };
+        checkUserStatus();
+    }, [router, supabase]);
 
     const handleNext = () => {
         if (currentStep < STEPS.length - 1) {

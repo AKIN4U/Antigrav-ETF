@@ -204,24 +204,43 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        // Create Supabase Auth user
-        // Use getSupabaseAdmin for privileged creation
-        const { data: authUser, error: authError } = await getSupabaseAdmin().auth.admin.createUser({
-            email,
-            password,
-            email_confirm: true, // Auto-confirm email
-            user_metadata: {
-                name,
-                role,
-            },
-        });
+        // Check if Auth user already exists
+        const { data: authUsers } = await getSupabaseAdmin().auth.admin.listUsers();
+        const existingAuthUser = authUsers?.users?.find((u) => u.email === email);
 
-        if (authError) {
-            console.error("Error creating auth user:", authError);
-            return NextResponse.json(
-                { error: `Failed to create auth user: ${authError.message}` },
-                { status: 500 }
-            );
+        let authUserId: string;
+
+        if (existingAuthUser) {
+            // Auth user exists, just use their ID
+            authUserId = existingAuthUser.id;
+        } else {
+            // Create new Supabase Auth user
+            const { data: authUser, error: authError } = await getSupabaseAdmin().auth.admin.createUser({
+                email,
+                password,
+                email_confirm: true, // Auto-confirm email
+                user_metadata: {
+                    name,
+                    role,
+                },
+            });
+
+            if (authError) {
+                console.error("Error creating auth user:", authError);
+                return NextResponse.json(
+                    { error: `Failed to create auth user: ${authError.message}` },
+                    { status: 500 }
+                );
+            }
+
+            if (!authUser.user) {
+                return NextResponse.json(
+                    { error: "Failed to create auth user" },
+                    { status: 500 }
+                );
+            }
+
+            authUserId = authUser.user.id;
         }
 
         // Add to AdminUser table
@@ -231,14 +250,17 @@ export async function POST(req: NextRequest) {
                 email,
                 name,
                 role,
+                status: "Approved", // SuperAdmin creates approved users
             })
             .select()
             .single();
 
         if (dbError) {
             console.error("Error creating admin user in database:", dbError);
-            // Rollback: Delete the auth user
-            await getSupabaseAdmin().auth.admin.deleteUser(authUser.user.id);
+            // Only rollback if we just created the auth user
+            if (!existingAuthUser) {
+                await getSupabaseAdmin().auth.admin.deleteUser(authUserId);
+            }
             return NextResponse.json(
                 { error: `Failed to create admin user: ${dbError.message}` },
                 { status: 500 }

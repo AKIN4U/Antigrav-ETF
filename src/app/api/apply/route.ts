@@ -43,6 +43,22 @@ export async function POST(request: Request) {
             return NextResponse.json({ success: false, error: "Invalid Date of Birth format" }, { status: 400 });
         }
 
+        // Check if user is a committee member (AdminUser)
+        if (email) {
+            const adminUser = await prisma.adminUser.findFirst({
+                where: {
+                    email: { equals: email, mode: "insensitive" }
+                },
+            });
+
+            if (adminUser) {
+                return NextResponse.json({
+                    success: false,
+                    error: "Committee members are not eligible to apply for scholarships."
+                }, { status: 403 });
+            }
+        }
+
         // Helper to safe parse Int
         const safeInt = (val: any) => {
             if (!val || val === "") return null;

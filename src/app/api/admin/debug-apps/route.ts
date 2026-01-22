@@ -13,8 +13,7 @@ export async function GET(request: Request) {
 
         const supabase = await createClient();
 
-        console.log("DEBUG: API Route entered");
-        console.log("DEBUG: Params:", { page, limit, status, search });
+        console.log("Fetching applications from DEBUG route:", { page, limit, status, search });
 
         const skip = (page - 1) * limit;
 
@@ -48,7 +47,7 @@ export async function GET(request: Request) {
         }
 
         const total = count || 0;
-        console.log(`Found ${data?.length || 0} applications out of ${total} total`);
+        console.log(`DEBUG: Found ${data?.length || 0} applications out of ${total} total`);
 
         return NextResponse.json({
             success: true,
@@ -61,8 +60,7 @@ export async function GET(request: Request) {
             }
         });
     } catch (error: any) {
-        console.error("CRITICAL ERROR in /api/admin/applications:", error);
-        if (error.stack) console.error(error.stack);
-        return NextResponse.json({ success: false, error: error.message || "Failed to fetch applications" }, { status: 500 });
+        console.error("Error fetching applications in DEBUG route:", error);
+        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
     }
 }
