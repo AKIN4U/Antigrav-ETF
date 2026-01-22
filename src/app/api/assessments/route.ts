@@ -55,7 +55,19 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ error: "Forbidden" }, { status: 403 });
         }
 
-        let query = supabase.from("Assessment").select("*, application:Application(id, applicant:Applicant(firstName, surname, middleName))");
+        const url = new URL(req.url);
+        const applicationId = url.searchParams.get("applicationId");
+
+        let query = supabase.from("Assessment").select(`
+            *,
+            application:Application(id, applicant:Applicant(firstName, surname, middleName)),
+            adminUser:AdminUser(name, email)
+        `);
+
+        // Filter by application if provided
+        if (applicationId) {
+            query = query.eq("applicationId", applicationId);
+        }
 
         // If not SuperAdmin, only show own assessments
         if (currentAdmin.role !== "SuperAdmin") {
