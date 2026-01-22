@@ -9,7 +9,7 @@ export default function AssessmentList({ applicationId }: { applicationId: strin
     useEffect(() => {
         const fetchAssessments = async () => {
             try {
-                const res = await fetch(`/api/applications/${applicationId}/assessments`);
+                const res = await fetch(`/api/admin/applications/${applicationId}/assessments`);
                 if (res.ok) {
                     const data = await res.json();
                     setAssessments(data.assessments || []);
