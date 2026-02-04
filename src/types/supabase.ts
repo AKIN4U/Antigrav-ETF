@@ -21,6 +21,7 @@ export type Database = {
           id: string
           name: string | null
           role: string
+          status: string | null
         }
         Insert: {
           createdAt?: string
@@ -28,6 +29,7 @@ export type Database = {
           id: string
           name?: string | null
           role?: string
+          status?: string | null
         }
         Update: {
           createdAt?: string
@@ -35,6 +37,7 @@ export type Database = {
           id?: string
           name?: string | null
           role?: string
+          status?: string | null
         }
         Relationships: []
       }
@@ -210,6 +213,60 @@ export type Database = {
             columns: ["applicantId"]
             isOneToOne: false
             referencedRelation: "Applicant"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      Assessment: {
+        Row: {
+          academicScore: number
+          adminUserId: string
+          applicationId: string
+          churchScore: number
+          createdAt: string
+          financialScore: number
+          id: string
+          notes: string | null
+          totalScore: number
+          updatedAt: string
+        }
+        Insert: {
+          academicScore?: number
+          adminUserId: string
+          applicationId: string
+          churchScore?: number
+          createdAt?: string
+          financialScore?: number
+          id: string
+          notes?: string | null
+          totalScore?: number
+          updatedAt: string
+        }
+        Update: {
+          academicScore?: number
+          adminUserId?: string
+          applicationId?: string
+          churchScore?: number
+          createdAt?: string
+          financialScore?: number
+          id?: string
+          notes?: string | null
+          totalScore?: number
+          updatedAt?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Assessment_adminUserId_fkey"
+            columns: ["adminUserId"]
+            isOneToOne: false
+            referencedRelation: "AdminUser"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "Assessment_applicationId_fkey"
+            columns: ["applicationId"]
+            isOneToOne: false
+            referencedRelation: "Application"
             referencedColumns: ["id"]
           },
         ]

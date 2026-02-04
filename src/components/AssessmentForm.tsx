@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,13 +17,51 @@ export default function AssessmentForm({ applicationId, existingAssessment, onSu
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
     const [scores, setScores] = useState({
-        financialScore: existingAssessment?.financialScore || 0,
-        academicScore: existingAssessment?.academicScore || 0,
-        churchScore: existingAssessment?.churchScore || 0,
-        notes: existingAssessment?.notes || "",
+        financialScore: 0,
+        academicScore: 0,
+        churchScore: 0,
+        notes: "",
     });
+
+    // Load existing assessment if not provided via props
+    useEffect(() => {
+        if (existingAssessment) {
+            setScores({
+                financialScore: existingAssessment.financialScore || 0,
+                academicScore: existingAssessment.academicScore || 0,
+                churchScore: existingAssessment.churchScore || 0,
+                notes: existingAssessment.notes || "",
+            });
+            return;
+        }
+
+        const loadMyAssessment = async () => {
+            try {
+                const res = await fetch(`/api/assessments?applicationId=${applicationId}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    // API returns list, find ours (should be only one due to server filtering)
+                    // But server returns { assessments: [] }
+                    if (data.assessments && data.assessments.length > 0) {
+                        const mine = data.assessments[0];
+                        setScores({
+                            financialScore: mine.financialScore || 0,
+                            academicScore: mine.academicScore || 0,
+                            churchScore: mine.churchScore || 0,
+                            notes: mine.notes || "",
+                        });
+                    }
+                }
+            } catch (e) {
+                console.error("Failed to load existing assessment", e);
+            }
+        };
+
+        loadMyAssessment();
+    }, [applicationId, existingAssessment]);
 
     const totalScore = (Number(scores.financialScore) || 0) + (Number(scores.academicScore) || 0) + (Number(scores.churchScore) || 0);
 
@@ -33,12 +71,16 @@ export default function AssessmentForm({ applicationId, existingAssessment, onSu
             ...prev,
             [name]: name === "notes" ? value : Number(value),
         }));
+        // Clear messages when user types
+        if (error) setError(null);
+        if (successMessage) setSuccessMessage(null);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
+        setSuccessMessage(null);
 
         try {
             const res = await fetch("/api/assessments", {
@@ -57,6 +99,7 @@ export default function AssessmentForm({ applicationId, existingAssessment, onSu
                 throw new Error(data.error || "Failed to submit assessment");
             }
 
+            setSuccessMessage("Assessment submitted");
             router.refresh();
             if (onSuccess) onSuccess();
         } catch (err: any) {
@@ -73,6 +116,12 @@ export default function AssessmentForm({ applicationId, existingAssessment, onSu
             {error && (
                 <div className="p-3 bg-destructive/10 text-destructive rounded-md text-sm">
                     {error}
+                </div>
+            )}
+
+            {successMessage && (
+                <div className="mb-4 p-3 bg-green-50 text-green-600 rounded-md text-sm">
+                    {successMessage}
                 </div>
             )}
 
