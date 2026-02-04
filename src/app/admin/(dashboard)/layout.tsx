@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { LayoutDashboard, Users, FileText, CreditCard, Settings, LogOut, BarChart3, Wallet, Heart, Shield, Menu, X } from "lucide-react";
+import { LayoutDashboard, Users, FileText, CreditCard, Settings, LogOut, BarChart3, Wallet, Heart, Shield, Menu, X, ClipboardCheck } from "lucide-react";
 
 export default function AdminLayout({
     children,
@@ -13,6 +13,9 @@ export default function AdminLayout({
 
     const navigationLinks = [
         { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
+        { href: "/admin/assessments", icon: ClipboardCheck, label: "Assessments" },
+        { href: "/admin/analytics", icon: BarChart3, label: "Analytics" },
+        { href: "/admin/audit-logs", icon: ClipboardCheck, label: "Audit Logs" },
         { href: "/admin/applications", icon: FileText, label: "Applications" },
         { href: "/admin/beneficiaries", icon: Users, label: "Beneficiaries" },
         { href: "/admin/disbursements", icon: CreditCard, label: "Disbursements" },

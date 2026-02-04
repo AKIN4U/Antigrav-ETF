@@ -15,6 +15,7 @@ export default function ApplicationDetailPage() {
     const [application, setApplication] = useState<ApplicationDetail | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
+    const [refreshKey, setRefreshKey] = useState(0);
 
     useEffect(() => {
         const fetchApplication = async () => {
@@ -244,13 +245,19 @@ export default function ApplicationDetailPage() {
                     <div className="space-y-6">
                         <div className="bg-card border rounded-lg p-6 shadow-sm">
                             <h2 className="text-lg font-semibold mb-4">My Assessment</h2>
-                            <AssessmentForm applicationId={params.id as string} onSuccess={() => router.refresh()} />
+                            <AssessmentForm
+                                applicationId={params.id as string}
+                                onSuccess={() => {
+                                    router.refresh();
+                                    setRefreshKey(k => k + 1);
+                                }}
+                            />
                         </div>
 
-                        {/* List of other assessments (could be restricted to admins in future) */}
+                        {/* List of other assessments */}
                         <div className="bg-card border rounded-lg p-6 shadow-sm">
                             <h2 className="text-lg font-semibold mb-4">Committee Reviews</h2>
-                            <AssessmentList applicationId={params.id as string} />
+                            <AssessmentList applicationId={params.id as string} key={refreshKey} />
                         </div>
                     </div>
                 </div>
