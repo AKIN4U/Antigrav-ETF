@@ -10,6 +10,10 @@ function getResendClient() {
     return resend;
 }
 
+const getFromEmail = () => {
+    return process.env.EMAIL_FROM || 'Antigrav ETF <onboarding@resend.dev>';
+};
+
 export async function sendApplicantNotification(email: string, name: string, applicationId: string) {
     if (!process.env.RESEND_API_KEY) {
         console.warn("RESEND_API_KEY is not set. Email not sent.");
@@ -21,7 +25,7 @@ export async function sendApplicantNotification(email: string, name: string, app
 
     try {
         await client.emails.send({
-            from: 'Antigrav ETF <onboarding@resend.dev>', // Default Resend testing domain
+            from: getFromEmail(),
             to: email,
             subject: 'Application Received - Antigrav ETF',
             html: `
@@ -57,7 +61,7 @@ export async function sendAdminNotification(applicantName: string, applicationId
         if (!client) return;
 
         await client.emails.send({
-            from: 'Antigrav ETF <onboarding@resend.dev>',
+            from: getFromEmail(),
             to: adminEmail,
             subject: `New Application: ${applicantName}`,
             html: `
@@ -88,7 +92,7 @@ export async function sendStatusUpdateEmail(email: string, name: string, status:
 
     try {
         await client.emails.send({
-            from: 'Antigrav ETF <onboarding@resend.dev>',
+            from: getFromEmail(),
             to: email,
             subject: `Application Update - Antigrav ETF`,
             html: `

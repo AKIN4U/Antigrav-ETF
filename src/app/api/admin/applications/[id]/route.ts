@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { sendStatusUpdateEmail } from "@/lib/email";
+import { createAuditLog } from "@/lib/audit";
 
 export const dynamic = "force-dynamic";
 
@@ -50,6 +51,9 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
             }
         });
 
+        // Get current status for comparison (optional but good for logs)
+        // For now, we trust the update.
+
         const { data: updatedApplication, error } = await supabase
             .from("Application")
             .update(updateData)
@@ -65,7 +69,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
             throw error;
         }
 
-        // Send email if status changed and we have an email
+        // Send email if status changed
         if (updateData.status && updatedApplication.applicant?.email) {
             await sendStatusUpdateEmail(
                 updatedApplication.applicant.email,
@@ -74,9 +78,23 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
             );
         }
 
+        // AUDIT LOG
+        if (updateData.status) {
+            const { data: { user } } = await supabase.auth.getUser();
+            await createAuditLog({
+                action: updateData.status === 'Approved' ? 'APPROVE_APPLICATION' :
+                    updateData.status === 'Rejected' ? 'REJECT_APPLICATION' :
+                        'UPDATE_STATUS',
+                details: `Application ${id} status changed to ${updateData.status}`,
+                userId: user?.id,
+                userEmail: user?.email
+            });
+        }
+
         return NextResponse.json({ success: true, data: updatedApplication });
     } catch (error) {
         console.error("Error updating application:", error);
         return NextResponse.json({ success: false, error: "Failed to update application" }, { status: 500 });
     }
 }
+

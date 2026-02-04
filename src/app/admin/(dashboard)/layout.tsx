@@ -14,6 +14,8 @@ export default function AdminLayout({
     const navigationLinks = [
         { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
         { href: "/admin/assessments", icon: ClipboardCheck, label: "Assessments" },
+        { href: "/admin/analytics", icon: BarChart3, label: "Analytics" },
+        { href: "/admin/audit-logs", icon: ClipboardCheck, label: "Audit Logs" },
         { href: "/admin/applications", icon: FileText, label: "Applications" },
         { href: "/admin/beneficiaries", icon: Users, label: "Beneficiaries" },
         { href: "/admin/disbursements", icon: CreditCard, label: "Disbursements" },
