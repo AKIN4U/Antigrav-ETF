@@ -18,7 +18,16 @@ export function DocumentUploadStep({ updateData, data }: DocumentUploadStepProps
         const file = e.target.files[0];
         const fileExt = file.name.split('.').pop();
         const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
-        const filePath = `applications/${fileName}`;
+
+        // Get user ID for application-specific folder
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+            setErrors((prev) => ({ ...prev, [field]: "You must be logged in to upload documents." }));
+            return;
+        }
+
+        // Store in user-specific folder (will be moved to application folder on submission)
+        const filePath = `applications/temp_${user.id}/${fileName}`;
 
         setUploading((prev) => ({ ...prev, [field]: true }));
         setErrors((prev) => ({ ...prev, [field]: "" }));
@@ -32,11 +41,8 @@ export function DocumentUploadStep({ updateData, data }: DocumentUploadStepProps
                 throw uploadError;
             }
 
-            const { data: { publicUrl } } = supabase.storage
-                .from('documents')
-                .getPublicUrl(filePath);
-
-            updateData({ [field]: publicUrl });
+            // Store only the file path, not a public URL
+            updateData({ [field]: filePath });
         } catch (error: any) {
             console.error("Upload error:", error);
             setErrors((prev) => ({ ...prev, [field]: "Upload failed. Please try again." }));

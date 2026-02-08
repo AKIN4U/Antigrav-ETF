@@ -33,12 +33,12 @@ export default function Home() {
             Transform Lives Through
             <br />
             <span className="text-gradient bg-gradient-to-r from-yellow-300 via-amber-200 to-yellow-400 bg-clip-text text-transparent drop-shadow-sm">
-              Education & Faith
+              Bursary Enrolment & Support
             </span>
           </h1>
 
           <p className="text-lg md:text-2xl max-w-3xl mx-auto text-blue-50/90 leading-relaxed animate-fade-in-up delay-200 font-light">
-            The CCC Central Cathedral Abuja Education Trust Fund nurtures the next generation of leaders through scholarships and spiritual guidance.
+            The CCC Central Cathedral Abuja Education Trust Fund provides bursary support to deserving students from our church community, empowering them through education and faith.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8 animate-fade-in-up delay-300 w-full max-w-2xl">
@@ -110,9 +110,9 @@ export default function Home() {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-3xl font-bold mb-3 text-gray-900">Scholar Portal</h3>
+                <h3 className="text-3xl font-bold mb-3 text-gray-900">Bursary Applicant Portal</h3>
                 <p className="text-muted-foreground leading-relaxed mb-8">
-                  For students and applicants seeking scholarship opportunities and educational support
+                  For students and families seeking bursary support for primary, secondary, and tertiary education
                 </p>
 
                 {/* Action Buttons */}

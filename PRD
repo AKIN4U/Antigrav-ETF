@@ -1,0 +1,310 @@
+Here is the updated PRD:
+
+Product Requirements Document: ETF Scholarship Program Web Application
+Version: 1.1
+Date: May 11, 2025
+Project: Celestial Church of Christ (CCC) Central Cathedral, Abuja - Education Trust Fund (ETF) Scholarship Management Web Application
+Based on: Updated Policy Guidelines of Education Trust Fund (ETF) - Updated May 2021 (as summarized in PRD scholarship_prd_ccc) and ETF Scholarship Application Form.
+1. Introduction
+1.1 Purpose
+This document outlines the product requirements for a robust and well-designed web application to manage the Celestial Church of Christ (CCC) Central Cathedral, Abuja's Education Trust Fund (ETF) Scholarship Program. This application aims to digitize and streamline the entire scholarship lifecycle, from application submission to fund disbursement and beneficiary monitoring, ensuring efficiency, transparency, and adherence to the program's established policies.
+1.2 Goals of the Web Application
+    • To provide a user-friendly online platform for prospective scholars to learn about the ETF program and submit applications.
+    • To automate and simplify the application review, screening, verification, and selection process for the ETF Committee.
+    • To facilitate transparent and efficient fund disbursement and tracking.
+    • To enable effective monitoring of beneficiaries' academic progress.
+    • To ensure secure management of applicant and beneficiary data.
+    • To integrate seamlessly with the Church's existing WordPress website.
+    • To leverage Supabase for a scalable and maintainable backend infrastructure.
+1.3 Target Users of the Web Application
+    • Applicants (Students/Parents/Guardians): Individuals seeking scholarship support.
+    • ETF Committee Members: Responsible for managing the scholarship program, including screening, interviewing, and recommending awardees.
+    • ETF Secretariat: Handles administrative tasks, verification, and communication.
+    • Church General Secretary: Responsible for public announcements.
+    • Church Treasurer: Manages fund custody and disbursement records.
+    • Parochial Committee Members: Provide oversight and final approvals for fund disbursement.
+    • System Administrators: Technical personnel responsible for maintaining the application.
+2. Overall Description
+2.1 Product Vision
+The ETF Scholarship Program Web Application will be the central digital hub for all scholarship-related activities at CCC Central Cathedral, Abuja. It will transform the current manual processes into an efficient, accessible, and transparent online system, empowering both applicants and the administrative team.
+2.2 Assumptions and Dependencies
+    • The Church has an existing WordPress website that the application can integrate with.
+    • Stable internet access is available to most target users (applicants and committee members).
+    • Supabase will be the chosen BaaS (Backend as a Service) platform.
+    • The ETF Committee and other stakeholders are willing to adopt and use the new digital system.
+    • Clear guidelines for WordPress integration (e.g., API access, theming consistency) will be available.
+    • A process for verifying church membership (as required by eligibility criteria) exists and can be integrated or referenced by the system.
+2.3 Scope
+2.3.1 In-Scope Features
+    • User registration and authentication for all user roles.
+    • Role-based access control (RBAC).
+    • Online scholarship application submission, including document uploads as per the official form.
+    • Automated eligibility pre-screening based on defined criteria.
+    • Application management dashboard for ETF Committee/Secretariat.
+    • Workflow management for application stages (Announcement, Application, Screening, Verification, Disbursement, Monitoring).
+    • Tools for interview scheduling and feedback logging.
+    • Document verification module.
+    • Automated notifications (email/in-app) for applicants and committee members.
+    • Generation of lists for shortlisted candidates and approved beneficiaries.
+    • Fund disbursement tracking and reporting (interfacing with Parochial Committee approval).
+    • Beneficiary academic progress tracking.
+    • Basic reporting and analytics for program oversight.
+    • Integration with WordPress for front-end presentation (e.g., information pages, application portal access) and potentially user authentication.
+    • Secure data storage and management using Supabase.
+    • Support for other empowerment schemes (Artisanal Skill Holders, Youths Seeking Admission) application and tracking, if data structure allows.
+2.3.2 Out-of-Scope Features (for Version 1.0)
+    • Direct online payment processing for fund disbursement (initially, the system will track disbursements which may occur through existing bank channels).
+    • Advanced AI-based application scoring.
+    • Full financial accounting system integration (beyond tracking ETF-specific disbursements).
+    • Mobile applications (iOS/Android) - focus on a responsive web application first.
+    • Direct integration with school portals for academic result fetching.
+3. Functional Requirements
+3.1 User Roles and Permissions
+    • Applicant (Student/Parent/Guardian):
+        ◦ Register/Login (can be linked to WordPress user accounts or standalone).
+        ◦ View scholarship program details, eligibility criteria, and announcements.
+        ◦ Create, save (draft), and submit scholarship applications based on the digitized official form.
+        ◦ Upload required documents (e.g., passport picture, school bills, academic results, birth certificate, primary school certificate, secondary/high school certificates (e.g., WAEC, NECO – especially for tertiary applicants), JAMB/university entrance exam results (for tertiary applicants), letter of financial need).
+        ◦ View their application status (e.g., Submitted, Under Review, Interview Scheduled, Approved, Rejected).
+        ◦ Receive notifications regarding their application.
+        ◦ Submit updated academic results if awarded a scholarship (for continued eligibility).
+    • ETF Committee Member / ETF Secretariat:
+        ◦ Secure login to an administrative dashboard.
+        ◦ View and filter all submitted applications.
+        ◦ Access applicant details and uploaded documents.
+        ◦ Update application statuses throughout the workflow.
+        ◦ Record interview notes, scores, and recommendations.
+        ◦ Mark documents as verified/unverified.
+        ◦ Generate lists of applicants for different stages (e.g., interview shortlist, recommended for award).
+        ◦ Initiate communication with applicants (e.g., request for more information).
+        ◦ View beneficiary academic progress reports.
+        ◦ Access basic reports (e.g., number of applications, awardee demographics).
+    • Church General Secretary:
+        ◦ Access to a module to publish/update scholarship announcements (could be managed via WordPress integration, with the app pulling this info).
+    • Church Treasurer:
+        ◦ View approved lists of beneficiaries and disbursement amounts.
+        ◦ Mark scholarships as "Funds Released" or "Paid" (after actual disbursement via bank).
+        ◦ Access reports related to funds disbursed.
+    • Parochial Committee Member:
+        ◦ View lists of candidates recommended by the ETF committee for final approval.
+        ◦ Electronically approve/reject candidates for fund disbursement.
+        ◦ Access oversight reports.
+    • System Administrator:
+        ◦ Manage user accounts and roles.
+        ◦ Configure system settings (e.g., scholarship cycles, deadlines, email templates).
+        ◦ Monitor system health and logs.
+        ◦ Manage master data (e.g., list of public schools, program types).
+3.2 Key Features and Workflows
+3.2.1 Scholarship Program Setup
+    • Admin interface to define scholarship cycles (e.g., "2025 Primary School Cycle").
+    • Ability to set application open/close dates for each cycle.
+    • Configuration of scholarship types (Primary, JSS, SSS, Tertiary) with respective coverage and ceilings (N30k, N50k, N60k).
+3.2.2 Phase One: Public Announcement & Application
+    • Announcements: Display scholarship announcements (pulled from WordPress or managed within the app).
+    • Application Form (Digitized based on official PDF form):
+        ◦ Child's Personal Information:
+            ▪ Surname
+            ▪ First Name
+            ▪ Middle Name
+            ▪ Date (of application)
+            ▪ Age
+            ▪ Date of Birth (DOB)
+            ▪ Sex
+            ▪ State of Origin
+            ▪ Local Government Area (LGA)
+            ▪ Town
+            ▪ Applicant's Passport Picture (File Upload)
+        ◦ Previous Scholarship:
+            ▪ Have you been granted a CCC ETF Scholarship before? (Yes/No)
+            ▪ If Yes, When? (Year/Date)
+        ◦ Academic Status:
+            ▪ Name of Your School
+            ▪ Address of School
+            ▪ Present Class/Level
+            ▪ JAMB/University Entrance Exam Score (for tertiary applicants) (Data Field)
+            ▪ Number of Children in Your Class (Optional, for context)
+            ▪ Position in Class (Optional, for context)
+            ▪ How much are your present school fees? (Amount)
+            ▪ How much do you pay for textbooks per year? (Amount)
+            ▪ Do you have enough textbooks? (Yes/No)
+            ▪ Do you have unhindered access to libraries? (Yes/No)
+            ▪ Have you ever been sent away from school because of non-payment of school fees? (Yes/No)
+            ▪ Have you ever repeated a class? (Yes/No)
+        ◦ Family Information - Father's Biodata:
+            ▪ Surname
+            ▪ First Name
+            ▪ Middle Name
+            ▪ Residential Address
+            ▪ Telephone Number
+            ▪ State of Origin
+            ▪ Local Government Area (LGA)
+            ▪ Town
+            ▪ Occupation
+            ▪ Employer
+            ▪ Salary Grade (Optional)
+            ▪ Estimated Annual Income (Amount or Range)
+            ▪ Do you have any outstanding obligations? (Yes/No)
+            ▪ If Yes, please list them: (Text Area)
+            ▪ Name of Spouse
+            ▪ Number of Children
+            ▪ Ages of your children (e.g., comma-separated list or multiple fields)
+            ▪ How many years have you served in Church?
+            ▪ What is your current position in Church?
+            ▪ What are your duties/roles in Church? (Text Area)
+        ◦ Family Information - Mother's Biodata: (Fields identical to Father's Biodata)
+            ▪ Surname
+            ▪ First Name
+            ▪ Middle Name
+            ▪ Residential Address
+            ▪ Telephone Number
+            ▪ State of Origin
+            ▪ Local Government Area (LGA)
+            ▪ Town
+            ▪ Occupation
+            ▪ Employer
+            ▪ Salary Grade (Optional)
+            ▪ Estimated Annual Income (Amount or Range)
+            ▪ Do you have any outstanding obligations? (Yes/No)
+            ▪ If Yes, please list them: (Text Area)
+            ▪ Name of Spouse
+            ▪ Number of Children
+            ▪ Ages of your children (e.g., comma-separated list or multiple fields)
+            ▪ How many years have you served in Church?
+            ▪ What is your current position in Church?
+            ▪ What are your duties/roles in Church? (Text Area)
+        ◦ Required Document Uploads (as per form):
+            ▪ Present Annual School Fees (Proof, e.g., official bill)
+            ▪ Recipient's Birth Certificate
+            ▪ Primary School Certificate (if applicable, e.g., for secondary applicants)
+            ▪ Secondary/High School Leaving Certificate (e.g., WAEC, NECO, or equivalent) (Mandatory for tertiary applicants)
+            ▪ JAMB/University Entrance Examination Result Slip (Mandatory for tertiary applicants seeking admission/already admitted)
+            ▪ Latest School Results (from current or previous institution as applicable)
+            ▪ One Page Letter explaining why you require financial assistance (File Upload)
+        ◦ Declarations/Signatures (Digital equivalent):
+            ▪ Checkbox for Child's agreement/confirmation.
+            ▪ Checkbox for Parent/Guardian's agreement/confirmation.
+        ◦ Church Membership Confirmation: (As per original PRD, e.g., self-declaration, member ID if available). This is crucial and should be integrated alongside the form fields.
+        ◦ One child per family rule: System should try to flag potential duplicates based on family information (e.g., parent's names, address) for committee review.
+    • Submission: Applicants receive confirmation (email/in-app) upon submission.
+3.2.3 Phase Two: Interview and Screening
+    • Application Dashboard: ETF Committee views incoming applications, sortable and filterable by form fields.
+    • Review & Shortlisting: Committee members can review applications, add internal notes/scores.
+    • Interview Management:
+        ◦ Ability to mark applicants for interview.
+        ◦ (Optional V1.1) Feature to suggest interview slots or allow applicants to choose.
+        ◦ Record interview date, attendees, and detailed notes/assessment.
+    • Selection: Committee marks applicants as "Recommended for Award," "Waitlisted," or "Not Recommended."
+3.2.4 Phase Three: Verification
+    • Document Review: ETF Secretariat accesses uploaded documents for each recommended applicant.
+    • Verification Checklist: Mark each claim/document as verified (e.g., school enrollment, bill authenticity, birth certificate, secondary/high school certificate authenticity, JAMB/university entrance exam result verification).
+    • Status update to "Verification Complete" or "Requires More Information."
+3.2.5 Phase Four: Funds Disbursement
+    • Approved List Generation: System generates a list of verified, recommended candidates for Parochial Committee review.
+    • Parochial Committee Approval: Designated members log in to approve the final list for fund disbursement.
+    • Payment Voucher Data: System prepares data equivalent to payment vouchers (Scholar name, School, Amount).
+    • Disbursement Tracking:
+        ◦ ETF Secretariat/Treasurer updates status to "Payment Processed" or "Paid" once funds are sent (directly to school or to scholar as per policy).
+        ◦ Record transaction details (date, reference number if applicable).
+    • Notification to successful scholars.
+3.2.6 Performance Appraisal and Monitoring (Post-Award)
+    • Results Submission: Awardees can log in to submit subsequent academic results.
+    • Automated reminders for result submission deadlines.
+    • ETF Committee can review submitted results.
+    • System flags beneficiaries not meeting academic requirements (e.g., CGPA < 2.1 for Tertiary, as per policy).
+    • Tracking eligibility for continued scholarship.
+3.2.7 Other Empowerment Schemes (ASH & Higher Education Forms)
+    • Simplified application forms for these schemes.
+    • Separate review and approval workflow, potentially managed by the ETF Committee.
+    • Tracking of assistance provided (one-off for exam forms).
+3.3 Data Management
+    • All data to be stored securely in Supabase (PostgreSQL).
+    • Structured data models for applicants, applications (with all form fields), scholarships, schools, users, documents, payments, academic progress, etc.
+    • Audit trails for key actions (e.g., application status changes, approvals).
+4. Non-Functional Requirements
+4.1 Usability
+    • Intuitive and easy-to-navigate interface for all user roles.
+    • Responsive design: Accessible on desktops, tablets, and mobile web browsers.
+    • Clear instructions, labels, and error messages.
+    • Minimal clicks to complete common tasks.
+    • Accessibility considerations (WCAG AA as a target).
+4.2 Performance
+    • Fast page load times (< 3 seconds for key pages).
+    • Efficient data querying and processing, especially for large lists of applications.
+    • System should handle concurrent users during peak application periods without degradation.
+4.3 Security
+    • Secure authentication and authorization (leveraging Supabase Auth).
+    • Role-based access control strictly enforced.
+    • Protection against common web vulnerabilities (XSS, CSRF, SQL Injection - Supabase helps significantly here).
+    • Encryption of sensitive data at rest and in transit (HTTPS).
+    • Secure file uploads and storage.
+    • Regular security audits and updates.
+4.4 Scalability
+    • The application should be able to handle a growing number of users and applications over time.
+    • Supabase provides inherent scalability for the backend. Frontend architecture should also be scalable.
+4.5 Maintainability
+    • Well-documented, modular, and clean code.
+    • Use of established design patterns and frameworks.
+    • Easy to update and modify by developers.
+    • Configuration options for key parameters (e.g., scholarship ceilings, email templates) to avoid hardcoding.
+4.6 Integration
+    • WordPress Integration:
+        ◦ Seamless embedding of application portal/links within the existing church WordPress site.
+        ◦ Potential for Single Sign-On (SSO) with WordPress user accounts if feasible and desired.
+        ◦ Consistent branding/theming with the main church website.
+        ◦ API for fetching announcements or other relevant content from WordPress if needed.
+    • Supabase Integration:
+        ◦ Full utilization of Supabase services: Database (PostgreSQL), Auth, Storage, Edge Functions (for backend logic).
+4.7 Reliability & Availability
+    • High uptime (e.g., 99.9%).
+    • Robust error handling and logging.
+    • Data backup and recovery mechanisms (provided by Supabase).
+5. Technical Specifications (High-Level)
+5.1 Architecture
+    • Frontend: Modern JavaScript framework (e.g., React, Vue.js, or Next.js for server-side rendering benefits and WordPress integration ease). To be embedded or linked from the WordPress site.
+    • Backend: Supabase (BaaS)
+        ◦ Database: PostgreSQL (managed by Supabase)
+        ◦ Authentication: Supabase Auth
+        ◦ Storage: Supabase Storage for document uploads.
+        ◦ Serverless Functions: Supabase Edge Functions for custom backend logic, API endpoints, and automated tasks (e.g., sending notifications, processing applications).
+    • WordPress Integration Layer: This might involve a custom WordPress plugin or theme modifications to embed the frontend application, handle SSO, or proxy API requests if necessary.
+5.2 Technology Stack
+    • Frontend: To be decided (e.g., React, Vue, Next.js, Svelte). HTML, CSS, JavaScript. Tailwind CSS for styling is recommended for rapid UI development.
+    • Backend: Supabase (PostgreSQL, Supabase Auth, Supabase Storage, Supabase Edge Functions).
+    • WordPress: PHP, WordPress API.
+6. User Interface (UI) / User Experience (UX) Considerations
+    • Simplicity and Clarity: Especially for applicants, the UI should be straightforward.
+    • Guided Processes: Use wizards or step-by-step guides for complex tasks like application submission.
+    • Visual Feedback: Clear indicators for actions, loading states, and success/error messages.
+    • Dashboard Views: Role-specific dashboards providing relevant information at a glance.
+    • Mobile-First Responsive Design: Ensure excellent usability on mobile devices.
+    • Branding: Consistent with CCC Central Cathedral's existing branding.
+    • Help and Documentation: Inline help texts, tooltips, and a dedicated FAQ section.
+7. Deployment and Maintenance
+7.1 Deployment
+    • Frontend application to be hosted on a platform like Vercel, Netlify, or similar, suitable for modern JavaScript applications.
+    • Supabase handles backend infrastructure.
+    • Coordination with WordPress site administrators for integration.
+7.2 Maintenance
+    • Regular updates for security patches and software dependencies.
+    • Monitoring of Supabase usage and performance.
+    • Ongoing support for bug fixes and minor enhancements.
+    • Database backups and disaster recovery plan (largely managed by Supabase).
+8. Success Metrics for the Web Application
+    • Adoption Rate: Percentage of eligible applicants using the online system.
+    • Efficiency Gains: Reduction in time taken for application processing, screening, and disbursement.
+    • User Satisfaction: Positive feedback from applicants and committee members (measured via surveys).
+    • Data Accuracy: Reduction in errors compared to manual processes.
+    • Transparency: Increased visibility of application status for applicants.
+    • System Uptime and Reliability: Meeting defined availability targets.
+    • Reduction in administrative overhead for the ETF Committee and Secretariat.
+9. Future Considerations (Post V1.0)
+    • Advanced Reporting & Analytics: More detailed dashboards and customizable reports.
+    • Direct Bank Integration: For automated fund disbursement (if feasible and secure).
+    • Communication Module: In-app messaging system between applicants and committee.
+    • Alumni Tracking: Features to track the long-term progress of beneficiaries.
+    • Integration with other Church Systems: E.g., membership database for automated verification.
+    • Offline Capabilities: For areas with limited internet, though web-first is the priority.
+    • Gamification/Engagement: For encouraging timely submission of progress reports.
+    • Multi-language Support: For accommodating applicants from different linguistic backgrounds.
+    • Mobile App: For easy access on mobile devices.
+    • Integration with other Church Systems: E.g., membership database for automated verification.
