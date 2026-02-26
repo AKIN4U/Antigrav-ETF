@@ -59,6 +59,45 @@ export async function POST(request: Request) {
             }
         }
 
+        // ONE CHILD PER FAMILY VALIDATION
+        // Check if any sibling from the same family already has an active application
+        // We match families using parent phone numbers (father or mother)
+        if (fatherPhone || motherPhone) {
+            const existingFamilyApplications = await prisma.familyInfo.findMany({
+                where: {
+                    OR: [
+                        fatherPhone ? { fatherPhone: fatherPhone } : {},
+                        motherPhone ? { motherPhone: motherPhone } : {},
+                    ]
+                },
+                include: {
+                    applicant: {
+                        include: {
+                            applications: {
+                                where: {
+                                    status: {
+                                        in: ['Approved', 'Disbursed', 'Pending', 'Under Review']
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Check if any of these families have active applications
+            const hasActiveApplication = existingFamilyApplications.some(
+                family => family.applicant?.applications && family.applicant.applications.length > 0
+            );
+
+            if (hasActiveApplication) {
+                return NextResponse.json({
+                    success: false,
+                    error: "One Child Per Family Policy: Another child from your family already has an active bursary application. Only one child per family may receive support at a time."
+                }, { status: 400 });
+            }
+        }
+
         // Helper to safe parse Int
         const safeInt = (val: any) => {
             if (!val || val === "") return null;

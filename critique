@@ -1,0 +1,237 @@
+1) Positioning and clarity gaps
+    • The site reads as a scholarship / education trust fund portal (ETF) rather than ETF bursary enrolment and registration platform. Since bursary is the core product we planning to provide for the students, Lets make that explicit in the hero copy and “Apply” page so users don’t second-guess what they’re signing up for. 
+    • Add a clear “How it works” section on the Apply page with:
+        ◦ who can apply
+        ◦ what you fund (tuition only? transport? books?)
+        ◦ what you don’t fund
+        ◦ expected timelines (review window, interview dates, disbursement date)
+        ◦ Feedback or Comments field where by they can provide other information for us the review to note any missing or additional information by the candidate.
+2) Missing policy and compliance essentials (high priority)
+    • Your footer links to Privacy Policy and Terms of Service but both return 404 Not Found. That’s a credibility hit and a legal risk. 
+    • Add, at minimum:
+        ◦ Privacy Policy 
+        ◦ Terms of Use
+        ◦ Document retention policy (how long you keep IDs/school invoices and Candidate credentials).  (GDPR requires 7 years for retention of personal data)
+        ◦ Applicants consent checkbox (data processing + sharing with committee/school for verification)
+        ◦ Safeguarding note if applicants are minors (parent/guardian consent + handling children’s data). i.e. a session for candidate below the age of 18 ages. 
+3) Application flow: what’s missing for a real review process
+You have a strong multi-step form structure (Personal, Academic, Family, Documents, Review). What you still need around it:
+Applicant side
+    • Application status tracking: Draft → Submitted → Under Review → Shortlisted → Verified → Approved/Rejected → Disbursed
+    • Email/SMS notifications for key status changes
+    • Ability to edit resubmit if “Returned for correction”
+    • A checklist on the Documents step:
+        ◦ required vs optional docs
+        ◦ accepted file types (PDF/JPG/PNG)
+        ◦ file size limit
+        ◦ document quality guidance (clear photo, full page, not cropped)
+    • A “support ticket / help” option inside the dashboard (not only a generic email)
+Committee side (admin portal)
+    • A real review workflow definition:
+        ◦ triage queue (new submissions)
+        ◦ scoring rubric (need, academic performance, church membership verification, one-child policy check)
+        ◦ comment log and “request additional info”
+        ◦ final decision capture + reason categories (useful for reporting and fairness)
+    • Audit trail: who reviewed, who changed a status, when, and what changed
+    • Export for reporting (CSV/PDF) and donor/church reporting
+4) Identity, eligibility, and anti-fraud controls
+Right now registration is email + password. For bursary selection and document upload, you’ll want:
+    • Email verification on sign-up
+    • Strong password policy + rate limiting + lockout
+    • CAPTCHA on register/login/forgot password/ Passkey to reduce abuse
+    • Duplicate detection: same child, same parent/guardian, same phone number, same school ID
+    • “One child per family” enforcement mechanics (you state the policy, but you also need the platform logic to support it). 
+    • Clear eligibility evidence fields (member ID, parish/unit, guardian details, proof of indigence criteria)
+5) Security and data protection basics (technical)
+Given we’re collecting sensitive documents:
+    • Encryption in transit (HTTPS) is assumed, but also plan for encryption at rest for uploaded files
+    • Private storage for documents (no public bucket URLs)
+    • Virus/malware scanning on upload
+    • Role-based access control (committee members only see what they must)
+    • Session security (short-lived tokens, secure cookies)
+    • Backups + disaster recovery plan (especially during application peaks)
+6) UX details that will reduce drop-offs
+    • Add an “Application requirements” box directly on the form page, not only on the Apply info page (people skip reading). 
+    • Add autosave confirmation (“Saved 2 mins ago”) and a clear “Continue later” entry point from the dashboard
+    • Show progress percentage and estimated time per step
+    • Inline validation (date formats, age range, required fields) and human error messages
+    • Mobile optimisation check: your main audience is likely mobile-first
+7) Content that’s missing but applicants expect
+    • FAQ page (eligibility, required docs, deadlines, how disbursement works)
+    • Timeline / application window dates (open/close dates)
+    • Appeals process (if rejected)
+    • Contact options: phone/WhatsApp + office hours + physical office address (if applicable)
+    • Transparency note: selection criteria summary and how decisions are made
+8) Consistency and credibility checks
+    • Donation page claims “Secured by Paystack • PCI-DSS Compliant”. Make sure that statement is accurate for your specific integration and only refers to Paystack’s card processing scope, not our whole platform. 
+    • Add organisation registration details (church office address, trustees/committee, governance summary) to reduce “is this legit?” concerns.
+    • Q&A / Suggestions / Feedbacks Sessions to receive information from external candidates
+
+
+Checklist Update: 
+Below is a tight build checklist for a bursary enrolment + student dashboard + committee review platform. It’s written stack-agnostic, with specific professional and technical recommendations.
+0) Define the operating model (1–2 pages)
+    • Programme rules: who qualifies, what’s funded, “one child per family” definition, disbursement method, timelines.
+    • Roles & permissions: Applicant, Parent/Guardian (optional), Reviewer, Admin, Super Admin, Finance (optional), Auditor (optional).
+    • Workflow states: Draft → Submitted → Under Review → Info Requested → Resubmitted → Shortlisted → Verified → Approved/Rejected → Disbursed → Closed.
+    • Scoring model: need score + academic score + vulnerability flags + discretionary notes, with a final threshold and override rules.
+    • Audit requirements: what decisions must be logged and retained.
+1) Information architecture and copy (public pages)
+    • Home page hero must say clearly: bursary enrolment + application portal (not only “education trust fund”).
+    • Add pages:
+        ◦ How it works (steps + timelines)
+        ◦ Eligibility & required documents (required vs optional)
+        ◦ FAQ
+        ◦ Contact & support (email + phone/WhatsApp + office hours)
+        ◦ Governance (committee structure, transparency note)
+    • Fix dead links:
+        ◦ Privacy Policy (NDPR; add GDPR language if you accept UK/EU applicants)
+        ◦ Terms of Use
+        ◦ Safeguarding & children’s data (guardian consent)
+2) Applicant onboarding and identity controls
+    • Registration
+        ◦ Email verification (mandatory)
+        ◦ Strong password policy + reset flow
+        ◦ CAPTCHA and rate limiting on register/login/reset
+    • Account profile
+        ◦ Applicant details + guardian details if applicant is a minor
+        ◦ Unique identifiers: phone, school, student ID/admission number (if available)
+    • Anti-duplicate rules
+        ◦ One child per family: enforce via guardian phone/email + household identifier (with manual override by admin)
+        ◦ Flag possible duplicates (same name + DOB + school, same guardian phone, same address)
+3) Application form build (data you must capture)
+Personal
+    • Full name, DOB, gender (optional), address, phone, email
+    • Guardian info (required for minors): name, phone, occupation, income band
+Academic
+    • School name, class/level, student ID/admission number
+    • Last term results summary (or GPA equivalent), attendance (optional), teacher reference (optional)
+Family & vulnerability
+    • Household size, number of school-age children
+    • Income band + income source
+    • Key vulnerability indicators (orphanhood, disability, displacement, medical hardship) with evidence requirements
+Programme verification
+    • Membership fields if this is church-linked: parish/unit, membership ID, referrer/leader contact (optional)
+    • Consent checkbox: data processing + verification calls/emails + policy acceptance
+Form UX
+    • Autosave draft
+    • Progress indicator + “Save and continue later”
+    • Inline validation and clear error messages
+    • Mobile-first layout and offline-safe retry for uploads
+4) Document upload system (security first)
+    • Required docs checklist (example)
+        ◦ Proof of identity (guardian/applicant)
+        ◦ Proof of enrolment/admission
+        ◦ School fee invoice or statement
+        ◦ Academic results
+        ◦ Vulnerability evidence (if applicable)
+    • Upload constraints
+        ◦ Accepted types: PDF/JPG/PNG
+        ◦ File size limit and total upload limit per application
+        ◦ Basic quality guidance and preview before submit
+    • Technical controls
+        ◦ Store documents in private storage (no public URLs)
+        ◦ Generate short-lived signed URLs for reviewers
+        ◦ Virus/malware scan on upload
+        ◦ Encrypt at rest (storage + database)
+        ◦ Maintain document versioning (if resubmitted)
+5) Applicant dashboard (must-have features)
+    • Status tracker with timestamps
+    • “What’s next” panel (action required, missing docs, deadline)
+    • Edit/resubmit when status is “Info Requested”
+    • Download receipt / submission PDF summary
+    • Notification preferences (email/SMS/WhatsApp if you support it)
+    • Help / support ticket form tied to the application ID
+6) Reviewer and committee portal (review workflow)
+Queue and filtering
+    • New submissions queue + SLA timers (how long waiting)
+    • Filters: school, class, vulnerability flag, score range, parish/unit, date submitted
+    • Search by applicant name, phone, application ID
+Review screen
+    • Full application view + document viewer (signed URL)
+    • Standardised scoring rubric (configurable weights)
+    • Reviewer notes and internal comments
+    • “Request additional info” action with templated messages
+    • Decision actions: shortlist, approve, reject, hold, refer to admin
+Governance controls
+    • Two-person rule for final approval (optional but recommended)
+    • Conflict of interest checkbox for reviewers
+    • Committee meeting mode: batch review + vote log
+7) Admin console (operational tools)
+    • User management (roles, activation, disabling accounts)
+    • Application settings:
+        ◦ Application window open/close
+        ◦ Eligibility rules and required documents toggles
+        ◦ Scoring weights and thresholds
+    • Content management (FAQ, announcements, banner alerts)
+    • Audit log viewer
+    • Data exports:
+        ◦ CSV export for reporting
+        ◦ PDF packs for committee meetings (watermarked, access-controlled)
+    • Financial module (if disbursing funds)
+        ◦ Approved amount, payment status, payment reference
+        ◦ Attach payment proof
+        ◦ Reconciliation export
+8) Notifications and communications
+    • Event triggers
+        ◦ Registration verified
+        ◦ Application submitted
+        ◦ Info requested
+        ◦ Shortlisted
+        ◦ Approved/rejected
+        ◦ Disbursement complete
+    • Templates
+        ◦ Clear, short, action-based content
+        ◦ Include application ID and support contact
+    • Delivery
+        ◦ Email is baseline; add SMS/WhatsApp only if you can manage cost and consent properly
+    • Logging
+        ◦ Store message history per applicant (time, channel, delivery status)
+9) Reporting and M&E-style outputs
+    • Basic dashboards
+        ◦ Applications received, completed, rejected, approved
+        ◦ Reasons for rejection (missing docs, ineligible, duplicates)
+        ◦ Average time per stage
+        ◦ Geographic/school distribution
+    • Data quality rules
+        ◦ Required fields enforcement
+        ◦ Standardised dropdowns (schools, classes, parishes) to reduce messy data
+    • Privacy-safe reporting
+        ◦ Aggregated views for donors, restricted access for personal data
+10) Security, privacy, and reliability requirements
+    • Authentication
+        ◦ Secure sessions, refresh tokens, CSRF protection where relevant
+        ◦ Optional 2FA for admins/reviewers
+    • Access control
+        ◦ Strict RBAC; applicants only see their own data
+        ◦ Reviewer scope limits if you segment by region/school
+    • Logging
+        ◦ Admin and reviewer actions must be logged (view/download docs, status changes, decisions)
+    • Backups and recovery
+        ◦ Daily backups for DB + storage
+        ◦ Restore testing schedule
+    • Retention policy
+        ◦ Define retention periods for documents and personal data (example: 12–24 months post-cycle)
+        ◦ Applicant deletion request process where required by law
+11) QA checklist (before launch)
+    • Functional tests
+        ◦ Full apply flow on mobile and desktop
+        ◦ Upload edge cases (large file, poor network, retry)
+        ◦ Duplicate detection and manual override
+        ◦ Status changes and notifications end-to-end
+    • Security checks
+        ◦ No public access to documents
+        ◦ Rate limiting works
+        ◦ Audit logs cannot be edited by normal admins
+    • Content checks
+        ◦ Privacy/Terms live and linked
+        ◦ Contact info and help routes tested
+    • Performance
+        ◦ Form responsiveness on low-end phones
+        ◦ Document viewer loads quickly with signed URLs
+12) Nice-to-have enhancements (after MVP)
+    • Interview scheduling module
+    • Reference verification workflow (school admin/leader confirmation)
+    • Bulk import of schools/branches and reviewer assignment rules
+    • “Fraud risk scoring” (too many apps per device/IP, repeated docs, suspicious patterns)
+    • Multi-language support

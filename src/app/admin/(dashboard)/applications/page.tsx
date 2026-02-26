@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Search, Filter, Eye, Loader2 } from "lucide-react";
+import { Search, Filter, Eye, Loader2, Download } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ApplicationWithApplicant, ApiResponse } from "@/types";
@@ -47,16 +47,83 @@ export default function ApplicationsPage() {
     const handleExportCSV = () => {
         if (applications.length === 0) return;
 
-        const headers = ["Applicant Name", "School", "Level", "Date", "Status"];
+        // Comprehensive headers
+        const headers = [
+            "Application ID",
+            "Applicant Name",
+            "Age",
+            "Sex",
+            "Date of Birth",
+            "Phone",
+            "Email",
+            "State of Origin",
+            "LGA",
+            "Town",
+            "Parish",
+            "School Name",
+            "School Address",
+            "Present Class",
+            "School Fees",
+            "Class Position",
+            "Class Size",
+            "Last Result",
+            "Father Name",
+            "Father Phone",
+            "Father Occupation",
+            "Father Income",
+            "Mother Name",
+            "Mother Phone",
+            "Mother Occupation",
+            "Mother Income",
+            "Financial Score",
+            "Academic Score",
+            "Church Score",
+            "Approved Amount",
+            "Status",
+            "Application Date",
+            "Committee Notes"
+        ];
+
         const csvContent = [
             headers.join(","),
-            ...applications.map(app => [
-                `"${app.applicant.surname} ${app.applicant.firstName}"`,
-                `"${app.schoolName}"`,
-                `"${app.presentClass}"`,
-                `"${new Date(app.createdAt).toLocaleDateString()}"`,
-                `"${app.status}"`
-            ].join(","))
+            ...applications.map(app => {
+                const family = app.applicant.familyInfo;
+                return [
+                    `"${app.id}"`,
+                    `"${app.applicant.surname} ${app.applicant.firstName} ${app.applicant.middleName || ''}"`,
+                    `"${app.applicant.age}"`,
+                    `"${app.applicant.sex}"`,
+                    `"${new Date(app.applicant.dob).toLocaleDateString()}"`,
+                    `"${app.applicant.phone}"`,
+                    `"${app.applicant.email || 'N/A'}"`,
+                    `"${app.applicant.stateOrigin}"`,
+                    `"${app.applicant.lga}"`,
+                    `"${app.applicant.town}"`,
+                    `"${app.applicant.parish}"`,
+                    `"${app.schoolName}"`,
+                    `"${app.schoolAddress}"`,
+                    `"${app.presentClass}"`,
+                    `"${app.schoolFees}"`,
+                    `"${app.classPosition || 'N/A'}"`,
+                    `"${app.classSize || 'N/A'}"`,
+                    `"${app.lastResult || 'N/A'}"`,
+                    `"${family ? `${family.fatherSurname || ''} ${family.fatherFirstName || ''}` : 'N/A'}"`,
+                    `"${family?.fatherPhone || 'N/A'}"`,
+                    `"${family?.fatherOccupation || 'N/A'}"`,
+                    `"${family?.fatherIncome || 'N/A'}"`,
+                    `"${family ? `${family.motherSurname || ''} ${family.motherFirstName || ''}` : 'N/A'}"`,
+                    `"${family?.motherPhone || 'N/A'}"`,
+                    `"${family?.motherOccupation || 'N/A'}"`,
+                    `"${family?.motherIncome || 'N/A'}"`,
+                    `"${app.scoreFinancial || 'N/A'}"`,
+                    `"${app.scoreAcademic || 'N/A'}"`,
+                    `"${app.scoreChurch || 'N/A'}"`,
+                    `"${app.approvedAmount || 'N/A'}"`,
+                    `"${app.status}"`,
+                    `"${new Date(app.createdAt).toLocaleDateString()}"`,
+                    `"${app.committeeNotes?.replace(/"/g, '""') || 'N/A'}"`
+                ].join(",");
+            })
         ].join("\n");
 
         const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
@@ -64,7 +131,7 @@ export default function ApplicationsPage() {
         if (link.download !== undefined) {
             const url = URL.createObjectURL(blob);
             link.setAttribute("href", url);
-            link.setAttribute("download", "applications_export.csv");
+            link.setAttribute("download", `etf_applications_${new Date().toISOString().split('T')[0]}.csv`);
             link.style.visibility = "hidden";
             document.body.appendChild(link);
             link.click();
@@ -80,9 +147,10 @@ export default function ApplicationsPage() {
                     <Button
                         onClick={handleExportCSV}
                         disabled={applications.length === 0}
-                        size="sm"
+                        className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 text-sm disabled:opacity-50"
                     >
-                        Export CSV
+                        <Download className="h-4 w-4" />
+                        Export to CSV
                     </Button>
                 </div>
             </div>

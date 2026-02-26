@@ -37,6 +37,27 @@ model Applicant {
   // Relations
   applications Application[]
   familyInfo   FamilyInfo?
+  alumniProfile AlumniProfile?
+}
+
+model AlumniProfile {
+  id          String   @id @default(cuid())
+  applicantId String   @unique
+  applicant   Applicant @relation(fields: [applicantId], references: [id])
+  
+  graduationYear Int
+  institution    String?
+  degree         String?
+  
+  currentStatus  String? // e.g. "Employed", "Self-Employed", "Further Studies", "Seeking Job"
+  employer       String?
+  jobTitle       String?
+  
+  linkedInUrl    String?
+  successStory   String? // Text area for details
+  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model FamilyInfo {
