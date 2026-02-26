@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ArrowLeft, CheckCircle, XCircle, FileText, User, GraduationCap, Church } from "lucide-react";
+import { ArrowLeft, CheckCircle, XCircle, FileText, User, GraduationCap, Church, AlertCircle } from "lucide-react";
 import AssessmentForm from "@/components/AssessmentForm";
 import AssessmentList from "@/components/AssessmentList";
 import Link from "next/link";
@@ -64,6 +64,41 @@ export default function ApplicationDetailPage() {
         }
     };
 
+    const handleReturnForCorrection = async () => {
+        if (!application) return;
+
+        const correctionNotes = prompt("Please enter the corrections needed (this will be visible to the applicant):");
+        if (!correctionNotes || correctionNotes.trim() === "") {
+            alert("Correction notes are required.");
+            return;
+        }
+
+        setIsSaving(true);
+        try {
+            const response = await fetch(`/api/admin/applications/${params.id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    status: "Returned for Correction",
+                    committeeNotes: correctionNotes
+                }),
+            });
+
+            if (response.ok) {
+                setApplication({ ...application, status: "Returned for Correction", committeeNotes: correctionNotes });
+                alert("Application returned for correction. Applicant will be notified.");
+                router.refresh();
+            } else {
+                alert("Failed to return application for correction.");
+            }
+        } catch (error) {
+            console.error("Error returning application:", error);
+            alert("An error occurred.");
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
     if (isLoading) {
         return <div className="p-8 text-center">Loading application details...</div>;
     }
@@ -113,6 +148,13 @@ export default function ApplicationDetailPage() {
                         disabled={isSaving || application.status === "Rejected"}
                     >
                         <XCircle className="h-4 w-4 mr-2" /> Reject
+                    </Button>
+                    <Button
+                        onClick={handleReturnForCorrection}
+                        disabled={isSaving || application.status === "Returned for Correction"}
+                        className="flex items-center gap-2 px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 disabled:opacity-50"
+                    >
+                        <AlertCircle className="h-4 w-4 mr-2" /> Return for Correction
                     </Button>
                 </div>
             </div>

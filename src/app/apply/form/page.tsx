@@ -8,7 +8,7 @@ import { PersonalInfoStep } from "@/components/apply/PersonalInfoStep";
 import { AcademicInfoStep } from "@/components/apply/AcademicInfoStep";
 import { FamilyInfoStep } from "@/components/apply/FamilyInfoStep";
 import { DocumentUploadStep } from "@/components/apply/DocumentUploadStep";
-import { Loader2 } from "lucide-react";
+import { Loader2, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const STEPS = ["Personal Info", "Academic Info", "Family Info", "Documents", "Review"];
@@ -16,7 +16,12 @@ const STEPS = ["Personal Info", "Academic Info", "Family Info", "Documents", "Re
 export default function ApplicationFormPage() {
     const [currentStep, setCurrentStep] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
-    const [formData, setFormData] = useState({});
+    const [isSavingDraft, setIsSavingDraft] = useState(false);
+    const [formData, setFormData] = useState<any>({});
+    const [draftId, setDraftId] = useState<string | null>(null);
+    const [draftLoaded, setDraftLoaded] = useState(false);
+    const [consentData, setConsentData] = useState(false);
+    const [consentTerms, setConsentTerms] = useState(false);
     const router = useRouter();
     const supabase = createClient();
 
@@ -37,10 +42,60 @@ export default function ApplicationFormPage() {
                 } catch (error) {
                     console.error("Error checking user status:", error);
                 }
+
+                // Load existing draft if available
+                if (!draftLoaded) {
+                    loadDraft();
+                }
             }
         };
         checkUserStatus();
-    }, [router, supabase]);
+    }, [router, supabase, draftLoaded]);
+
+    const loadDraft = async () => {
+        try {
+            const response = await fetch("/api/apply/draft");
+            if (response.ok) {
+                const result = await response.json();
+                if (result.success && result.draft) {
+                    setFormData(result.draft);
+                    setDraftId(result.draft.draftId);
+                    console.log("Draft loaded successfully");
+                }
+            }
+        } catch (error) {
+            console.error("Error loading draft:", error);
+        } finally {
+            setDraftLoaded(true);
+        }
+    };
+
+    const handleSaveDraft = async () => {
+        setIsSavingDraft(true);
+        try {
+            const response = await fetch("/api/apply/draft", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ ...formData, draftId }),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                setDraftId(result.draftId);
+                alert("Draft saved successfully! You can continue later.");
+            } else {
+                alert("Failed to save draft: " + result.error);
+            }
+        } catch (error) {
+            console.error("Error saving draft:", error);
+            alert("An error occurred while saving draft.");
+        } finally {
+            setIsSavingDraft(false);
+        }
+    };
 
     const handleNext = () => {
         if (currentStep < STEPS.length - 1) {
@@ -57,6 +112,12 @@ export default function ApplicationFormPage() {
     };
 
     const handleSubmit = async () => {
+        // Validate consent checkboxes
+        if (!consentData || !consentTerms) {
+            alert("Please accept both consent checkboxes before submitting your application.");
+            return;
+        }
+
         setIsLoading(true);
         try {
             const response = await fetch("/api/apply", {
@@ -64,7 +125,7 @@ export default function ApplicationFormPage() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({ ...formData, draftId }),
             });
 
             const result = await response.json();
@@ -85,12 +146,34 @@ export default function ApplicationFormPage() {
     };
 
     const updateFormData = (data: any) => {
-        setFormData((prev) => ({ ...prev, ...data }));
+        setFormData((prev: any) => ({ ...prev, ...data }));
     };
 
     return (
         <div className="container mx-auto px-4 py-12 max-w-3xl">
-            <h1 className="text-3xl font-bold text-center mb-8">Scholarship Application</h1>
+            <div className="flex items-center justify-between mb-8">
+                <h1 className="text-3xl font-bold">Bursary Application</h1>
+                <Button
+                    onClick={handleSaveDraft}
+                    disabled={isSavingDraft}
+                    variant="outline"
+                    className="inline-flex items-center gap-2"
+                >
+                    {isSavingDraft ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                        <Save className="h-4 w-4" />
+                    )}
+                    Save as Draft
+                </Button>
+            </div>
+
+            {draftId && (
+                <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-md text-sm text-blue-800">
+                    <strong>Draft loaded:</strong> You can continue from where you left off.
+                </div>
+            )}
+
             <StepIndicator steps={STEPS} currentStep={currentStep} />
 
             <div className="bg-card border rounded-lg p-6 shadow-sm min-h-[400px]">
@@ -99,12 +182,51 @@ export default function ApplicationFormPage() {
                 {currentStep === 2 && <FamilyInfoStep updateData={updateFormData} data={formData} />}
                 {currentStep === 3 && <DocumentUploadStep updateData={updateFormData} data={formData} />}
                 {currentStep === 4 && (
-                    <div className="text-center space-y-4">
-                        <h2 className="text-xl font-semibold">Review Application</h2>
-                        <p className="text-muted-foreground">Please review your details before submitting.</p>
-                        <pre className="text-left bg-muted p-4 rounded-md overflow-auto text-xs max-h-[400px]">
-                            {JSON.stringify(formData, null, 2)}
-                        </pre>
+                    <div className="space-y-6">
+                        <div className="text-center space-y-4">
+                            <h2 className="text-xl font-semibold">Review Application</h2>
+                            <p className="text-muted-foreground">Please review your details before submitting.</p>
+                            <pre className="text-left bg-muted p-4 rounded-md overflow-auto text-xs max-h-[300px]">
+                                {JSON.stringify(formData, null, 2)}
+                            </pre>
+                        </div>
+
+                        {/* Consent Checkboxes */}
+                        <div className="border-t pt-6 space-y-4">
+                            <h3 className="font-semibold text-lg">Required Consents</h3>
+
+                            <div className="flex items-start gap-3 p-4 bg-muted/30 rounded-md">
+                                <input
+                                    type="checkbox"
+                                    id="consentData"
+                                    checked={consentData}
+                                    onChange={(e) => setConsentData(e.target.checked)}
+                                    className="mt-1 h-4 w-4 rounded border-gray-300"
+                                />
+                                <label htmlFor="consentData" className="text-sm cursor-pointer">
+                                    <strong>Data Processing Consent:</strong> I consent to the collection, processing, and storage of my personal data for the purpose of this bursary application. I understand that my data will be handled in accordance with the <a href="/privacy" target="_blank" className="text-primary underline">Privacy Policy</a>.
+                                </label>
+                            </div>
+
+                            <div className="flex items-start gap-3 p-4 bg-muted/30 rounded-md">
+                                <input
+                                    type="checkbox"
+                                    id="consentTerms"
+                                    checked={consentTerms}
+                                    onChange={(e) => setConsentTerms(e.target.checked)}
+                                    className="mt-1 h-4 w-4 rounded border-gray-300"
+                                />
+                                <label htmlFor="consentTerms" className="text-sm cursor-pointer">
+                                    <strong>Terms of Use:</strong> I have read and agree to the <a href="/terms" target="_blank" className="text-primary underline">Terms of Use</a>. I understand that providing false information may result in disqualification and that only one child per family may receive a bursary at any given time.
+                                </label>
+                            </div>
+
+                            {(!consentData || !consentTerms) && (
+                                <p className="text-sm text-red-600">
+                                    * Both consents are required to submit your application.
+                                </p>
+                            )}
+                        </div>
                     </div>
                 )}
             </div>
