@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = 'force-dynamic';
+
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Search, Filter, ChevronLeft, ChevronRight, FileText, User } from "lucide-react";

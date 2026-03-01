@@ -22,10 +22,8 @@ export async function GET(request: Request) {
             .select(`
                 *,
                 applicant:Applicant(
-                    firstName,
-                    surname,
-                    email,
-                    phone
+                    *,
+                    familyInfo:FamilyInfo(*)
                 )
             `, { count: "exact" });
 

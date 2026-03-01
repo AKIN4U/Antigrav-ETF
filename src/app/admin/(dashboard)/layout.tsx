@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { LayoutDashboard, Users, FileText, CreditCard, Settings, LogOut, BarChart3, Wallet, Heart, Shield, Menu, X, ClipboardCheck } from "lucide-react";
+import { LayoutDashboard, Users, FileText, CreditCard, Settings, LogOut, BarChart3, Wallet, Heart, Shield, Menu, X, ClipboardCheck, GraduationCap } from "lucide-react";
 
 export default function AdminLayout({
     children,

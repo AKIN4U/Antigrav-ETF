@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = 'force-dynamic';
+
 import { useState, useEffect } from "react";
 import { BarChart3, TrendingUp, Users, DollarSign, Download, Calendar, PieChart } from "lucide-react";
 import { ReportResponse, ApiResponse } from "@/types";
