@@ -10,7 +10,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
         const { id } = await params;
         const supabase = await createClient();
 
-        const { data: application, error } = await supabase
+        const { data: application, error } = await (supabase as any)
             .from("Application")
             .select(`
                 *,
@@ -54,7 +54,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
         // Get current status for comparison (optional but good for logs)
         // For now, we trust the update.
 
-        const { data: updatedApplication, error } = await supabase
+        const { data: updatedApplication, error } = await (supabase as any)
             .from("Application")
             .update(updateData)
             .eq("id", id)

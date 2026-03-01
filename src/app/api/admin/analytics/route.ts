@@ -14,15 +14,17 @@ export async function GET() {
             { data: disbursements }
         ] = await Promise.all([
             // 1. Applicants for Demographics
-            supabase.from("Applicant").select("sex, stateOrigin, lga"),
+            (supabase as any).from("Applicant").select("sex, stateOrigin, lga"),
 
             // 2. Applications for Status & Trends
-            supabase.from("Application").select("id, status, approvedAmount, createdAt"),
+            (supabase as any).from("Application").select("id, status, approvedAmount, createdAt"),
 
-            // 3. Transactions/Disbursements (using generic Transaction table joined with Budget/Donation if needed, or simplistically just Application.approvedAmount for now)
-            // For simplicity in this iteration, we will rely on Application.approvedAmount where status='Disbursed'
-            Promise.resolve({ data: [] }) // Placeholder if we need separate transaction table later
+            // 3. Transactions/Disbursements
+            Promise.resolve({ data: [] as any[] })
         ]);
+
+        const typedApplicants = (applicants || []) as any[];
+        const typedApplications = (applications || []) as any[];
 
         if (!applicants || !applications) {
             throw new Error("Failed to fetch data");
@@ -32,7 +34,7 @@ export async function GET() {
 
         // 1. Gender Distribution
         const genderCounts: Record<string, number> = {};
-        applicants.forEach(app => {
+        typedApplicants.forEach(app => {
             const sex = app.sex || "Not Specified";
             genderCounts[sex] = (genderCounts[sex] || 0) + 1;
         });
@@ -40,7 +42,7 @@ export async function GET() {
 
         // 2. State Distribution (Top 10)
         const stateCounts: Record<string, number> = {};
-        applicants.forEach(app => {
+        typedApplicants.forEach(app => {
             const state = app.stateOrigin || "Unknown";
             stateCounts[state] = (stateCounts[state] || 0) + 1;
         });
@@ -51,7 +53,7 @@ export async function GET() {
 
         // 3. Application Status Distribution
         const statusCounts: Record<string, number> = {};
-        applications.forEach(app => {
+        typedApplications.forEach(app => {
             const status = app.status || "Unknown";
             statusCounts[status] = (statusCounts[status] || 0) + 1;
         });
@@ -59,11 +61,11 @@ export async function GET() {
 
         // 4. Financial Overview
         // Calculate total approved vs disbursed
-        const totalApproved = applications
+        const totalApproved = typedApplications
             .filter(app => app.status === 'Approved' || app.status === 'Disbursed')
             .reduce((sum, app) => sum + (parseFloat(app.approvedAmount || "0") || 0), 0);
 
-        const totalDisbursed = applications
+        const totalDisbursed = typedApplications
             .filter(app => app.status === 'Disbursed')
             .reduce((sum, app) => sum + (parseFloat(app.approvedAmount || "0") || 0), 0);
 
@@ -82,7 +84,7 @@ export async function GET() {
             months[key] = 0;
         }
 
-        applications.forEach(app => {
+        typedApplications.forEach(app => {
             const d = new Date(app.createdAt);
             const key = d.toLocaleString('default', { month: 'short' });
             if (months.hasOwnProperty(key)) {
@@ -100,9 +102,9 @@ export async function GET() {
                 financialData,
                 trendData,
                 metrics: {
-                    totalApplicants: applicants.length,
-                    totalApplications: applications.length,
-                    approvalRate: Math.round((applications.filter(a => a.status === 'Approved' || a.status === 'Disbursed').length / applications.length) * 100) || 0,
+                    totalApplicants: typedApplicants.length,
+                    totalApplications: typedApplications.length,
+                    approvalRate: Math.round((typedApplications.filter(a => a.status === 'Approved' || a.status === 'Disbursed').length / typedApplications.length) * 100) || 0,
                 }
             }
         });

@@ -37,7 +37,7 @@ export async function GET(
             );
         }
 
-        const { data: adminUser } = await supabase
+        const { data: adminUser } = await (supabase as any)
             .from('AdminUser')
             .select('id')
             .eq('email', user.email)
@@ -60,7 +60,7 @@ export async function GET(
 
             // Verify the application belongs to this user
             // Note: Applicant model doesn't have userId, so we check via email
-            const { data: application } = await supabase
+            const { data: application } = await (supabase as any)
                 .from('Application')
                 .select('applicantId, applicant:Applicant(email)')
                 .eq('id', applicationId)
@@ -75,7 +75,7 @@ export async function GET(
         }
 
         // Generate signed URL with 1 hour expiration
-        const { data, error } = await supabase
+        const { data, error } = await (supabase as any)
             .storage
             .from('documents')
             .createSignedUrl(filePath, 3600); // 3600 seconds = 1 hour

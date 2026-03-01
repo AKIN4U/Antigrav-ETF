@@ -45,7 +45,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
         }
 
         // Get current admin user
-        const { data: currentAdmin } = await supabase
+        const { data: currentAdmin } = await (supabase as any)
             .from("AdminUser")
             .select("id, role")
             .eq("email", session.user.email)
@@ -56,7 +56,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
         }
 
         // Fetch assessments for this application
-        const { data: assessments, error } = await supabase
+        const { data: assessments, error } = await (supabase as any)
             .from("Assessment")
             .select("*, adminUser:AdminUser(name, email)")
             .eq("applicationId", id);

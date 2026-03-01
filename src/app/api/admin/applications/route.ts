@@ -18,7 +18,7 @@ export async function GET(request: Request) {
 
         const skip = (page - 1) * limit;
 
-        let query = supabase
+        let query = (supabase as any)
             .from("Application")
             .select(`
                 *,

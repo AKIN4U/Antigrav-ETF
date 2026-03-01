@@ -52,7 +52,7 @@ export async function GET(req: NextRequest) {
         }
 
         // Check AdminUser status
-        const { data: adminUser } = await supabase
+        const { data: adminUser } = await (supabase as any)
             .from("AdminUser")
             .select("status")
             .eq("email", session.user.email)

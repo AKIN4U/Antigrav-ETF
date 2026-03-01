@@ -2,9 +2,9 @@ import { createBrowserClient } from '@supabase/ssr'
 import type { Database } from '@/types/supabase'
 import { SupabaseClient } from '@supabase/supabase-js'
 
-let cachedClient: SupabaseClient<Database> | null = null
+let cachedClient: any = null
 
-export function createClient(): SupabaseClient<Database> {
+export function createClient(): any {
     // Return cached client if available
     if (cachedClient) {
         return cachedClient
@@ -23,11 +23,11 @@ export function createClient(): SupabaseClient<Database> {
                 getUser: async () => ({ data: { user: null }, error: null }),
                 onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => { } } } }),
             }
-        } as unknown as SupabaseClient<Database>
+        } as any
     }
 
     try {
-        cachedClient = createBrowserClient<Database>(
+        cachedClient = createBrowserClient(
             process.env.NEXT_PUBLIC_SUPABASE_URL!,
             process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
         )
@@ -44,6 +44,6 @@ export function createClient(): SupabaseClient<Database> {
                 getUser: async () => ({ data: { user: null }, error: new Error('Failed to initialize Supabase client') }),
                 onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => { } } } }),
             }
-        } as unknown as SupabaseClient<Database>
+        } as any
     }
 }

@@ -106,7 +106,7 @@ export async function POST(request: Request) {
         };
 
         // Create Applicant with nested relations
-        const applicant = await prisma.applicant.create({
+        const applicant = await ((prisma as any).applicant as any).create({
             data: {
                 surname: surname || "",
                 firstName: firstName || "",
@@ -119,8 +119,8 @@ export async function POST(request: Request) {
                 town: town || "",
                 address: address || "",
                 phone: phone || "",
-                email: email === "" ? null : email, // Convert empty string to null to avoid unique constraint violations
-                parish: parish || undefined, // undefined triggers default value
+                email: email === "" ? null : email,
+                parish: parish || undefined,
                 prevScholarship: prevScholarship === "Yes",
                 prevScholarshipDate: prevScholarshipDate || null,
                 familyInfo: {
@@ -138,6 +138,7 @@ export async function POST(request: Request) {
                 },
                 applications: {
                     create: {
+                        cycleId: body.cycleId || null,
                         schoolName: schoolName || "",
                         schoolAddress: schoolAddress || "",
                         presentClass: presentClass || "",
@@ -150,7 +151,6 @@ export async function POST(request: Request) {
                         sentAway: sentAway === "Yes",
                         repeatedClass: repeatedClass === "Yes",
                         lastResult,
-                        // Map frontend document keys to schema fields
                         schoolBillUrl: schoolFeesBill,
                         birthCertUrl: birthCertificate,
                         primaryCertUrl: primaryCertificate,

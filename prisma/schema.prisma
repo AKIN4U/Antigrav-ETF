@@ -150,6 +150,9 @@ model Application {
   paymentReference String?
 
   assessments     Assessment[] // Relation to assessments
+  
+  cycleId         String?
+  cycle           ScholarshipCycle? @relation(fields: [cycleId], references: [id])
 }
 
 model AdminUser {
@@ -240,4 +243,18 @@ model AuditLog {
   userEmail String?  // Email for easier reading
   ipAddress String? 
   createdAt DateTime @default(now())
+}
+
+model ScholarshipCycle {
+  id            String   @id @default(uuid())
+  year          Int
+  name          String   // e.g., "First Half 2026"
+  startDate     DateTime
+  endDate       DateTime
+  status        String   @default("Draft") // Draft, Active, Completed, Cancelled
+  description   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  applications Application[]
 }

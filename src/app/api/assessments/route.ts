@@ -45,7 +45,7 @@ export async function GET(req: NextRequest) {
         }
 
         // Get current admin user
-        const { data: currentAdmin } = await supabase
+        const { data: currentAdmin } = await (supabase as any)
             .from("AdminUser")
             .select("id, role")
             .eq("email", session.user.email)
@@ -58,7 +58,7 @@ export async function GET(req: NextRequest) {
         const url = new URL(req.url);
         const applicationId = url.searchParams.get("applicationId");
 
-        let query = supabase.from("Assessment").select(`
+        let query = (supabase as any).from("Assessment").select(`
             *,
             application:Application(id, applicant:Applicant(firstName, surname, middleName)),
             adminUser:AdminUser(name, email)
@@ -97,7 +97,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        const { data: currentAdmin } = await supabase
+        const { data: currentAdmin } = await (supabase as any)
             .from("AdminUser")
             .select("id, role")
             .eq("email", session.user.email)
@@ -118,7 +118,7 @@ export async function POST(req: NextRequest) {
         const totalScore = (financialScore || 0) + (academicScore || 0) + (churchScore || 0);
 
         // Upsert assessment
-        const { data, error } = await supabase
+        const { data, error } = await (supabase as any)
             .from("Assessment")
             .upsert({
                 applicationId,

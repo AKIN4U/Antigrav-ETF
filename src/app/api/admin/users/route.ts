@@ -79,7 +79,7 @@ export async function GET(req: NextRequest) {
         }
 
         // Verify SuperAdmin role
-        const { data: currentAdmin } = await supabase
+        const { data: currentAdmin } = await (supabase as any)
             .from("AdminUser")
             .select("role")
             .eq("email", session.user.email)
@@ -100,7 +100,7 @@ export async function GET(req: NextRequest) {
         }
 
         // Get all admin users
-        const { data: adminUsers, error } = await supabase
+        const { data: adminUsers, error } = await (supabase as any)
             .from("AdminUser")
             .select("*")
             .order("createdAt", { ascending: false });
@@ -159,7 +159,7 @@ export async function POST(req: NextRequest) {
         }
 
         // Verify SuperAdmin role
-        const { data: currentAdmin } = await supabase
+        const { data: currentAdmin } = await (supabase as any)
             .from("AdminUser")
             .select("role")
             .eq("email", session.user.email)
@@ -191,7 +191,7 @@ export async function POST(req: NextRequest) {
         }
 
         // Check if user already exists in AdminUser table
-        const { data: existingAdmin } = await supabase
+        const { data: existingAdmin } = await (supabase as any)
             .from("AdminUser")
             .select("id")
             .eq("email", email)
@@ -244,16 +244,16 @@ export async function POST(req: NextRequest) {
         }
 
         // Add to AdminUser table
-        const { data: newAdmin, error: dbError } = await supabase
+        const { data: newAdmin, error: dbError } = (await supabase
             .from("AdminUser")
             .insert({
                 email,
                 name,
                 role,
                 status: "Approved", // SuperAdmin creates approved users
-            })
+            } as any)
             .select()
-            .single();
+            .single()) as any;
 
         if (dbError) {
             console.error("Error creating admin user in database:", dbError);
@@ -302,7 +302,7 @@ export async function PATCH(req: NextRequest) {
         }
 
         // Verify SuperAdmin role
-        const { data: currentAdmin } = await supabase
+        const { data: currentAdmin } = await (supabase as any)
             .from("AdminUser")
             .select("role")
             .eq("email", session.user.email)
@@ -345,12 +345,12 @@ export async function PATCH(req: NextRequest) {
         if (name) updateData.name = name;
         if (status) updateData.status = status;
 
-        const { data: updatedAdmin, error } = await supabase
+        const { data: updatedAdmin, error } = (await supabase
             .from("AdminUser")
-            .update(updateData)
+            .update(updateData as any)
             .eq("id", id)
             .select()
-            .single();
+            .single()) as any;
 
         if (error) {
             console.error("Error updating admin user:", error);
@@ -389,7 +389,7 @@ export async function DELETE(req: NextRequest) {
         }
 
         // Verify SuperAdmin role
-        const { data: currentAdmin } = await supabase
+        const { data: currentAdmin } = await (supabase as any)
             .from("AdminUser")
             .select("role, email")
             .eq("email", session.user.email)
@@ -413,7 +413,7 @@ export async function DELETE(req: NextRequest) {
         }
 
         // Get the admin user to delete
-        const { data: adminToDelete } = await supabase
+        const { data: adminToDelete } = await (supabase as any)
             .from("AdminUser")
             .select("email")
             .eq("id", userId)
@@ -440,7 +440,7 @@ export async function DELETE(req: NextRequest) {
         const authUser = authUsers?.users?.find((u: any) => u.email === adminToDelete.email);
 
         // Delete from AdminUser table
-        const { error: dbError } = await supabase
+        const { error: dbError } = await (supabase as any)
             .from("AdminUser")
             .delete()
             .eq("id", userId);

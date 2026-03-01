@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
         const supabaseAdmin = getSupabaseAdmin();
 
         // 1. Check if user already exists in AdminUser table
-        const { data: existingAdmin } = await supabaseAdmin
+        const { data: existingAdmin } = await (supabaseAdmin as any)
             .from("AdminUser")
             .select("id")
             .eq("email", email)
@@ -90,7 +90,7 @@ export async function POST(req: NextRequest) {
                 name,
                 role: "Committee",
                 status: "Pending", // Explicitly pending
-            });
+            } as any);
 
         if (dbError) {
             console.error("Error creating database entry:", dbError);

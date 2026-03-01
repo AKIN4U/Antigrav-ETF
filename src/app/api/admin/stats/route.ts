@@ -16,19 +16,19 @@ export async function GET() {
             { data: recentApplications }
         ] = await Promise.all([
             // 1. Total Applications
-            supabase.from("Application").select("*", { count: "exact", head: true }),
+            (supabase as any).from("Application").select("*", { count: "exact", head: true }),
 
             // 2. Pending Review
-            supabase.from("Application").select("*", { count: "exact", head: true }).eq("status", "Pending"),
+            (supabase as any).from("Application").select("*", { count: "exact", head: true }).eq("status", "Pending"),
 
             // 3. Approved Scholars
-            supabase.from("Application").select("*", { count: "exact", head: true }).eq("status", "Approved"),
+            (supabase as any).from("Application").select("*", { count: "exact", head: true }).eq("status", "Approved"),
 
             // 4. For beneficiaries (unique applicants with approved applications)
-            supabase.from("Application").select("applicantId").eq("status", "Approved"),
+            (supabase as any).from("Application").select("applicantId").eq("status", "Approved"),
 
             // 5. Recent Applications
-            supabase.from("Application")
+            (supabase as any).from("Application")
                 .select(`
                     *,
                     applicant:Applicant(
@@ -38,10 +38,11 @@ export async function GET() {
                 `)
                 .order("createdAt", { ascending: false })
                 .limit(5)
-        ]);
+        ]) as any[];
 
         // Calculate unique beneficiaries
-        const uniqueBeneficiaries = new Set(approvedApps?.map(app => app.applicantId) || []);
+        const approvedAppsArray = (approvedApps || []) as any[];
+        const uniqueBeneficiaries = new Set(approvedAppsArray.map(app => app.applicantId));
         const totalBeneficiaries = uniqueBeneficiaries.size;
 
         return NextResponse.json({

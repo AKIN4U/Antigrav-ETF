@@ -8,7 +8,7 @@ import { PersonalInfoStep } from "@/components/apply/PersonalInfoStep";
 import { AcademicInfoStep } from "@/components/apply/AcademicInfoStep";
 import { FamilyInfoStep } from "@/components/apply/FamilyInfoStep";
 import { DocumentUploadStep } from "@/components/apply/DocumentUploadStep";
-import { Loader2, Save } from "lucide-react";
+import { Loader2, Save, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const STEPS = ["Personal Info", "Academic Info", "Family Info", "Documents", "Review"];
@@ -19,6 +19,8 @@ export default function ApplicationFormPage() {
     const [isSavingDraft, setIsSavingDraft] = useState(false);
     const [formData, setFormData] = useState<any>({});
     const [draftId, setDraftId] = useState<string | null>(null);
+    const [activeCycle, setActiveCycle] = useState<any>(null);
+    const [cycleLoading, setCycleLoading] = useState(true);
     const [draftLoaded, setDraftLoaded] = useState(false);
     const [consentData, setConsentData] = useState(false);
     const [consentTerms, setConsentTerms] = useState(false);
@@ -26,7 +28,24 @@ export default function ApplicationFormPage() {
     const supabase = createClient();
 
     useEffect(() => {
-        const checkUserStatus = async () => {
+        const checkCycleAndUser = async () => {
+            // Check active cycle first
+            try {
+                const cycleRes = await fetch("/api/cycles/active");
+                const cycleData = await cycleRes.json();
+                if (cycleData.success && cycleData.data) {
+                    setActiveCycle(cycleData.data);
+                } else {
+                    alert("Applications are currently closed.");
+                    router.push("/apply");
+                    return;
+                }
+            } catch (err) {
+                console.error("Error checking cycle:", err);
+            } finally {
+                setCycleLoading(false);
+            }
+
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
                 // Check if user is a committee member
@@ -49,7 +68,7 @@ export default function ApplicationFormPage() {
                 }
             }
         };
-        checkUserStatus();
+        checkCycleAndUser();
     }, [router, supabase, draftLoaded]);
 
     const loadDraft = async () => {
@@ -78,7 +97,7 @@ export default function ApplicationFormPage() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ ...formData, draftId }),
+                body: JSON.stringify({ ...formData, draftId, cycleId: activeCycle?.id }),
             });
 
             const result = await response.json();
@@ -112,6 +131,12 @@ export default function ApplicationFormPage() {
     };
 
     const handleSubmit = async () => {
+        // Double check cycle
+        if (!activeCycle) {
+            alert("Applications are closed. Cannot submit.");
+            return;
+        }
+
         // Validate consent checkboxes
         if (!consentData || !consentTerms) {
             alert("Please accept both consent checkboxes before submitting your application.");
@@ -125,7 +150,7 @@ export default function ApplicationFormPage() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ ...formData, draftId }),
+                body: JSON.stringify({ ...formData, draftId, cycleId: activeCycle.id }),
             });
 
             const result = await response.json();
@@ -149,10 +174,25 @@ export default function ApplicationFormPage() {
         setFormData((prev: any) => ({ ...prev, ...data }));
     };
 
+    if (cycleLoading) {
+        return (
+            <div className="flex h-screen items-center justify-center">
+                <Loader2 className="h-12 w-12 animate-spin text-primary" />
+            </div>
+        );
+    }
+
     return (
         <div className="container mx-auto px-4 py-12 max-w-3xl">
             <div className="flex items-center justify-between mb-8">
-                <h1 className="text-3xl font-bold">Bursary Application</h1>
+                <div className="space-y-1">
+                    <h1 className="text-3xl font-bold">Bursary Application</h1>
+                    {activeCycle && (
+                        <p className="text-sm text-muted-foreground flex items-center gap-1">
+                            <span className="font-semibold">{activeCycle.name}</span>
+                        </p>
+                    )}
+                </div>
                 <Button
                     onClick={handleSaveDraft}
                     disabled={isSavingDraft}
@@ -167,6 +207,13 @@ export default function ApplicationFormPage() {
                     Save as Draft
                 </Button>
             </div>
+
+            {activeCycle && (
+                <div className="mb-6 p-3 bg-green-50 border border-green-200 rounded-md text-sm text-green-800 flex items-center gap-2">
+                    <Clock className="h-4 w-4" />
+                    <span>Active Cycle: <strong>{activeCycle.name}</strong>. Submit by {new Date(activeCycle.endDate).toLocaleDateString()}.</span>
+                </div>
+            )}
 
             {draftId && (
                 <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-md text-sm text-blue-800">
@@ -247,3 +294,4 @@ export default function ApplicationFormPage() {
         </div>
     );
 }
+import { Clock } from "lucide-react";
