@@ -25,7 +25,8 @@ export async function POST(request: NextRequest) {
                     where: { status: 'Draft' },
                     orderBy: { updatedAt: 'desc' },
                     take: 1
-                }
+                },
+                familyInfo: true
             }
         });
 
@@ -33,7 +34,14 @@ export async function POST(request: NextRequest) {
 
         if (draftId || (existingApplicant?.applications && existingApplicant.applications.length > 0)) {
             // Update existing draft
-            const applicationId = draftId || existingApplicant.applications[0].id;
+            const applicationId = draftId || (existingApplicant ? existingApplicant.applications[0].id : null);
+
+            if (!applicationId) {
+                return NextResponse.json(
+                    { success: false, error: 'Application ID is required' },
+                    { status: 400 }
+                );
+            }
 
             savedDraft = await prisma.application.update({
                 where: { id: applicationId },
@@ -101,7 +109,7 @@ export async function POST(request: NextRequest) {
             let applicant = existingApplicant;
 
             if (!applicant) {
-                applicant = await prisma.applicant.create({
+                const newApplicant = await prisma.applicant.create({
                     data: {
                         surname: formData.surname || 'Draft',
                         firstName: formData.firstName || 'User',
@@ -114,12 +122,17 @@ export async function POST(request: NextRequest) {
                         town: formData.town || 'Not Specified',
                         address: formData.address || 'Not Specified',
                         phone: formData.phone || 'Not Specified',
-                        email: user.email,
+                        email: user.email!, // We know email exists from auth check
                         parish: formData.parish || 'Central Cathedral Abuja',
                         prevScholarship: formData.prevScholarship || false,
                         prevScholarshipDate: formData.prevScholarshipDate,
                     }
                 });
+                applicant = newApplicant as any;
+            }
+
+            if (!applicant) {
+                throw new Error("Failed to create or find applicant");
             }
 
             savedDraft = await prisma.application.create({
@@ -239,8 +252,8 @@ export async function GET(request: NextRequest) {
                 admissionLetterUrl: draft.admissionLetterUrl,
                 passportUrl: draft.passportUrl,
                 // Family info
-                ...applicant.familyInfo
-            }
+                ...(applicant.familyInfo || {})
+            } as any
         });
 
     } catch (error) {

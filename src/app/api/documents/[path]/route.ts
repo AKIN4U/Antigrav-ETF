@@ -3,9 +3,10 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
     request: NextRequest,
-    { params }: { params: { path: string } }
+    { params }: { params: Promise<{ path: string }> }
 ) {
     try {
+        const { path } = await params;
         const supabase = await createClient();
 
         // Check authentication
@@ -19,7 +20,7 @@ export async function GET(
         }
 
         // Decode the path parameter (it may be URL encoded)
-        const filePath = params.path ? decodeURIComponent(params.path) : '';
+        const filePath = path ? decodeURIComponent(path) : '';
 
         if (!filePath) {
             return NextResponse.json(
@@ -29,6 +30,13 @@ export async function GET(
         }
 
         // Check if user is a committee member (admin)
+        if (!user.email) {
+            return NextResponse.json(
+                { error: 'User email is required' },
+                { status: 400 }
+            );
+        }
+
         const { data: adminUser } = await supabase
             .from('AdminUser')
             .select('id')

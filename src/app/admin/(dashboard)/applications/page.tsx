@@ -1,13 +1,15 @@
 "use client";
 
+export const dynamic = 'force-dynamic';
+
 import { useState, useEffect } from "react";
 import { Search, Filter, Eye, Loader2, Download } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ApplicationWithApplicant, ApiResponse } from "@/types";
+import { ApplicationDetail, ApiResponse } from "@/types";
 
 export default function ApplicationsPage() {
-    const [applications, setApplications] = useState<ApplicationWithApplicant[]>([]);
+    const [applications, setApplications] = useState<ApplicationDetail[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("All");
@@ -24,7 +26,7 @@ export default function ApplicationsPage() {
                 search: searchTerm,
             });
             const response = await fetch(`/api/admin/debug-apps?${params}`);
-            const result: ApiResponse<ApplicationWithApplicant[]> = await response.json();
+            const result: ApiResponse<ApplicationDetail[]> = await response.json();
             if (result.success && result.data) {
                 setApplications(result.data);
                 setTotalPages(result.meta?.totalPages || 1);
