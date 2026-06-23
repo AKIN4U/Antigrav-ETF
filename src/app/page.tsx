@@ -24,7 +24,7 @@ export default function Home() {
         <div className="relative z-10 container px-4 py-20 -mt-35 flex flex-col items-center space-y-6">
           <div className="inline-flex items-center gap-2 px-4 py-2 -mb-1 rounded-full border border-white/20 bg-white/10 text-sm font-medium backdrop-blur-sm">
             <Sparkles className="h-4 w-4 text-amber-300" />
-            <span className="tracking-wide text-md">Empowering Education Since 2021</span>
+            <span className="tracking-wide text-md">Empowering Education Since 2011</span>
           </div>
 
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight animate-fade-in-up leading-tight">
