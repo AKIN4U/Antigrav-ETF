@@ -8,6 +8,15 @@ export function AcademicInfoStep({ updateData, data }: AcademicInfoStepProps) {
         updateData({ [e.target.name]: e.target.value });
     };
 
+    const isTertiary = () => {
+        const cls = (data.presentClass || "").toLowerCase();
+        if (!cls) return false;
+        if (cls.includes("jss") || cls.includes("junior") || cls.includes("sss") || cls.includes("ss") || cls.includes("senior") || cls.includes("primary") || cls.includes("pry") || cls.includes("class") || cls.includes("basic") || cls.includes("grade")) {
+            return false;
+        }
+        return true;
+    };
+
     return (
         <div className="space-y-6 animate-fade-in">
             <h2 className="text-xl font-semibold mb-4">Academic Status</h2>
@@ -63,6 +72,34 @@ export function AcademicInfoStep({ updateData, data }: AcademicInfoStepProps) {
                             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                         />
                     </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Last Result (Average % or CGPA)</label>
+                        <input
+                            name="lastResult"
+                            value={data.lastResult || ""}
+                            onChange={handleChange}
+                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                            placeholder="e.g. 78% or 3.5 CGPA"
+                        />
+                    </div>
+                    {isTertiary() && (
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">JAMB / University Entrance Exam Score</label>
+                            <input
+                                name="jambScore"
+                                type="number"
+                                min="0"
+                                max="400"
+                                value={data.jambScore || ""}
+                                onChange={handleChange}
+                                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                                placeholder="e.g. 270"
+                            />
+                        </div>
+                    )}
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

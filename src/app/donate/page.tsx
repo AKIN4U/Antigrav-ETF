@@ -65,7 +65,7 @@ export default function DonatePage() {
     const verifyTransaction = async (ref: string) => {
         try {
             const res = await fetch(`/api/donations/verify?reference=${ref}`);
-            const result = await res.json();
+            const result = await res.json() as any;
             if (result.success) {
                 setShowSuccess(true);
             } else {

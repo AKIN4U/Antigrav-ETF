@@ -5,8 +5,18 @@ export type Enums<T extends keyof Database['public']['Enums']> = Database['publi
 
 // Basic Table Types
 export type AdminUser = Tables<'AdminUser'>;
-export type Applicant = Tables<'Applicant'>;
-export type Application = Tables<'Application'>;
+export type Applicant = Tables<'Applicant'> & {
+    churchMemberId?: string | null;
+    parentConsent?: boolean;
+    childConsent?: boolean;
+};
+export type Application = Tables<'Application'> & {
+    jambScore?: number | null;
+    jambSlipUrl?: string | null;
+    waecCertUrl?: string | null;
+    verificationStatus?: string;
+    verificationChecklist?: string;
+};
 export type Budget = Tables<'Budget'>;
 export type Donation = Tables<'Donation'>;
 export type FamilyInfo = Tables<'FamilyInfo'>;

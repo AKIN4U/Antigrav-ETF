@@ -38,21 +38,21 @@ export async function proxy(request: NextRequest) {
     );
 
     const {
-        data: { session },
-    } = await supabase.auth.getSession();
+        data: { user },
+    } = await supabase.auth.getUser();
 
     // Protect admin routes
     if (request.nextUrl.pathname.startsWith("/admin")) {
         // Exclude /admin/login from protection
         if (request.nextUrl.pathname === "/admin/login") {
             // Optional: If already logged in, redirect to admin dashboard
-            if (session) {
+            if (user) {
                 return NextResponse.redirect(new URL("/admin/applications", request.url));
             }
             return response;
         }
 
-        if (!session) {
+        if (!user) {
             return NextResponse.redirect(new URL("/admin/login", request.url));
         }
 

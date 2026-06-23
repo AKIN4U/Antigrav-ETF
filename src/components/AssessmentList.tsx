@@ -11,7 +11,7 @@ export default function AssessmentList({ applicationId }: { applicationId: strin
             try {
                 const res = await fetch(`/api/admin/applications/${applicationId}/assessments`);
                 if (res.ok) {
-                    const data = await res.json();
+                    const data = await res.json() as any;
                     setAssessments(data.assessments || []);
                 }
             } catch (err) {

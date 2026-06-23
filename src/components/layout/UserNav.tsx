@@ -14,17 +14,17 @@ export function UserNav() {
     const supabase = createClient();
 
     useEffect(() => {
-        const getUser = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session?.user) {
-                setUser(session.user);
+        const getUserInfo = async () => {
+            const { data: { user: currentUser } } = await supabase.auth.getUser();
+            if (currentUser) {
+                setUser(currentUser);
             } else {
                 setUser(null);
             }
             setLoading(false);
         };
 
-        getUser();
+        getUserInfo();
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: AuthChangeEvent, session: Session | null) => {
             setUser(session?.user ?? null);
@@ -49,6 +49,17 @@ export function UserNav() {
     }
 
     if (user) {
+        const getDashboardHref = () => {
+            const role = user.user_metadata?.role;
+            if (role === 'SuperAdmin' || role === 'Admin') {
+                return "/admin/dashboard";
+            }
+            if (role === 'Treasurer') {
+                return "/treasurer/dashboard";
+            }
+            return "/dashboard";
+        };
+
         return (
             <div className="flex items-center gap-4">
                 <div className="hidden md:flex flex-col items-end">
@@ -58,7 +69,7 @@ export function UserNav() {
 
                 <div className="flex items-center gap-2">
                     <Link
-                        href={user.user_metadata?.role === 'SuperAdmin' || user.user_metadata?.role === 'Admin' ? "/admin/dashboard" : "/dashboard"}
+                        href={getDashboardHref()}
                         className="inline-flex h-9 items-center justify-center rounded-md border border-input bg-background px-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
                         title="Dashboard"
                     >

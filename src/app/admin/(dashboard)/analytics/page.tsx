@@ -9,7 +9,7 @@ import {
 } from "recharts";
 import { Loader2, TrendingUp, Users, MapPin, DollarSign } from "lucide-react";
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
+const COLORS: string[] = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
 
 export default function AnalyticsPage() {
     const [data, setData] = useState<any>(null);
@@ -19,7 +19,7 @@ export default function AnalyticsPage() {
         const fetchAnalytics = async () => {
             try {
                 const res = await fetch("/api/admin/analytics");
-                const json = await res.json();
+                const json = await res.json() as any;
                 if (json.success) {
                     setData(json.data);
                 }
@@ -132,7 +132,7 @@ export default function AnalyticsPage() {
                                     dataKey="value"
                                 >
                                     {genderData.map((entry: any, index: number) => (
-                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                        <Cell key={`cell-${index}`} fill={(COLORS as any)[index % 5]} />
                                     ))}
                                 </Pie>
                                 <Tooltip />

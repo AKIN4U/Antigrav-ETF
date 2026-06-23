@@ -1,16 +1,19 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
     try {
-        const logs = await prisma.auditLog.findMany({
-            orderBy: {
-                createdAt: "desc"
-            },
-            take: 100 // Limit to last 100 actions for now
-        });
+        const supabase = await createClient();
+        
+        const { data: logs, error } = await supabase
+            .from("AuditLog")
+            .select("*")
+            .order("createdAt", { ascending: false })
+            .limit(100);
+
+        if (error) throw error;
 
         return NextResponse.json({ success: true, data: logs });
     } catch (error) {

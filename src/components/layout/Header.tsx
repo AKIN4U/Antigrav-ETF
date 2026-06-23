@@ -18,6 +18,12 @@ export function Header() {
                     <Link href="/apply" className="text-sm font-medium hover:text-primary transition-colors">
                         Apply
                     </Link>
+                    <Link href="/donate" className="text-sm font-medium hover:text-primary transition-colors">
+                        Donate
+                    </Link>
+                    <Link href="/treasurer/login" className="text-sm font-medium hover:text-primary transition-colors">
+                        Treasurer
+                    </Link>
                     <Link href="/admin/login" className="text-sm font-medium hover:text-primary transition-colors">
                         Committee
                     </Link>

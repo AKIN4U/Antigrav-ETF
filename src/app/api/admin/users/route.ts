@@ -67,22 +67,22 @@ export async function GET(req: NextRequest) {
 
         // Check if user is authenticated
         const {
-            data: { session },
-        } = await supabase.auth.getSession();
+            data: { user },
+        } = await supabase.auth.getUser();
 
-        if (!session) {
-            return NextResponse.json({ error: "Unauthorized: No active session found" }, { status: 401 });
+        if (!user) {
+            return NextResponse.json({ error: "Unauthorized: No active user found" }, { status: 401 });
         }
 
-        if (!session.user?.email) {
-            return NextResponse.json({ error: "Unauthorized: Session has no email" }, { status: 401 });
+        if (!user.email) {
+            return NextResponse.json({ error: "Unauthorized: User has no email" }, { status: 401 });
         }
 
         // Verify SuperAdmin role
         const { data: currentAdmin } = await (supabase as any)
             .from("AdminUser")
             .select("role")
-            .eq("email", session.user.email)
+            .eq("email", user.email)
             .single();
 
         if (!currentAdmin) {
@@ -147,14 +147,14 @@ export async function POST(req: NextRequest) {
 
         // Check if user is authenticated
         const {
-            data: { session },
-        } = await supabase.auth.getSession();
+            data: { user },
+        } = await supabase.auth.getUser();
 
-        if (!session) {
+        if (!user) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        if (!session.user?.email) {
+        if (!user.email) {
             return NextResponse.json({ error: "User email not found" }, { status: 401 });
         }
 
@@ -162,7 +162,7 @@ export async function POST(req: NextRequest) {
         const { data: currentAdmin } = await (supabase as any)
             .from("AdminUser")
             .select("role")
-            .eq("email", session.user.email)
+            .eq("email", user.email)
             .single();
 
         if (!currentAdmin || currentAdmin.role !== "SuperAdmin") {
@@ -290,14 +290,14 @@ export async function PATCH(req: NextRequest) {
 
         // Check if user is authenticated
         const {
-            data: { session },
-        } = await supabase.auth.getSession();
+            data: { user },
+        } = await supabase.auth.getUser();
 
-        if (!session) {
+        if (!user) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        if (!session.user?.email) {
+        if (!user.email) {
             return NextResponse.json({ error: "User email not found" }, { status: 401 });
         }
 
@@ -305,7 +305,7 @@ export async function PATCH(req: NextRequest) {
         const { data: currentAdmin } = await (supabase as any)
             .from("AdminUser")
             .select("role")
-            .eq("email", session.user.email)
+            .eq("email", user.email)
             .single();
 
         if (!currentAdmin || currentAdmin.role !== "SuperAdmin") {
@@ -377,14 +377,14 @@ export async function DELETE(req: NextRequest) {
 
         // Check if user is authenticated
         const {
-            data: { session },
-        } = await supabase.auth.getSession();
+            data: { user },
+        } = await supabase.auth.getUser();
 
-        if (!session) {
+        if (!user) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        if (!session.user?.email) {
+        if (!user.email) {
             return NextResponse.json({ error: "User email not found" }, { status: 401 });
         }
 
@@ -392,7 +392,7 @@ export async function DELETE(req: NextRequest) {
         const { data: currentAdmin } = await (supabase as any)
             .from("AdminUser")
             .select("role, email")
-            .eq("email", session.user.email)
+            .eq("email", user.email)
             .single();
 
         if (!currentAdmin || currentAdmin.role !== "SuperAdmin") {

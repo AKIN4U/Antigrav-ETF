@@ -29,6 +29,9 @@ model Applicant {
   phone         String
   email         String?  @unique // Optional for children, but good for contact
   parish        String   @default("Central Cathedral Abuja")
+  churchMemberId String?
+  parentConsent  Boolean  @default(false)
+  childConsent   Boolean  @default(false)
 
   // Previous Scholarship
   prevScholarship     Boolean @default(false)
@@ -38,6 +41,7 @@ model Applicant {
   applications Application[]
   familyInfo   FamilyInfo?
   alumniProfile AlumniProfile?
+  academicRecords AcademicRecord[]
 }
 
 model AlumniProfile {
@@ -129,6 +133,7 @@ model Application {
   sentAway        Boolean @default(false)
   repeatedClass   Boolean @default(false)
   lastResult      String? // CGPA or Average
+  jambScore       Int?
 
   // Documents (URLs or paths)
   schoolBillUrl       String?
@@ -138,6 +143,8 @@ model Application {
   assistanceLetterUrl String?
   admissionLetterUrl  String?
   passportUrl         String?
+  jambSlipUrl         String?
+  waecCertUrl         String?
 
   // Admin/Screening
   scoreFinancial    Int?
@@ -148,11 +155,14 @@ model Application {
   voucherCode     String?
   disbursedDate   DateTime?
   paymentReference String?
+  verificationStatus    String @default("Unverified")
+  verificationChecklist String @default("{}")
 
   assessments     Assessment[] // Relation to assessments
   
   cycleId         String?
   cycle           ScholarshipCycle? @relation(fields: [cycleId], references: [id])
+  academicRecords AcademicRecord[]
 }
 
 model AdminUser {
@@ -257,4 +267,40 @@ model ScholarshipCycle {
   updatedAt     DateTime @updatedAt
 
   applications Application[]
+}
+
+model AcademicRecord {
+  id            String      @id @default(uuid())
+  applicantId   String
+  applicant     Applicant   @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+  applicationId String?
+  application   Application? @relation(fields: [applicationId], references: [id])
+  
+  academicYear  String      // e.g., "2025/2026"
+  semester      String?     // e.g., "First", "Second"
+  level         String      // e.g., "100 Level", "JSS2"
+  cgpaOrAverage String      // e.g., "3.5", "85%"
+  resultUrl     String      // URL to the uploaded result document
+  status        String      @default("Pending Review") // Pending Review, Approved, Rejected
+  reviewerNotes String?
+  
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model SystemSetting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Announcement {
+  id        String   @id @default(uuid())
+  title     String
+  content   String   // Markdown or HTML content
+  status    String   @default("Draft") // Draft, Published
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

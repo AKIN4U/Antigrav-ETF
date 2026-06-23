@@ -51,13 +51,30 @@ export function DocumentUploadStep({ updateData, data }: DocumentUploadStepProps
         }
     };
 
+    const isTertiary = () => {
+        const cls = (data.presentClass || "").toLowerCase();
+        if (!cls) return false;
+        if (cls.includes("jss") || cls.includes("junior") || cls.includes("sss") || cls.includes("ss") || cls.includes("senior") || cls.includes("primary") || cls.includes("pry") || cls.includes("class") || cls.includes("basic") || cls.includes("grade")) {
+            return false;
+        }
+        return true;
+    };
+
     const documents = [
+        { id: "passportPhoto", label: "Applicant's Passport Picture" },
         { id: "schoolFeesBill", label: "Present Annual School Fees (Bill)" },
         { id: "birthCertificate", label: "Recipient's Birth Certificate" },
         { id: "primaryCertificate", label: "Primary School Certificate" },
         { id: "schoolResults", label: "Latest School Results" },
         { id: "assistanceLetter", label: "One Page Letter Explaining Financial Need" },
     ];
+
+    if (isTertiary()) {
+        documents.push(
+            { id: "waecCertificate", label: "Secondary School Leaving Certificate (WAEC/NECO)" },
+            { id: "jambSlip", label: "JAMB / Entrance Exam Result Slip" }
+        );
+    }
 
     return (
         <div className="space-y-6 animate-fade-in">

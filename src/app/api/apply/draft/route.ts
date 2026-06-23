@@ -66,6 +66,9 @@ export async function POST(request: NextRequest) {
                     ...(formData.assistanceLetterUrl && { assistanceLetterUrl: formData.assistanceLetterUrl }),
                     ...(formData.admissionLetterUrl && { admissionLetterUrl: formData.admissionLetterUrl }),
                     ...(formData.passportUrl && { passportUrl: formData.passportUrl }),
+                    ...(formData.jambSlipUrl && { jambSlipUrl: formData.jambSlipUrl }),
+                    ...(formData.waecCertUrl && { waecCertUrl: formData.waecCertUrl }),
+                    ...(formData.jambScore !== undefined && { jambScore: parseInt(formData.jambScore) || null }),
                     updatedAt: new Date()
                 }
             });
@@ -89,6 +92,9 @@ export async function POST(request: NextRequest) {
                         ...(formData.parish !== undefined && { parish: formData.parish }),
                         ...(formData.prevScholarship !== undefined && { prevScholarship: formData.prevScholarship }),
                         ...(formData.prevScholarshipDate !== undefined && { prevScholarshipDate: formData.prevScholarshipDate }),
+                        ...(formData.churchMemberId !== undefined && { churchMemberId: formData.churchMemberId }),
+                        ...(formData.parentConsent !== undefined && { parentConsent: formData.parentConsent === true }),
+                        ...(formData.childConsent !== undefined && { childConsent: formData.childConsent === true }),
                     }
                 });
 
@@ -126,6 +132,9 @@ export async function POST(request: NextRequest) {
                         parish: formData.parish || 'Central Cathedral Abuja',
                         prevScholarship: formData.prevScholarship || false,
                         prevScholarshipDate: formData.prevScholarshipDate,
+                        churchMemberId: formData.churchMemberId,
+                        parentConsent: formData.parentConsent === true,
+                        childConsent: formData.childConsent === true,
                     }
                 });
                 applicant = newApplicant as any;
@@ -158,6 +167,9 @@ export async function POST(request: NextRequest) {
                     assistanceLetterUrl: formData.assistanceLetterUrl,
                     admissionLetterUrl: formData.admissionLetterUrl,
                     passportUrl: formData.passportUrl,
+                    jambSlipUrl: formData.jambSlipUrl,
+                    waecCertUrl: formData.waecCertUrl,
+                    jambScore: formData.jambScore ? parseInt(formData.jambScore) : null,
                 }
             });
         }
@@ -230,6 +242,9 @@ export async function GET(request: NextRequest) {
                 parish: applicant.parish,
                 prevScholarship: applicant.prevScholarship,
                 prevScholarshipDate: applicant.prevScholarshipDate,
+                churchMemberId: applicant.churchMemberId,
+                parentConsent: applicant.parentConsent,
+                childConsent: applicant.childConsent,
                 // Academic info
                 schoolName: draft.schoolName,
                 schoolAddress: draft.schoolAddress,
@@ -251,6 +266,9 @@ export async function GET(request: NextRequest) {
                 assistanceLetterUrl: draft.assistanceLetterUrl,
                 admissionLetterUrl: draft.admissionLetterUrl,
                 passportUrl: draft.passportUrl,
+                jambSlipUrl: draft.jambSlipUrl,
+                waecCertUrl: draft.waecCertUrl,
+                jambScore: draft.jambScore,
                 // Family info
                 ...(applicant.familyInfo || {})
             } as any

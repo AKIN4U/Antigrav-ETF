@@ -33,9 +33,9 @@ export async function GET(
     try {
         const { id } = await params;
         const supabase = await createSupabaseServerClient();
-        const { data: { session } } = await supabase.auth.getSession();
+        const { data: { user } } = await supabase.auth.getUser();
 
-        if (!session || !session.user?.email) {
+        if (!user || !user.email) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
@@ -43,7 +43,7 @@ export async function GET(
         const { data: currentAdmin } = await supabase
             .from("AdminUser")
             .select("id, role")
-            .eq("email", session.user.email)
+            .eq("email", user.email)
             .single();
 
         if (!currentAdmin) {

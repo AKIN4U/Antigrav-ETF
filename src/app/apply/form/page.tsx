@@ -24,6 +24,8 @@ export default function ApplicationFormPage() {
     const [draftLoaded, setDraftLoaded] = useState(false);
     const [consentData, setConsentData] = useState(false);
     const [consentTerms, setConsentTerms] = useState(false);
+    const [childConsent, setChildConsent] = useState(false);
+    const [parentConsent, setParentConsent] = useState(false);
     const router = useRouter();
     const supabase = createClient();
 
@@ -46,8 +48,8 @@ export default function ApplicationFormPage() {
                 setCycleLoading(false);
             }
 
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
                 // Check if user is a committee member
                 try {
                     const response = await fetch("/api/admin/users/check-status");
@@ -138,8 +140,8 @@ export default function ApplicationFormPage() {
         }
 
         // Validate consent checkboxes
-        if (!consentData || !consentTerms) {
-            alert("Please accept both consent checkboxes before submitting your application.");
+        if (!consentData || !consentTerms || !childConsent || !parentConsent) {
+            alert("Please accept all consent checkboxes before submitting your application.");
             return;
         }
 
@@ -150,7 +152,13 @@ export default function ApplicationFormPage() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ ...formData, draftId, cycleId: activeCycle.id }),
+                body: JSON.stringify({ 
+                    ...formData, 
+                    draftId, 
+                    cycleId: activeCycle.id,
+                    childConsent,
+                    parentConsent
+                }),
             });
 
             const result = await response.json();
@@ -240,7 +248,7 @@ export default function ApplicationFormPage() {
 
                         {/* Consent Checkboxes */}
                         <div className="border-t pt-6 space-y-4">
-                            <h3 className="font-semibold text-lg">Required Consents</h3>
+                            <h3 className="font-semibold text-lg">Required Consents & Signature Agreements</h3>
 
                             <div className="flex items-start gap-3 p-4 bg-muted/30 rounded-md">
                                 <input
@@ -268,9 +276,35 @@ export default function ApplicationFormPage() {
                                 </label>
                             </div>
 
-                            {(!consentData || !consentTerms) && (
+                            <div className="flex items-start gap-3 p-4 bg-muted/30 rounded-md">
+                                <input
+                                    type="checkbox"
+                                    id="childConsent"
+                                    checked={childConsent}
+                                    onChange={(e) => setChildConsent(e.target.checked)}
+                                    className="mt-1 h-4 w-4 rounded border-gray-300"
+                                />
+                                <label htmlFor="childConsent" className="text-sm cursor-pointer">
+                                    <strong>Child&apos;s Signature Agreement:</strong> I confirm that I am the applicant, and all educational and biographical information provided in this form is accurate.
+                                </label>
+                            </div>
+
+                            <div className="flex items-start gap-3 p-4 bg-muted/30 rounded-md">
+                                <input
+                                    type="checkbox"
+                                    id="parentConsent"
+                                    checked={parentConsent}
+                                    onChange={(e) => setParentConsent(e.target.checked)}
+                                    className="mt-1 h-4 w-4 rounded border-gray-300"
+                                />
+                                <label htmlFor="parentConsent" className="text-sm cursor-pointer">
+                                    <strong>Parent/Guardian Consent:</strong> I, as the parent or legal guardian, hereby authorize the applicant to apply for this scholarship and certify that the financial details declared are true.
+                                </label>
+                            </div>
+
+                            {(!consentData || !consentTerms || !childConsent || !parentConsent) && (
                                 <p className="text-sm text-red-600">
-                                    * Both consents are required to submit your application.
+                                    * All consents and signature agreements are required to submit your application.
                                 </p>
                             )}
                         </div>

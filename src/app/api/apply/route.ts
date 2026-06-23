@@ -29,7 +29,14 @@ export async function POST(request: Request) {
             motherYearsServed, motherChurchPosition, motherChurchDuties,
 
             // Documents (keys match the frontend state)
-            schoolFeesBill, birthCertificate, primaryCertificate, schoolResults, assistanceLetter
+            schoolFeesBill, birthCertificate, primaryCertificate, schoolResults, assistanceLetter,
+            passportPhoto, waecCertificate, jambSlip,
+
+            // Consents
+            parentConsent, childConsent,
+            
+            // New Fields
+            churchMemberId, jambScore
         } = body;
 
         // Basic validation
@@ -123,6 +130,9 @@ export async function POST(request: Request) {
                 parish: parish || undefined,
                 prevScholarship: prevScholarship === "Yes",
                 prevScholarshipDate: prevScholarshipDate || null,
+                churchMemberId: churchMemberId || null,
+                parentConsent: parentConsent === true,
+                childConsent: childConsent === true,
                 familyInfo: {
                     create: {
                         fatherSurname, fatherFirstName, fatherMiddleName, fatherAddress, fatherPhone, fatherState, fatherLga, fatherTown,
@@ -151,11 +161,15 @@ export async function POST(request: Request) {
                         sentAway: sentAway === "Yes",
                         repeatedClass: repeatedClass === "Yes",
                         lastResult,
+                        jambScore: safeInt(jambScore),
                         schoolBillUrl: schoolFeesBill,
                         birthCertUrl: birthCertificate,
                         primaryCertUrl: primaryCertificate,
                         schoolResultUrl: schoolResults,
                         assistanceLetterUrl: assistanceLetter,
+                        passportUrl: passportPhoto || null,
+                        waecCertUrl: waecCertificate || null,
+                        jambSlipUrl: jambSlip || null,
                     }
                 }
             }

@@ -18,9 +18,9 @@ export default function UpdatePasswordPage() {
     // Check if we have a session (the callback should have set one)
     useEffect(() => {
         const checkSession = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session) {
-                // If no session, they shouldn't be here
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) {
+                // If no user, they shouldn't be here
                 // Note: In some Supabase configs, the session is already active here
                 // if they came from the recovery link.
             }

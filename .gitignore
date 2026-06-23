@@ -22,6 +22,7 @@
 
 # Local Environment Variables
 .env.local
+.env
 
 # Prisma
 # Keep dev.db in gitignore for local development
@@ -35,3 +36,13 @@ prisma/dev.db-journal
 
 # PNPM (NEW)
 pnpm-debug.log*
+
+# Large Installers
+DockerDesktopInstaller.exe
+*.msi
+
+# Agent & Temp Package Files
+.agents/
+package/
+*.tgz
+skills-lock.json

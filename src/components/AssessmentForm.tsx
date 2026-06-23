@@ -42,7 +42,7 @@ export default function AssessmentForm({ applicationId, existingAssessment, onSu
             try {
                 const res = await fetch(`/api/assessments?applicationId=${applicationId}`);
                 if (res.ok) {
-                    const data = await res.json();
+                    const data = await res.json() as any;
                     // API returns list, find ours (should be only one due to server filtering)
                     // But server returns { assessments: [] }
                     if (data.assessments && data.assessments.length > 0) {
@@ -95,7 +95,7 @@ export default function AssessmentForm({ applicationId, existingAssessment, onSu
             });
 
             if (!res.ok) {
-                const data = await res.json();
+                const data = await res.json() as any;
                 throw new Error(data.error || "Failed to submit assessment");
             }
 

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { prisma } from "@/lib/prisma";
 import { sendStatusUpdateEmail } from "@/lib/email";
 import { createAuditLog } from "@/lib/audit";
 
@@ -8,26 +9,64 @@ export const dynamic = "force-dynamic";
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
     try {
         const { id } = await params;
-        const supabase = await createClient();
 
-        const { data: application, error } = await (supabase as any)
-            .from("Application")
-            .select(`
-                *,
-                applicant:Applicant(
-                    *,
-                    familyInfo:FamilyInfo(*)
-                )
-            `)
-            .eq("id", id)
-            .single();
+        const application = await prisma.application.findUnique({
+            where: { id },
+            include: {
+                applicant: {
+                    include: {
+                        familyInfo: true
+                    }
+                }
+            }
+        });
 
-        if (error || !application) {
-            console.error("Error fetching application:", error);
+        if (!application) {
             return NextResponse.json({ success: false, error: "Application not found" }, { status: 404 });
         }
 
-        return NextResponse.json({ success: true, data: application });
+        // Find potential duplicates
+        const applicant = application.applicant;
+        const familyInfo = applicant?.familyInfo;
+        const orConditions: any[] = [];
+
+        if (familyInfo) {
+            if (familyInfo.fatherPhone) orConditions.push({ applicant: { familyInfo: { fatherPhone: familyInfo.fatherPhone } } });
+            if (familyInfo.motherPhone) orConditions.push({ applicant: { familyInfo: { motherPhone: familyInfo.motherPhone } } });
+            if (familyInfo.fatherSurname && familyInfo.fatherFirstName) {
+                orConditions.push({ applicant: { familyInfo: { fatherSurname: familyInfo.fatherSurname, fatherFirstName: familyInfo.fatherFirstName } } });
+            }
+            if (familyInfo.motherSurname && familyInfo.motherFirstName) {
+                orConditions.push({ applicant: { familyInfo: { motherSurname: familyInfo.motherSurname, motherFirstName: familyInfo.motherFirstName } } });
+            }
+        }
+
+        if (applicant) {
+            orConditions.push({ applicant: { surname: applicant.surname, firstName: applicant.firstName, dob: applicant.dob } });
+            if (applicant.phone) orConditions.push({ applicant: { phone: applicant.phone } });
+        }
+
+        let duplicates: any[] = [];
+        if (orConditions.length > 0) {
+            duplicates = await prisma.application.findMany({
+                where: {
+                    id: { not: id },
+                    cycleId: application.cycleId,
+                    OR: orConditions
+                },
+                include: {
+                    applicant: true
+                }
+            });
+        }
+
+        return NextResponse.json({ 
+            success: true, 
+            data: { 
+                ...application, 
+                duplicates 
+            } 
+        });
     } catch (error) {
         console.error("Error fetching application:", error);
         return NextResponse.json({ success: false, error: "Failed to fetch application" }, { status: 500 });

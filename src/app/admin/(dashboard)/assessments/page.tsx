@@ -20,7 +20,7 @@ export default function AssessmentsPage() {
             try {
                 const res = await fetch("/api/assessments");
                 if (res.ok) {
-                    const data = await res.json();
+                    const data = await res.json() as any;
                     setAssessments(data.assessments || []);
                 }
             } catch (error) {

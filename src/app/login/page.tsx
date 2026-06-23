@@ -2,7 +2,7 @@
 
 export const dynamic = "force-dynamic";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Loader2 } from "lucide-react";
@@ -10,11 +10,35 @@ import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
     const router = useRouter();
+    const [checkingAuth, setCheckingAuth] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
     const supabase = createClient();
+
+    useEffect(() => {
+        let isMounted = true;
+        const checkUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user && isMounted) {
+                const role = user.user_metadata?.role;
+                if (role === "SuperAdmin" || role === "Admin") {
+                    router.push("/admin/dashboard");
+                } else if (role === "Treasurer") {
+                    router.push("/treasurer/dashboard");
+                } else {
+                    router.push("/dashboard");
+                }
+            } else if (isMounted) {
+                setCheckingAuth(false);
+            }
+        };
+        checkUser();
+        return () => {
+            isMounted = false;
+        };
+    }, [supabase, router]);
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -39,6 +63,14 @@ export default function LoginPage() {
             setIsLoading(false);
         }
     };
+
+    if (checkingAuth) {
+        return (
+            <div className="container flex h-screen w-screen flex-col items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+        );
+    }
 
     return (
         <div className="container flex h-screen w-screen flex-col items-center justify-center">

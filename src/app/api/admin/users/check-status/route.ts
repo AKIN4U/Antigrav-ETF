@@ -41,10 +41,10 @@ export async function GET(req: NextRequest) {
 
         // Check if user is authenticated
         const {
-            data: { session },
-        } = await supabase.auth.getSession();
+            data: { user },
+        } = await supabase.auth.getUser();
 
-        if (!session || !session.user?.email) {
+        if (!user || !user.email) {
             return NextResponse.json(
                 { approved: false, status: "Unauthorized" },
                 { status: 401 }
@@ -54,8 +54,8 @@ export async function GET(req: NextRequest) {
         // Check AdminUser status
         const { data: adminUser } = await (supabase as any)
             .from("AdminUser")
-            .select("status")
-            .eq("email", session.user.email)
+            .select("status, role")
+            .eq("email", user.email)
             .single();
 
         if (!adminUser) {
@@ -72,7 +72,7 @@ export async function GET(req: NextRequest) {
             );
         }
 
-        return NextResponse.json({ approved: true, status: "Approved" });
+        return NextResponse.json({ approved: true, status: "Approved", role: adminUser.role });
     } catch (error: any) {
         console.error("Error checking user status:", error);
         return NextResponse.json(

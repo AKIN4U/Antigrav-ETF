@@ -115,6 +115,41 @@ export function PersonalInfoStep({ updateData, data }: PersonalInfoStepProps) {
             </div>
 
             <div className="space-y-4 border-t pt-4">
+                <h3 className="text-lg font-semibold">Church Membership & Parish Details</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Parish Name</label>
+                        <input
+                            name="parish"
+                            value={data.parish || ""}
+                            onChange={handleChange}
+                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                            placeholder="e.g. Central Cathedral Abuja"
+                            list="parish-suggestions"
+                        />
+                        <datalist id="parish-suggestions">
+                            <option value="Central Cathedral Abuja" />
+                            <option value="Central Parish Area 10 Garki Abuja" />
+                            <option value="Suleja Parish" />
+                            <option value="Kuje Parish" />
+                            <option value="Nyanya Parish" />
+                            <option value="Gwagwalada Parish" />
+                        </datalist>
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Church Member ID (Optional)</label>
+                        <input
+                            name="churchMemberId"
+                            value={data.churchMemberId || ""}
+                            onChange={handleChange}
+                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                            placeholder="e.g. CCC-12345"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div className="space-y-4 border-t pt-4">
                 <div className="space-y-2">
                     <label className="text-sm font-medium">Have you been granted a CCC ETF Scholarship before?</label>
                     <div className="flex gap-4">

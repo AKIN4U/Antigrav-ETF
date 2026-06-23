@@ -13,7 +13,7 @@ export default function AuditLogsPage() {
         const fetchLogs = async () => {
             try {
                 const res = await fetch("/api/admin/audit-logs");
-                const json = await res.json();
+                const json = await res.json() as any;
                 if (json.success) {
                     setLogs(json.data);
                 }

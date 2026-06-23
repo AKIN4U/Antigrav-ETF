@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { LayoutDashboard, Users, FileText, CreditCard, Settings, LogOut, BarChart3, Wallet, Heart, Shield, Menu, X, ClipboardCheck, GraduationCap, Calendar } from "lucide-react";
+import { LayoutDashboard, Users, FileText, CreditCard, Settings, LogOut, BarChart3, Wallet, Heart, Shield, Menu, X, ClipboardCheck, GraduationCap, Calendar, Activity } from "lucide-react";
 
 export default function AdminLayout({
     children,
@@ -18,6 +18,7 @@ export default function AdminLayout({
         { href: "/admin/audit-logs", icon: ClipboardCheck, label: "Audit Logs" },
         { href: "/admin/alumni", icon: GraduationCap, label: "Alumni" },
         { href: "/admin/applications", icon: FileText, label: "Applications" },
+        { href: "/admin/monitoring", icon: Activity, label: "Scholar Monitoring" },
         { href: "/admin/beneficiaries", icon: Users, label: "Beneficiaries" },
         { href: "/admin/disbursements", icon: CreditCard, label: "Disbursements" },
         { href: "/admin/reports", icon: BarChart3, label: "Reports" },

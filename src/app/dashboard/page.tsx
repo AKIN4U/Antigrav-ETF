@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { FileText, Clock, CheckCircle, AlertCircle, XCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import AcademicProgress from "@/components/AcademicProgress";
 
 export default function DashboardPage() {
     const [applicant, setApplicant] = useState<any>(null);
@@ -223,6 +224,7 @@ export default function DashboardPage() {
                         </ul>
                     </div>
 
+                    {/* School Details */}
                     <div className="bg-card border rounded-lg p-6 shadow-sm">
                         <h2 className="text-lg font-semibold mb-2">School Details</h2>
                         <p className="text-sm text-muted-foreground">{latestApplication.schoolName}</p>
@@ -230,6 +232,14 @@ export default function DashboardPage() {
                     </div>
                 </div>
             </div>
+
+            {/* Post-Award Monitoring: Academic Progress */}
+            {(status === "Approved" || status === "Disbursed") && (
+                <div className="mt-8">
+                    <h2 className="text-2xl font-bold mb-6">Academic Progress Tracking</h2>
+                    <AcademicProgress applicationId={latestApplication.id} />
+                </div>
+            )}
         </div>
     );
 }
