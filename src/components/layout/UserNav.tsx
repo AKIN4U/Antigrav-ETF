@@ -10,16 +10,63 @@ import { LogOut, LayoutDashboard, Loader2 } from "lucide-react";
 export function UserNav() {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
+    const [role, setRole] = useState<string>("Applicant");
     const router = useRouter();
     const supabase = createClient();
 
+    const getDisplayRole = (roleKey: string) => {
+        switch (roleKey) {
+            case "SuperAdmin":
+                return "Super Admin";
+            case "Admin":
+                return "Committee Admin";
+            case "Committee":
+                return "Committee Member";
+            case "Treasurer":
+                return "Treasurer";
+            case "ParochialCommittee":
+                return "Parochial Committee";
+            case "GeneralSecretary":
+                return "General Secretary";
+            case "Applicant":
+                return "Applicant";
+            default:
+                return roleKey ? roleKey.charAt(0).toUpperCase() + roleKey.slice(1) : "Applicant";
+        }
+    };
+
     useEffect(() => {
+        const fetchUserRole = async (currentUser: User) => {
+            try {
+                const metaRole = currentUser.user_metadata?.role;
+                if (metaRole) {
+                    setRole(metaRole);
+                }
+                
+                const res = await fetch("/api/admin/users/check-status");
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.role) {
+                        setRole(data.role);
+                    }
+                } else if (!metaRole) {
+                    setRole("Applicant");
+                }
+            } catch (err) {
+                if (!currentUser.user_metadata?.role) {
+                    setRole("Applicant");
+                }
+            }
+        };
+
         const getUserInfo = async () => {
             const { data: { user: currentUser } } = await supabase.auth.getUser();
             if (currentUser) {
                 setUser(currentUser);
+                await fetchUserRole(currentUser);
             } else {
                 setUser(null);
+                setRole("Applicant");
             }
             setLoading(false);
         };
@@ -27,9 +74,15 @@ export function UserNav() {
         getUserInfo();
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: AuthChangeEvent, session: Session | null) => {
-            setUser(session?.user ?? null);
+            const currentUser = session?.user ?? null;
+            setUser(currentUser);
+            if (currentUser) {
+                fetchUserRole(currentUser);
+            } else {
+                setRole("Applicant");
+            }
             setLoading(false);
-            router.refresh(); // Refresh server components when auth state changes
+            router.refresh();
         });
 
         return () => {
@@ -50,8 +103,7 @@ export function UserNav() {
 
     if (user) {
         const getDashboardHref = () => {
-            const role = user.user_metadata?.role;
-            if (role === 'SuperAdmin' || role === 'Admin') {
+            if (role === 'SuperAdmin' || role === 'Admin' || role === 'Committee') {
                 return "/admin/dashboard";
             }
             if (role === 'Treasurer') {
@@ -64,7 +116,7 @@ export function UserNav() {
             <div className="flex items-center gap-4">
                 <div className="hidden md:flex flex-col items-end">
                     <span className="text-sm font-medium">{user.user_metadata?.name || user.email}</span>
-                    <span className="text-xs text-muted-foreground capitalize">{user.user_metadata?.role || 'User'}</span>
+                    <span className="text-xs text-muted-foreground capitalize">{getDisplayRole(role)}</span>
                 </div>
 
                 <div className="flex items-center gap-2">
