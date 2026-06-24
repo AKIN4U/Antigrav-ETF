@@ -183,7 +183,10 @@ export default function ApplicationsPage() {
                         <option value="All">All Status</option>
                         <option value="Pending">Pending</option>
                         <option value="Under Review">Under Review</option>
+                        <option value="Recommended for Award">Recommended</option>
                         <option value="Approved">Approved</option>
+                        <option value="Waitlisted">Waitlisted</option>
+                        <option value="Not Recommended">Not Recommended</option>
                         <option value="Rejected">Rejected</option>
                         <option value="Disbursed">Disbursed</option>
                     </select>
@@ -230,11 +233,13 @@ export default function ApplicationsPage() {
                                         <td className="px-6 py-4">{new Date(app.createdAt).toLocaleDateString()}</td>
                                         <td className="px-6 py-4">
                                             <span
-                                                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${app.status === "Approved"
-                                                    ? "bg-green-100 text-green-800"
-                                                    : app.status === "Rejected"
-                                                        ? "bg-red-100 text-red-800"
-                                                        : "bg-yellow-100 text-yellow-800"
+                                                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                                    app.status === "Approved" ? "bg-green-100 text-green-800" :
+                                                    app.status === "Rejected" ? "bg-red-100 text-red-800" :
+                                                    app.status === "Recommended for Award" ? "bg-blue-100 text-blue-800" :
+                                                    app.status === "Waitlisted" ? "bg-amber-100 text-amber-800" :
+                                                    app.status === "Not Recommended" ? "bg-rose-100 text-rose-800" :
+                                                    "bg-yellow-100 text-yellow-800"
                                                     }`}
                                             >
                                                 {app.status}

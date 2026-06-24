@@ -16,6 +16,9 @@ export type Application = Tables<'Application'> & {
     waecCertUrl?: string | null;
     verificationStatus?: string;
     verificationChecklist?: string;
+    interviewDate?: string | null;
+    interviewNotes?: string | null;
+    interviewAttendees?: string | null;
 };
 export type Budget = Tables<'Budget'>;
 export type Donation = Tables<'Donation'>;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ArrowLeft, CheckCircle, XCircle, FileText, User, GraduationCap, Church, AlertCircle, X } from "lucide-react";
+import { ArrowLeft, CheckCircle, XCircle, FileText, User, GraduationCap, Church, AlertCircle, X, Clock, Calendar } from "lucide-react";
 import AssessmentForm from "@/components/AssessmentForm";
 import AssessmentList from "@/components/AssessmentList";
 import Link from "next/link";
@@ -26,6 +26,12 @@ export default function ApplicationDetailPage() {
     const [verificationStatus, setVerificationStatus] = useState("Unverified");
     const [checklist, setChecklist] = useState<Record<string, boolean>>({});
 
+    // Interview Management state
+    const [interviewDate, setInterviewDate] = useState("");
+    const [interviewAttendees, setInterviewAttendees] = useState("");
+    const [interviewNotes, setInterviewNotes] = useState("");
+    const [isSavingInterview, setIsSavingInterview] = useState(false);
+
     useEffect(() => {
         if (application) {
             setVerificationStatus((application as any).verificationStatus || "Unverified");
@@ -34,6 +40,22 @@ export default function ApplicationDetailPage() {
             } catch {
                 setChecklist({});
             }
+
+            // Format interview date for datetime-local input (YYYY-MM-DDThh:mm)
+            if (application.interviewDate) {
+                const dateObj = new Date(application.interviewDate);
+                const pad = (n: number) => n.toString().padStart(2, '0');
+                const yyyy = dateObj.getFullYear();
+                const MM = pad(dateObj.getMonth() + 1);
+                const dd = pad(dateObj.getDate());
+                const hh = pad(dateObj.getHours());
+                const mm = pad(dateObj.getMinutes());
+                setInterviewDate(`${yyyy}-${MM}-${dd}T${hh}:${mm}`);
+            } else {
+                setInterviewDate("");
+            }
+            setInterviewAttendees(application.interviewAttendees || "");
+            setInterviewNotes(application.interviewNotes || "");
         }
     }, [application]);
 
@@ -226,6 +248,41 @@ export default function ApplicationDetailPage() {
         }
     };
 
+    const handleSaveInterviewDetails = async () => {
+        if (!application) return;
+        setIsSavingInterview(true);
+        try {
+            const formattedDate = interviewDate ? new Date(interviewDate).toISOString() : null;
+            const response = await fetch(`/api/admin/applications/${params.id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    interviewDate: formattedDate,
+                    interviewAttendees: interviewAttendees || null,
+                    interviewNotes: interviewNotes || null,
+                })
+            });
+
+            if (response.ok) {
+                setApplication({
+                    ...application,
+                    interviewDate: formattedDate,
+                    interviewAttendees: interviewAttendees || null,
+                    interviewNotes: interviewNotes || null,
+                });
+                alert("Interview details saved successfully!");
+                router.refresh();
+            } else {
+                alert("Failed to save interview details.");
+            }
+        } catch (error) {
+            console.error("Error saving interview details:", error);
+            alert("An error occurred while saving interview details.");
+        } finally {
+            setIsSavingInterview(false);
+        }
+    };
+
     if (isLoading) {
         return <div className="p-8 text-center">Loading application details...</div>;
     }
@@ -257,6 +314,8 @@ export default function ApplicationDetailPage() {
                     <span className={`px-3 py-1 rounded-full text-sm font-medium border ${application.status === 'Approved' ? 'bg-green-100 text-green-800 border-green-200' :
                         application.status === 'Recommended for Award' ? 'bg-blue-100 text-blue-800 border-blue-200' :
                         application.status === 'Rejected' ? 'bg-red-100 text-red-800 border-red-200' :
+                        application.status === 'Waitlisted' ? 'bg-amber-100 text-amber-800 border-amber-200' :
+                        application.status === 'Not Recommended' ? 'bg-rose-100 text-rose-800 border-rose-200' :
                             'bg-yellow-100 text-yellow-800 border-yellow-200'
                         }`}>
                         {application.status}
@@ -268,6 +327,22 @@ export default function ApplicationDetailPage() {
                         className="bg-blue-600 hover:bg-blue-700 text-white"
                     >
                         <CheckCircle className="h-4 w-4 mr-2" /> Recommend
+                    </Button>
+                    <Button
+                        onClick={() => handleStatusUpdate("Waitlisted")}
+                        disabled={isSaving || application.status === "Waitlisted" || application.status === "Approved"}
+                        size="sm"
+                        className="bg-amber-600 hover:bg-amber-700 text-white"
+                    >
+                        <Clock className="h-4 w-4 mr-2" /> Waitlist
+                    </Button>
+                    <Button
+                        onClick={() => handleStatusUpdate("Not Recommended")}
+                        disabled={isSaving || application.status === "Not Recommended" || application.status === "Approved"}
+                        size="sm"
+                        className="bg-rose-600 hover:bg-rose-700 text-white"
+                    >
+                        <XCircle className="h-4 w-4 mr-2" /> Not Recommend
                     </Button>
                     <Button
                         onClick={() => {
@@ -461,6 +536,63 @@ export default function ApplicationDetailPage() {
                                     </a>
                                 </div>
                             ))}
+                        </div>
+                    </div>
+
+                    {/* Interview Management */}
+                    <div className="bg-card border rounded-lg p-6 shadow-sm space-y-4">
+                        <div className="flex items-center gap-2 border-b pb-2">
+                            <Calendar className="h-5 w-5 text-primary" />
+                            <h2 className="text-lg font-semibold">Interview Management</h2>
+                        </div>
+                        
+                        <div className="space-y-4">
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground block">
+                                    Interview Date & Time
+                                </label>
+                                <div className="relative">
+                                    <input
+                                        type="datetime-local"
+                                        value={interviewDate}
+                                        onChange={(e) => setInterviewDate(e.target.value)}
+                                        className="w-full h-10 px-3 py-2 bg-background border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm font-medium"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground block">
+                                    Attendees / Interviewers
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="e.g. Akin Sowemimo, Father John"
+                                    value={interviewAttendees}
+                                    onChange={(e) => setInterviewAttendees(e.target.value)}
+                                    className="w-full h-10 px-3 py-2 bg-background border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm font-medium"
+                                />
+                            </div>
+
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground block">
+                                    Notes / Feedback
+                                </label>
+                                <textarea
+                                    placeholder="Enter interview notes, performance rating, and feedback..."
+                                    value={interviewNotes}
+                                    onChange={(e) => setInterviewNotes(e.target.value)}
+                                    className="w-full min-h-[100px] px-3 py-2 bg-background border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm font-medium"
+                                />
+                            </div>
+
+                            <Button
+                                onClick={handleSaveInterviewDetails}
+                                disabled={isSavingInterview}
+                                className="w-full bg-primary hover:bg-primary/95 text-primary-foreground font-semibold flex items-center justify-center gap-2"
+                            >
+                                {isSavingInterview ? "Saving..." : "Save Interview Details"}
+                            </Button>
                         </div>
                     </div>
 

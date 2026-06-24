@@ -143,8 +143,13 @@ export default function AdminDashboardPage() {
                                                 </p>
                                             </div>
                                         </div>
-                                        <div className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${app.status === 'Approved' ? 'bg-green-100 text-green-700' :
+                                        <div className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${
+                                            app.status === 'Approved' ? 'bg-green-100 text-green-700' :
                                             app.status === 'Pending' ? 'bg-yellow-100 text-yellow-700' :
+                                            app.status === 'Rejected' ? 'bg-red-100 text-red-700' :
+                                            app.status === 'Waitlisted' ? 'bg-amber-100 text-amber-700' :
+                                            app.status === 'Not Recommended' ? 'bg-rose-100 text-rose-700' :
+                                            app.status === 'Recommended for Award' ? 'bg-blue-100 text-blue-700' :
                                                 'bg-gray-100 text-gray-700'
                                             }`}>
                                             {app.status}

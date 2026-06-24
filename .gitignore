@@ -46,3 +46,4 @@ DockerDesktopInstaller.exe
 package/
 *.tgz
 skills-lock.json
+.env*.local

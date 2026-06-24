@@ -158,6 +158,11 @@ model Application {
   verificationStatus    String @default("Unverified")
   verificationChecklist String @default("{}")
 
+  // Interview Info
+  interviewDate       DateTime?
+  interviewNotes      String?
+  interviewAttendees  String?
+
   assessments     Assessment[] // Relation to assessments
   
   cycleId         String?
