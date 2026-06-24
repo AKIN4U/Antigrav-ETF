@@ -5,3 +5,7 @@ build_error.log
 *.log
 .env.local
 .env.*.local
+*.exe
+*.msi
+wsl*
+DockerDesktopInstaller*
